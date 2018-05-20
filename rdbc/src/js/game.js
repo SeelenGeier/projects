@@ -1,3 +1,5 @@
+/* global Phaser */
+
 let splashScene = new Phaser.Scene('Splash');
 
 let config = {
