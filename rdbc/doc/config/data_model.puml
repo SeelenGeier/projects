@@ -7,8 +7,11 @@ object global {
     screen
         attribute(\twidth) -> type(int)
         attribute(\theight) -> type(int)
-    attribute(inventorySize) -> type(int)
     default
+        attribute(\tmusic) -> type(bool)
+        attribute(\tsound) -> type(bool)
+    attribute(inventorySize) -> type(int)
+    defaultEquipment
         attribute(\tweapon) -> type(int) (id)
         attribute(\tarmor) -> type(int) (id)
         attribute(\toffhand) -> type(int) (id)
@@ -189,6 +192,8 @@ object saveObject {
     attribute(inventory) -> type(inventory)
     attribute(character) -> type(character)
     attribute(room) -> type(room)
+    attribute(music) -> type(bool)
+    attribute(sound) -> type(bool)
 }
 
 @enduml
