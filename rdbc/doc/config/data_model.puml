@@ -7,7 +7,7 @@ object global {
     screen
         attribute(\twidth) -> type(int)
         attribute(\theight) -> type(int)
-    attribute(inventorysize) -> type(int)
+    attribute(inventorySize) -> type(int)
     default
         attribute(\tweapon) -> type(int) (id)
         attribute(\tarmor) -> type(int) (id)

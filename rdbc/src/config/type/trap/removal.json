@@ -1,5 +1,5 @@
 {
-  "id": 0,
+  "id": 1,
   "name": "removal",
   "description": "A trap that removes one or more items from the available inventory.",
   "actionMessage": "Your character trips and breaks an item while searching for traps."
