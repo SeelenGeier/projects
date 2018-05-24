@@ -14,20 +14,45 @@ object global {
         attribute(\toffhand) -> type(int) (id)
         attribute(\ttrinket) -> type(int) (id)
     trapType (variable)
-        attribute(\ttypeA) -> type(int)
-        attribute(\ttypeB) -> type(int)
-        attribute(\t...)
+        \ttrapTypeA
+            attribute(\t\tid) -> type(int)
+            attribute(\t\tname) -> type(string)
+        \ttrapTypeA
+            attribute(\t\tid) -> type(int)
+            attribute(\t\tname) -> type(string)
+        \t...
+    resistanceType (variable)
+        \tresistanceTypeA
+            attribute(\t\tid) -> type(int)
+            attribute(\t\tname) -> type(string)
+        \tresistanceTypeB
+            attribute(\t\tid) -> type(int)
+            attribute(\t\tname) -> type(string)
+        \t...
+    damageType (variable)
+        \tdamageTypeA
+            attribute(\t\tid) -> type(int)
+            attribute(\t\tname) -> type(string)
+        \tdamageTypeB
+            attribute(\t\tid) -> type(int)
+            attribute(\t\tname) -> type(string)
+        \t...
 }
 
 object character {
-    health
-        attribute(\tmaximum) -> type(int)
-        attribute(\tcurrent) -> type(int)
+    stats
+        \thealth
+            attribute(\t\tmaximum) -> type(int)
+            attribute(\t\tcurrent) -> type(int)
+        \t...
     experiences (variable)
-        attribute(\tweaponA) -> type(int)
-        attribute(\tweaponB) -> type(int)
-        attribute(\t...)
-    attribute(speed) -> type(int)
+        \texperienceA
+            attribute(\t\tid) -> type(int)
+            attribute(\t\tvalue) -> type(int)
+        \texperienceB
+            attribute(\t\tid) -> type(int)
+            attribute(\t\tvalue) -> type(int)
+        \t...
     attribute(weapon) -> type(int) (id)
     attribute(armor) -> type(int) (id)
     attribute(offhand) -> type(int) (id)
@@ -39,6 +64,9 @@ object monster {
         attribute(\tmaximum) -> type(int)
         attribute(\tcurrent) -> type(int)
     attribute(weapon) -> type(int) (id)
+    attribute(armor) -> type(int) (id)
+    attribute(offhand) -> type(int) (id)
+    attribute(trinket) -> type(int) (id)
 }
 
 object weapon {
@@ -47,9 +75,13 @@ object weapon {
     attribute(description) -> type(string)
     attribute(value) -> type(int)
     damage (variable)
-        attribute(\tblunt) -> type(int)
-        attribute(\tslash) -> type(int)
-        attribute(\t...)
+        \tdamageA
+            attribute(\t\tdamageType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \tdamageB
+            attribute(\t\tdamageType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \t...
 }
 
 object armor {
@@ -58,9 +90,13 @@ object armor {
     attribute(description) -> type(string)
     attribute(value) -> type(int)
     resistance (variable)
-        attribute(\tblunt) -> type(int)
-        attribute(\tslash) -> type(int)
-        attribute(\t...)
+        \tresistanceA
+            attribute(\t\tresistanceType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \tresistanceB
+            attribute(\t\tresistanceType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \t...
 }
 
 object trinket {
@@ -69,13 +105,21 @@ object trinket {
     attribute(description) -> type(string)
     attribute(value) -> type(int)
     resistance (variable)
-        attribute(\tblunt) -> type(int)
-        attribute(\tslash) -> type(int)
-        attribute(\t...)
+        \tresistanceA
+            attribute(\t\tresistanceType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \tresistanceB
+            attribute(\t\tresistanceType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \t...
     damage (variable)
-        attribute(\tblunt) -> type(int)
-        attribute(\tslash) -> type(int)
-        attribute(\t...)
+        \tdamageA
+            attribute(\t\tdamageType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \tdamageB
+            attribute(\t\tdamageType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \t...
 }
 
 object offhand {
@@ -84,13 +128,21 @@ object offhand {
     attribute(description) -> type(string)
     attribute(value) -> type(int)
     resistance (variable)
-        attribute(\tblunt) -> type(int)
-        attribute(\tslash) -> type(int)
-        attribute(\t...)
+        \tresistanceA
+            attribute(\t\tresistanceType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \tresistanceB
+            attribute(\t\tresistanceType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \t...
     damage (variable)
-        attribute(\tblunt) -> type(int)
-        attribute(\tslash) -> type(int)
-        attribute(\t...)
+        \tdamageA
+            attribute(\t\tdamageType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \tdamageB
+            attribute(\t\tdamageType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \t...
 }
 
 object valuable {
