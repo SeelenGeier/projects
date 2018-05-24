@@ -1,12 +1,20 @@
 /* global Phaser */
 
-let splashScene = new Phaser.Scene('Splash');
+//load config
+
+$startingScene = splashScene
+
+//load save data and change starting scene accordingly
 
 let config = {
     type: Phaser.AUTO,
-    width: 1280,
-    height: 720,
-    scene: splashScene // the starting scene
+    width: 720,
+    height: 1280,
+    backgroundColor: '#000000',
+    parent: "RBDC",
+    scene: [splashScene, profileManagementScene, profileOverviewScene, configScene, shopScene, dungeonScene, resultScene]
 };
 
 let game = new Phaser.Game(config);
+
+//this.scene.start('sceneA');
