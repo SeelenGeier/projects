@@ -13,29 +13,57 @@ object global {
         attribute(\tarmor) -> type(int) (id)
         attribute(\toffhand) -> type(int) (id)
         attribute(\ttrinket) -> type(int) (id)
+    startingValues
+        attribute(\tcurrency) -> type(int)
+        attribute(\tHealth) -> type(int)
+}
+
+object types {
     trapType (variable)
         \ttrapTypeA
             attribute(\t\tid) -> type(int)
             attribute(\t\tname) -> type(string)
+            attribute(\t\tdescription) -> type(string)
+            attribute(\t\tactionMessage) -> type(string)
         \ttrapTypeA
             attribute(\t\tid) -> type(int)
             attribute(\t\tname) -> type(string)
+            attribute(\t\tdescription) -> type(string)
+            attribute(\t\tactionMessage) -> type(string)
         \t...
     resistanceType (variable)
         \tresistanceTypeA
             attribute(\t\tid) -> type(int)
             attribute(\t\tname) -> type(string)
+            attribute(\t\tdescription) -> type(string)
         \tresistanceTypeB
             attribute(\t\tid) -> type(int)
             attribute(\t\tname) -> type(string)
+            attribute(\t\tdescription) -> type(string)
         \t...
     damageType (variable)
         \tdamageTypeA
             attribute(\t\tid) -> type(int)
             attribute(\t\tname) -> type(string)
+            attribute(\t\tdescription) -> type(string)
         \tdamageTypeB
             attribute(\t\tid) -> type(int)
             attribute(\t\tname) -> type(string)
+            attribute(\t\tdescription) -> type(string)
+        \t...
+}
+
+object inventory {
+    attribute(currency) -> type(int)
+    items (variable)
+        \titemA
+            attribute(\t\titemType) -> type(int) (id)
+            attribute(\t\tdurability) -> type(int)
+            attribute(\t\tequipped) -> type(bool)
+        \titemB
+            attribute(\t\titemType) -> type(int) (id)
+            attribute(\t\tdurability) -> type(int)
+            attribute(\t\tequipped) -> type(bool)
         \t...
 }
 
@@ -60,6 +88,7 @@ object character {
 }
 
 object monster {
+    attribute(name) -> type(string)
     health
         attribute(\tmaximum) -> type(int)
         attribute(\tcurrent) -> type(int)
@@ -152,23 +181,11 @@ object valuable {
     attribute(value) -> type(int)
 }
 
-object inventory {
-    items (variable)
-        \titemA
-            attribute(\t\titemType) -> type(int) (id)
-            attribute(\t\tdurability) -> type(int)
-            attribute(\t\tequipped) -> type(bool)
-        \titemB
-            attribute(\t\titemType) -> type(int) (id)
-            attribute(\t\tdurability) -> type(int)
-            attribute(\t\tequipped) -> type(bool)
-        \t...
-}
-
 object trap {
     attribute(trapType) -> type(int) (id)
     attribute(name) -> type(string)
     attribute(message) -> type(string)
+    attribute(value) -> type(int)
 }
 
 @enduml
