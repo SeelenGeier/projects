@@ -31,16 +31,6 @@ object types {
             attribute(\t\tdescription) -> type(string)
             attribute(\t\tactionMessage) -> type(string)
         \t...
-    resistanceType (variable)
-        \tresistanceTypeA
-            attribute(\t\tid) -> type(int)
-            attribute(\t\tname) -> type(string)
-            attribute(\t\tdescription) -> type(string)
-        \tresistanceTypeB
-            attribute(\t\tid) -> type(int)
-            attribute(\t\tname) -> type(string)
-            attribute(\t\tdescription) -> type(string)
-        \t...
     damageType (variable)
         \tdamageTypeA
             attribute(\t\tid) -> type(int)
@@ -119,11 +109,11 @@ object armor {
     attribute(description) -> type(string)
     attribute(value) -> type(int)
     resistance (variable)
-        \tresistanceA
-            attribute(\t\tresistanceType) -> type(int) (id)
+        \tdamageA
+            attribute(\t\tdamageType) -> type(int) (id)
             attribute(\t\tvalue) -> type(int)
-        \tresistanceB
-            attribute(\t\tresistanceType) -> type(int) (id)
+        \tdamageB
+            attribute(\t\tdamageType) -> type(int) (id)
             attribute(\t\tvalue) -> type(int)
         \t...
 }
@@ -134,11 +124,11 @@ object trinket {
     attribute(description) -> type(string)
     attribute(value) -> type(int)
     resistance (variable)
-        \tresistanceA
-            attribute(\t\tresistanceType) -> type(int) (id)
+        \tdamageA
+            attribute(\t\tdamageType) -> type(int) (id)
             attribute(\t\tvalue) -> type(int)
-        \tresistanceB
-            attribute(\t\tresistanceType) -> type(int) (id)
+        \tdamageB
+            attribute(\t\tdamageType) -> type(int) (id)
             attribute(\t\tvalue) -> type(int)
         \t...
     damage (variable)
@@ -157,11 +147,11 @@ object offhand {
     attribute(description) -> type(string)
     attribute(value) -> type(int)
     resistance (variable)
-        \tresistanceA
-            attribute(\t\tresistanceType) -> type(int) (id)
+        \tdamageA
+            attribute(\t\tdamageType) -> type(int) (id)
             attribute(\t\tvalue) -> type(int)
-        \tresistanceB
-            attribute(\t\tresistanceType) -> type(int) (id)
+        \tdamageB
+            attribute(\t\tdamageType) -> type(int) (id)
             attribute(\t\tvalue) -> type(int)
         \t...
     damage (variable)
