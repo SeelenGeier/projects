@@ -189,11 +189,12 @@ object room {
 }
 
 object saveObject {
+    attribute(scene) -> type(string)
+    attribute(music) -> type(bool)
+    attribute(sound) -> type(bool)
     attribute(inventory) -> type(inventory)
     attribute(character) -> type(character)
     attribute(room) -> type(room)
-    attribute(music) -> type(bool)
-    attribute(sound) -> type(bool)
 }
 
 @enduml
