@@ -15,11 +15,11 @@ object global {
         attribute(\ttrinket) -> type(int) (id)
     startingValues
         attribute(\tcurrency) -> type(int)
-        attribute(\tHealth) -> type(int)
+        attribute(\thealth) -> type(int)
 }
 
 object types {
-    trapType (variable)
+    trapType
         \ttrapTypeA
             attribute(\t\tid) -> type(int)
             attribute(\t\tname) -> type(string)
@@ -31,7 +31,7 @@ object types {
             attribute(\t\tdescription) -> type(string)
             attribute(\t\tactionMessage) -> type(string)
         \t...
-    damageType (variable)
+    damageType
         \tdamageTypeA
             attribute(\t\tid) -> type(int)
             attribute(\t\tname) -> type(string)
@@ -45,7 +45,7 @@ object types {
 
 object inventory {
     attribute(currency) -> type(int)
-    items (variable)
+    items
         \titemA
             attribute(\t\titemType) -> type(int) (id)
             attribute(\t\tdurability) -> type(int)
@@ -63,7 +63,7 @@ object character {
             attribute(\t\tmaximum) -> type(int)
             attribute(\t\tcurrent) -> type(int)
         \t...
-    experiences (variable)
+    experiences
         \texperienceA
             attribute(\t\tid) -> type(int)
             attribute(\t\tvalue) -> type(int)
@@ -93,7 +93,7 @@ object weapon {
     attribute(name) -> type(string)
     attribute(description) -> type(string)
     attribute(value) -> type(int)
-    damage (variable)
+    damage
         \tdamageA
             attribute(\t\tdamageType) -> type(int) (id)
             attribute(\t\tvalue) -> type(int)
@@ -108,7 +108,7 @@ object armor {
     attribute(name) -> type(string)
     attribute(description) -> type(string)
     attribute(value) -> type(int)
-    resistance (variable)
+    resistance
         \tdamageA
             attribute(\t\tdamageType) -> type(int) (id)
             attribute(\t\tvalue) -> type(int)
@@ -123,7 +123,7 @@ object trinket {
     attribute(name) -> type(string)
     attribute(description) -> type(string)
     attribute(value) -> type(int)
-    resistance (variable)
+    resistance
         \tdamageA
             attribute(\t\tdamageType) -> type(int) (id)
             attribute(\t\tvalue) -> type(int)
@@ -131,7 +131,7 @@ object trinket {
             attribute(\t\tdamageType) -> type(int) (id)
             attribute(\t\tvalue) -> type(int)
         \t...
-    damage (variable)
+    damage
         \tdamageA
             attribute(\t\tdamageType) -> type(int) (id)
             attribute(\t\tvalue) -> type(int)
@@ -146,7 +146,7 @@ object offhand {
     attribute(name) -> type(string)
     attribute(description) -> type(string)
     attribute(value) -> type(int)
-    resistance (variable)
+    resistance
         \tdamageA
             attribute(\t\tdamageType) -> type(int) (id)
             attribute(\t\tvalue) -> type(int)
@@ -154,7 +154,7 @@ object offhand {
             attribute(\t\tdamageType) -> type(int) (id)
             attribute(\t\tvalue) -> type(int)
         \t...
-    damage (variable)
+    damage
         \tdamageA
             attribute(\t\tdamageType) -> type(int) (id)
             attribute(\t\tvalue) -> type(int)
@@ -176,6 +176,19 @@ object trap {
     attribute(name) -> type(string)
     attribute(message) -> type(string)
     attribute(value) -> type(int)
+}
+
+object room {
+    attribute(monster) -> type(int) (id)
+    attribute(chestItem) -> type(int) (id)
+    attribute(trap) -> type(int) (id)
+    attribute(portal) -> type(bool)
+}
+
+object saveObject {
+    attribute(inventory) -> type(inventory)
+    attribute(character) -> type(character)
+    attribute(room) -> type(room)
 }
 
 @enduml
