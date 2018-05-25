@@ -1,0 +1,200 @@
+@startuml
+
+!define type(x) <color:blue>x</color>
+!define attribute(x) <color:green>x</color>
+
+object global {
+    screen
+        attribute(\twidth) -> type(int)
+        attribute(\theight) -> type(int)
+    default
+        attribute(\tmusic) -> type(bool)
+        attribute(\tsound) -> type(bool)
+    attribute(inventorySize) -> type(int)
+    defaultEquipment
+        attribute(\tweapon) -> type(int) (id)
+        attribute(\tarmor) -> type(int) (id)
+        attribute(\toffhand) -> type(int) (id)
+        attribute(\ttrinket) -> type(int) (id)
+    startingValues
+        attribute(\tcurrency) -> type(int)
+        attribute(\thealth) -> type(int)
+}
+
+object types {
+    trapType
+        \ttrapTypeA
+            attribute(\t\tid) -> type(int)
+            attribute(\t\tname) -> type(string)
+            attribute(\t\tdescription) -> type(string)
+            attribute(\t\tactionMessage) -> type(string)
+        \ttrapTypeA
+            attribute(\t\tid) -> type(int)
+            attribute(\t\tname) -> type(string)
+            attribute(\t\tdescription) -> type(string)
+            attribute(\t\tactionMessage) -> type(string)
+        \t...
+    damageType
+        \tdamageTypeA
+            attribute(\t\tid) -> type(int)
+            attribute(\t\tname) -> type(string)
+            attribute(\t\tdescription) -> type(string)
+        \tdamageTypeB
+            attribute(\t\tid) -> type(int)
+            attribute(\t\tname) -> type(string)
+            attribute(\t\tdescription) -> type(string)
+        \t...
+}
+
+object inventory {
+    attribute(currency) -> type(int)
+    items
+        \titemA
+            attribute(\t\titemType) -> type(int) (id)
+            attribute(\t\tdurability) -> type(int)
+            attribute(\t\tequipped) -> type(bool)
+        \titemB
+            attribute(\t\titemType) -> type(int) (id)
+            attribute(\t\tdurability) -> type(int)
+            attribute(\t\tequipped) -> type(bool)
+        \t...
+}
+
+object character {
+    stats
+        \thealth
+            attribute(\t\tmaximum) -> type(int)
+            attribute(\t\tcurrent) -> type(int)
+        \t...
+    experiences
+        \texperienceA
+            attribute(\t\tid) -> type(int)
+            attribute(\t\tvalue) -> type(int)
+        \texperienceB
+            attribute(\t\tid) -> type(int)
+            attribute(\t\tvalue) -> type(int)
+        \t...
+    attribute(weapon) -> type(int) (id)
+    attribute(armor) -> type(int) (id)
+    attribute(offhand) -> type(int) (id)
+    attribute(trinket) -> type(int) (id)
+}
+
+object monster {
+    attribute(name) -> type(string)
+    health
+        attribute(\tmaximum) -> type(int)
+        attribute(\tcurrent) -> type(int)
+    attribute(weapon) -> type(int) (id)
+    attribute(armor) -> type(int) (id)
+    attribute(offhand) -> type(int) (id)
+    attribute(trinket) -> type(int) (id)
+}
+
+object weapon {
+    attribute(id) -> type(int)
+    attribute(name) -> type(string)
+    attribute(description) -> type(string)
+    attribute(value) -> type(int)
+    damage
+        \tdamageA
+            attribute(\t\tdamageType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \tdamageB
+            attribute(\t\tdamageType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \t...
+}
+
+object armor {
+    attribute(id) -> type(int)
+    attribute(name) -> type(string)
+    attribute(description) -> type(string)
+    attribute(value) -> type(int)
+    resistance
+        \tdamageA
+            attribute(\t\tdamageType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \tdamageB
+            attribute(\t\tdamageType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \t...
+}
+
+object trinket {
+    attribute(id) -> type(int)
+    attribute(name) -> type(string)
+    attribute(description) -> type(string)
+    attribute(value) -> type(int)
+    resistance
+        \tdamageA
+            attribute(\t\tdamageType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \tdamageB
+            attribute(\t\tdamageType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \t...
+    damage
+        \tdamageA
+            attribute(\t\tdamageType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \tdamageB
+            attribute(\t\tdamageType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \t...
+}
+
+object offhand {
+    attribute(id) -> type(int)
+    attribute(name) -> type(string)
+    attribute(description) -> type(string)
+    attribute(value) -> type(int)
+    resistance
+        \tdamageA
+            attribute(\t\tdamageType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \tdamageB
+            attribute(\t\tdamageType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \t...
+    damage
+        \tdamageA
+            attribute(\t\tdamageType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \tdamageB
+            attribute(\t\tdamageType) -> type(int) (id)
+            attribute(\t\tvalue) -> type(int)
+        \t...
+}
+
+object valuable {
+    attribute(id) -> type(int)
+    attribute(name) -> type(string)
+    attribute(description) -> type(string)
+    attribute(value) -> type(int)
+}
+
+object trap {
+    attribute(trapType) -> type(int) (id)
+    attribute(name) -> type(string)
+    attribute(message) -> type(string)
+    attribute(value) -> type(int)
+}
+
+object room {
+    attribute(monster) -> type(int) (id)
+    attribute(chestItem) -> type(int) (id)
+    attribute(trap) -> type(int) (id)
+    attribute(portal) -> type(bool)
+}
+
+object saveObject {
+    attribute(scene) -> type(string)
+    attribute(music) -> type(bool)
+    attribute(sound) -> type(bool)
+    attribute(inventory) -> type(inventory)
+    attribute(character) -> type(character)
+    attribute(room) -> type(room)
+}
+
+@enduml
