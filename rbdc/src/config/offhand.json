@@ -8,5 +8,13 @@
       "puncture": 1,
       "slash": 1
     }
+  },
+  "torch": {
+    "name": "Torch",
+    "description": "A flaming wooden stick.",
+    "value": 1,
+    "damage": {
+      "heat": 1
+    }
   }
 }
