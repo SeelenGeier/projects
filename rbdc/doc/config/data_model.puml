@@ -21,23 +21,24 @@ object global {
         attribute(\thealth) -> type(int)
 }
 
-object types {
-    trapType
-        \ttrapTypeA
-            attribute(\t\tdescription) -> type(string)
-            attribute(\t\tactionMessage) -> type(string)
-            attribute(\t\tvalueDescription) -> type(string)
-        \ttrapTypeA
-            attribute(\t\tdescription) -> type(string)
-            attribute(\t\tactionMessage) -> type(string)
-            attribute(\t\tvalueDescription) -> type(string)
-        \t...
-    damageType
-        \tdamageTypeA
-            attribute(\t\tdescription) -> type(string)
-        \tdamageTypeB
-            attribute(\t\tdescription) -> type(string)
-        \t...
+object trapTypes {
+        trapTypeA
+            attribute(\tdescription) -> type(string)
+            attribute(\tactionMessage) -> type(string)
+            attribute(\tvalueDescription) -> type(string)
+        trapTypeA
+            attribute(\tdescription) -> type(string)
+            attribute(\tactionMessage) -> type(string)
+            attribute(\tvalueDescription) -> type(string)
+        ...
+}
+
+object damageTypes {
+        damageTypeA
+            attribute(\tdescription) -> type(string)
+        damageTypeB
+            attribute(\tdescription) -> type(string)
+        ...
 }
 
 object inventory {
