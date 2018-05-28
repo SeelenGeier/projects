@@ -14,7 +14,7 @@ object global {
     defaultEquipment
         attribute(\tweapon) -> type(string)
         attribute(\tarmor) -> type(string)
-        attribute(\toffhand) -> type(istring)
+        attribute(\toffhand) -> type(string)
         attribute(\ttrinket) -> type(string)
     startingValues
         attribute(\tcurrency) -> type(int)
