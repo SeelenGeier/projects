@@ -12,10 +12,10 @@ object global {
         attribute(\tsound) -> type(bool)
     attribute(inventorySize) -> type(int)
     defaultEquipment
-        attribute(\tweapon) -> type(int) (id)
-        attribute(\tarmor) -> type(int) (id)
-        attribute(\toffhand) -> type(int) (id)
-        attribute(\ttrinket) -> type(int) (id)
+        attribute(\tweapon) -> type(string)
+        attribute(\tarmor) -> type(string)
+        attribute(\toffhand) -> type(istring)
+        attribute(\ttrinket) -> type(string)
     startingValues
         attribute(\tcurrency) -> type(int)
         attribute(\thealth) -> type(int)
@@ -24,23 +24,21 @@ object global {
 object types {
     trapType
         \ttrapTypeA
-            attribute(\t\tid) -> type(int)
             attribute(\t\tname) -> type(string)
             attribute(\t\tdescription) -> type(string)
             attribute(\t\tactionMessage) -> type(string)
+            attribute(\t\tvalueDescription) -> type(string)
         \ttrapTypeA
-            attribute(\t\tid) -> type(int)
             attribute(\t\tname) -> type(string)
             attribute(\t\tdescription) -> type(string)
             attribute(\t\tactionMessage) -> type(string)
+            attribute(\t\tvalueDescription) -> type(string)
         \t...
     damageType
         \tdamageTypeA
-            attribute(\t\tid) -> type(int)
             attribute(\t\tname) -> type(string)
             attribute(\t\tdescription) -> type(string)
         \tdamageTypeB
-            attribute(\t\tid) -> type(int)
             attribute(\t\tname) -> type(string)
             attribute(\t\tdescription) -> type(string)
         \t...
@@ -50,11 +48,11 @@ object inventory {
     attribute(currency) -> type(int)
     items
         \titemA
-            attribute(\t\titemType) -> type(int) (id)
+            attribute(\t\titemType) -> type(string)
             attribute(\t\tdurability) -> type(int)
             attribute(\t\tequipped) -> type(bool)
         \titemB
-            attribute(\t\titemType) -> type(int) (id)
+            attribute(\t\titemType) -> type(string)
             attribute(\t\tdurability) -> type(int)
             attribute(\t\tequipped) -> type(bool)
         \t...
@@ -67,124 +65,91 @@ object character {
             attribute(\t\tcurrent) -> type(int)
         \t...
     experiences
-        \texperienceA
-            attribute(\t\tid) -> type(int)
-            attribute(\t\tvalue) -> type(int)
-        \texperienceB
-            attribute(\t\tid) -> type(int)
-            attribute(\t\tvalue) -> type(int)
+        \texperienceA -> type(int)
+        \texperienceB -> type(int)
         \t...
-    attribute(weapon) -> type(int) (id)
-    attribute(armor) -> type(int) (id)
-    attribute(offhand) -> type(int) (id)
-    attribute(trinket) -> type(int) (id)
+    attribute(weapon) -> type(string)
+    attribute(armor) -> type(string)
+    attribute(offhand) -> type(string)
+    attribute(trinket) -> type(string)
 }
 
 object monster {
     attribute(name) -> type(string)
-    health
-        attribute(\tmaximum) -> type(int)
-        attribute(\tcurrent) -> type(int)
-    attribute(weapon) -> type(int) (id)
-    attribute(armor) -> type(int) (id)
-    attribute(offhand) -> type(int) (id)
-    attribute(trinket) -> type(int) (id)
+    attribute(health) -> type(int)
+    attribute(weapon) -> type(string)
+    attribute(armor) -> type(string)
+    attribute(offhand) -> type(string)
+    attribute(trinket) -> type(string)
 }
 
 object weapon {
-    attribute(id) -> type(int)
     attribute(name) -> type(string)
     attribute(description) -> type(string)
     attribute(value) -> type(int)
     damage
-        \tdamageA
-            attribute(\t\tdamageType) -> type(int) (id)
-            attribute(\t\tvalue) -> type(int)
-        \tdamageB
-            attribute(\t\tdamageType) -> type(int) (id)
-            attribute(\t\tvalue) -> type(int)
+        \tdamageA -> type(int)
+        \tdamageA -> type(int)
         \t...
 }
 
 object armor {
-    attribute(id) -> type(int)
     attribute(name) -> type(string)
     attribute(description) -> type(string)
     attribute(value) -> type(int)
     resistance
-        \tdamageA
-            attribute(\t\tdamageType) -> type(int) (id)
-            attribute(\t\tvalue) -> type(int)
-        \tdamageB
-            attribute(\t\tdamageType) -> type(int) (id)
-            attribute(\t\tvalue) -> type(int)
+        \tdamageA -> type(int)
+        \tdamageA -> type(int)
         \t...
 }
 
 object trinket {
-    attribute(id) -> type(int)
     attribute(name) -> type(string)
     attribute(description) -> type(string)
     attribute(value) -> type(int)
     resistance
-        \tdamageA
-            attribute(\t\tdamageType) -> type(int) (id)
-            attribute(\t\tvalue) -> type(int)
-        \tdamageB
-            attribute(\t\tdamageType) -> type(int) (id)
-            attribute(\t\tvalue) -> type(int)
+        \tdamageA -> type(int)
+        \tdamageA -> type(int)
         \t...
     damage
-        \tdamageA
-            attribute(\t\tdamageType) -> type(int) (id)
-            attribute(\t\tvalue) -> type(int)
-        \tdamageB
-            attribute(\t\tdamageType) -> type(int) (id)
-            attribute(\t\tvalue) -> type(int)
+        \tdamageA -> type(int)
+        \tdamageA -> type(int)
         \t...
 }
 
 object offhand {
-    attribute(id) -> type(int)
     attribute(name) -> type(string)
     attribute(description) -> type(string)
     attribute(value) -> type(int)
     resistance
-        \tdamageA
-            attribute(\t\tdamageType) -> type(int) (id)
-            attribute(\t\tvalue) -> type(int)
-        \tdamageB
-            attribute(\t\tdamageType) -> type(int) (id)
-            attribute(\t\tvalue) -> type(int)
+        \tdamageA -> type(int)
+        \tdamageA -> type(int)
         \t...
     damage
-        \tdamageA
-            attribute(\t\tdamageType) -> type(int) (id)
-            attribute(\t\tvalue) -> type(int)
-        \tdamageB
-            attribute(\t\tdamageType) -> type(int) (id)
-            attribute(\t\tvalue) -> type(int)
+        \tdamageA -> type(int)
+        \tdamageA -> type(int)
         \t...
 }
 
 object valuable {
-    attribute(id) -> type(int)
     attribute(name) -> type(string)
     attribute(description) -> type(string)
     attribute(value) -> type(int)
 }
 
 object trap {
-    attribute(trapType) -> type(int) (id)
+    attribute(trapType) -> type(string)
     attribute(name) -> type(string)
     attribute(message) -> type(string)
     attribute(value) -> type(int)
 }
 
 object room {
-    attribute(monster) -> type(int) (id)
-    attribute(chestItem) -> type(int) (id)
-    attribute(trap) -> type(int) (id)
+    monster
+        attribute(\ttype) -> type(string)
+        attribute(\thealth) -> type(int)
+    attribute(chestItem) -> type(string)
+    attribute(trap) -> type(string)
     attribute(portal) -> type(bool)
 }
 

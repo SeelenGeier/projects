@@ -1,0 +1,8 @@
+{
+  "name": "Lamp",
+  "description": "A simple lamp used for lighting the area.",
+  "value": 1,
+  "damage": {
+    "heat": 1
+  }
+}

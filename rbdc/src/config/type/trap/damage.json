@@ -1,6 +1,6 @@
 {
-  "id": 0,
   "name": "damage",
   "description": "A trap that damages the player.",
-  "actionMessage": "Your character hurts himself while searching for traps."
+  "actionMessage": "Your character hurts himself while searching for traps.",
+  "valueDescription": "Value contains the amount of damage the player receives."
 }

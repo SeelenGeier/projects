@@ -1,6 +1,6 @@
 {
-  "id": 4,
   "name": "monster",
   "description": "A trap that summons a monster.",
-  "actionMessage": "While searching for traps a monster appears."
+  "actionMessage": "While searching for traps a monster appears.",
+  "valueDescription": "Value contains the id of the spawned monster."
 }
