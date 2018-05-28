@@ -21,24 +21,14 @@ object global {
         attribute(\thealth) -> type(int)
 }
 
-object trapTypes {
-        trapTypeA
-            attribute(\tdescription) -> type(string)
-            attribute(\tactionMessage) -> type(string)
-            attribute(\tvalueDescription) -> type(string)
-        trapTypeA
-            attribute(\tdescription) -> type(string)
-            attribute(\tactionMessage) -> type(string)
-            attribute(\tvalueDescription) -> type(string)
-        ...
+object trapType {
+    attribute(description) -> type(string)
+    attribute(actionMessage) -> type(string)
+    attribute(valueDescription) -> type(string)
 }
 
-object damageTypes {
-        damageTypeA
-            attribute(\tdescription) -> type(string)
-        damageTypeB
-            attribute(\tdescription) -> type(string)
-        ...
+object damageType {
+    attribute(description) -> type(string)
 }
 
 object inventory {
@@ -86,7 +76,7 @@ object weapon {
     attribute(value) -> type(int)
     damage
         \tdamageA -> type(int)
-        \tdamageA -> type(int)
+        \tdamageB -> type(int)
         \t...
 }
 
@@ -96,7 +86,7 @@ object armor {
     attribute(value) -> type(int)
     resistance
         \tdamageA -> type(int)
-        \tdamageA -> type(int)
+        \tdamageB -> type(int)
         \t...
 }
 
@@ -106,11 +96,11 @@ object trinket {
     attribute(value) -> type(int)
     resistance
         \tdamageA -> type(int)
-        \tdamageA -> type(int)
+        \tdamageB -> type(int)
         \t...
     damage
         \tdamageA -> type(int)
-        \tdamageA -> type(int)
+        \tdamageB -> type(int)
         \t...
 }
 
@@ -120,11 +110,11 @@ object offhand {
     attribute(value) -> type(int)
     resistance
         \tdamageA -> type(int)
-        \tdamageA -> type(int)
+        \tdamageB -> type(int)
         \t...
     damage
         \tdamageA -> type(int)
-        \tdamageA -> type(int)
+        \tdamageB -> type(int)
         \t...
 }
 

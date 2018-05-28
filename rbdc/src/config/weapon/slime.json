@@ -1,8 +1,0 @@
-{
-  "name": "Slime",
-  "description": "A slime attacks with his body.",
-  "value": 1,
-  "damage": {
-    "impact": 1
-  }
-}

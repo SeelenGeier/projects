@@ -1,0 +1,8 @@
+{
+  "slime": {
+    "id": 0,
+    "name": "Slime",
+    "health": 10,
+    "weapon": 1
+  }
+}
