@@ -3,141 +3,150 @@
 !define type(x) <color:blue>x</color>
 !define attribute(x) <color:green>x</color>
 
-object global {
-    screen
-        attribute(\twidth) -> type(int)
-        attribute(\theight) -> type(int)
-    default
-        attribute(\tmusic) -> type(bool)
-        attribute(\tsound) -> type(bool)
-    attribute(inventorySize) -> type(int)
-    defaultEquipment
-        attribute(\tweapon) -> type(string)
-        attribute(\tarmor) -> type(string)
-        attribute(\toffhand) -> type(string)
-        attribute(\ttrinket) -> type(string)
-    startingValues
-        attribute(\tcurrency) -> type(int)
-        attribute(\thealth) -> type(int)
+package Configurations{
+    object global {
+        screen
+            attribute(\twidth) -> type(int)
+            attribute(\theight) -> type(int)
+        default
+            attribute(\tmusic) -> type(bool)
+            attribute(\tsound) -> type(bool)
+        attribute(inventorySize) -> type(int)
+        defaultEquipment
+            attribute(\tweapon) -> type(string)
+            attribute(\tarmor) -> type(string)
+            attribute(\toffhand) -> type(string)
+            attribute(\ttrinket) -> type(string)
+        startingValues
+            attribute(\tcurrency) -> type(int)
+            attribute(\thealth) -> type(int)
+    }
+
+    package TypeLists{
+        object trapType {
+            attribute(description) -> type(string)
+            attribute(actionMessage) -> type(string)
+            attribute(valueDescription) -> type(string)
+        }
+
+        object damageType {
+            attribute(description) -> type(string)
+        }
+    }
+
+    package Lists{
+
+        object monster {
+            attribute(name) -> type(string)
+            attribute(health) -> type(int)
+            attribute(weapon) -> type(string)
+            attribute(armor) -> type(string)
+            attribute(offhand) -> type(string)
+            attribute(trinket) -> type(string)
+        }
+
+        object weapon {
+            attribute(name) -> type(string)
+            attribute(description) -> type(string)
+            attribute(value) -> type(int)
+            damage
+                \tdamageA -> type(int)
+                \tdamageB -> type(int)
+                \t...
+        }
+
+        object armor {
+            attribute(name) -> type(string)
+            attribute(description) -> type(string)
+            attribute(value) -> type(int)
+            resistance
+                \tdamageA -> type(int)
+                \tdamageB -> type(int)
+                \t...
+        }
+
+        object trinket {
+            attribute(name) -> type(string)
+            attribute(description) -> type(string)
+            attribute(value) -> type(int)
+            resistance
+                \tdamageA -> type(int)
+                \tdamageB -> type(int)
+                \t...
+            damage
+                \tdamageA -> type(int)
+                \tdamageB -> type(int)
+                \t...
+        }
+
+        object offhand {
+            attribute(name) -> type(string)
+            attribute(description) -> type(string)
+            attribute(value) -> type(int)
+            resistance
+                \tdamageA -> type(int)
+                \tdamageB -> type(int)
+                \t...
+            damage
+                \tdamageA -> type(int)
+                \tdamageB -> type(int)
+                \t...
+        }
+
+        object valuable {
+            attribute(name) -> type(string)
+            attribute(description) -> type(string)
+            attribute(value) -> type(int)
+        }
+
+        object trap {
+            attribute(trapType) -> type(string)
+            attribute(name) -> type(string)
+            attribute(message) -> type(string)
+            attribute(value) -> type(int)
+        }
+    }
 }
 
-object trapType {
-    attribute(description) -> type(string)
-    attribute(actionMessage) -> type(string)
-    attribute(valueDescription) -> type(string)
-}
+package Temporary{
+    object character {
+        stats
+            \thealth
+                attribute(\t\tmaximum) -> type(int)
+                attribute(\t\tcurrent) -> type(int)
+            \t...
+        experiences
+            \texperienceA -> type(int)
+            \texperienceB -> type(int)
+            \t...
+        attribute(weapon) -> type(string)
+        attribute(armor) -> type(string)
+        attribute(offhand) -> type(string)
+        attribute(trinket) -> type(string)
+    }
 
-object damageType {
-    attribute(description) -> type(string)
-}
+    object room {
+        monster
+            attribute(\ttype) -> type(string)
+            attribute(\thealth) -> type(int)
+        attribute(chestItem) -> type(string)
+        attribute(trap) -> type(string)
+        attribute(portal) -> type(bool)
+    }
 
-object inventory {
-    attribute(currency) -> type(int)
-    items
-        \titemA
-            attribute(\t\titemType) -> type(string)
-            attribute(\t\tdurability) -> type(int)
-            attribute(\t\tequipped) -> type(bool)
-        \titemB
-            attribute(\t\titemType) -> type(string)
-            attribute(\t\tdurability) -> type(int)
-            attribute(\t\tequipped) -> type(bool)
-        \t...
-}
-
-object character {
-    stats
-        \thealth
-            attribute(\t\tmaximum) -> type(int)
-            attribute(\t\tcurrent) -> type(int)
-        \t...
-    experiences
-        \texperienceA -> type(int)
-        \texperienceB -> type(int)
-        \t...
-    attribute(weapon) -> type(string)
-    attribute(armor) -> type(string)
-    attribute(offhand) -> type(string)
-    attribute(trinket) -> type(string)
-}
-
-object monster {
-    attribute(name) -> type(string)
-    attribute(health) -> type(int)
-    attribute(weapon) -> type(string)
-    attribute(armor) -> type(string)
-    attribute(offhand) -> type(string)
-    attribute(trinket) -> type(string)
-}
-
-object weapon {
-    attribute(name) -> type(string)
-    attribute(description) -> type(string)
-    attribute(value) -> type(int)
-    damage
-        \tdamageA -> type(int)
-        \tdamageB -> type(int)
-        \t...
-}
-
-object armor {
-    attribute(name) -> type(string)
-    attribute(description) -> type(string)
-    attribute(value) -> type(int)
-    resistance
-        \tdamageA -> type(int)
-        \tdamageB -> type(int)
-        \t...
-}
-
-object trinket {
-    attribute(name) -> type(string)
-    attribute(description) -> type(string)
-    attribute(value) -> type(int)
-    resistance
-        \tdamageA -> type(int)
-        \tdamageB -> type(int)
-        \t...
-    damage
-        \tdamageA -> type(int)
-        \tdamageB -> type(int)
-        \t...
-}
-
-object offhand {
-    attribute(name) -> type(string)
-    attribute(description) -> type(string)
-    attribute(value) -> type(int)
-    resistance
-        \tdamageA -> type(int)
-        \tdamageB -> type(int)
-        \t...
-    damage
-        \tdamageA -> type(int)
-        \tdamageB -> type(int)
-        \t...
-}
-
-object valuable {
-    attribute(name) -> type(string)
-    attribute(description) -> type(string)
-    attribute(value) -> type(int)
-}
-
-object trap {
-    attribute(trapType) -> type(string)
-    attribute(name) -> type(string)
-    attribute(message) -> type(string)
-    attribute(value) -> type(int)
-}
-
-object room {
-    monster
-        attribute(\ttype) -> type(string)
-        attribute(\thealth) -> type(int)
-    attribute(chestItem) -> type(string)
-    attribute(trap) -> type(string)
-    attribute(portal) -> type(bool)
+    object inventory {
+        attribute(currency) -> type(int)
+        items
+            \titemA
+                attribute(\t\titemType) -> type(string)
+                attribute(\t\tdurability) -> type(int)
+                attribute(\t\tequipped) -> type(bool)
+            \titemB
+                attribute(\t\titemType) -> type(string)
+                attribute(\t\tdurability) -> type(int)
+                attribute(\t\tequipped) -> type(bool)
+            \t...
+    }
 }
 
 object saveObject {
