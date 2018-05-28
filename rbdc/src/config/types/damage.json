@@ -1,22 +1,17 @@
 {
-  "0": {
-    "name": "impact",
+  "impact": {
     "description": "Damage dealt through blunt force."
   },
-  "1": {
-    "name": "puncture",
+  "puncture": {
     "description": "Damage causing tears and holes in objects."
   },
-  "2": {
-    "name": "slash",
+  "slash": {
     "description": "Damage dealt by sharp objects or weapons."
   },
-  "3": {
-    "name": "toxin",
+  "toxin": {
     "description": "Damage dealt by toxic substances."
   },
-  "4": {
-    "name": "heat",
+  "heat": {
     "description": "Burning damage dealt by flames or similar hot effects."
   }
 }

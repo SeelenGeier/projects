@@ -24,22 +24,18 @@ object global {
 object types {
     trapType
         \ttrapTypeA
-            attribute(\t\tname) -> type(string)
             attribute(\t\tdescription) -> type(string)
             attribute(\t\tactionMessage) -> type(string)
             attribute(\t\tvalueDescription) -> type(string)
         \ttrapTypeA
-            attribute(\t\tname) -> type(string)
             attribute(\t\tdescription) -> type(string)
             attribute(\t\tactionMessage) -> type(string)
             attribute(\t\tvalueDescription) -> type(string)
         \t...
     damageType
         \tdamageTypeA
-            attribute(\t\tname) -> type(string)
             attribute(\t\tdescription) -> type(string)
         \tdamageTypeB
-            attribute(\t\tname) -> type(string)
             attribute(\t\tdescription) -> type(string)
         \t...
 }
