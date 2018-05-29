@@ -9,21 +9,27 @@ class splashScene extends Phaser.Scene {
     }
 
     create() {
-        //TODO: replace with splash screen
+        //TODO: replace mockup image with splash screen
         this.splashImage = this.add.sprite(0,0,"red").setOrigin(0,0);
 
+        this.time.delayedCall(2000, this.activatePointer, [], this);
+    }
+
+    fadeSplash() {
         this.fadeSplashTween = this.tweens.add({
             targets: this.splashImage,
             alpha: 0,
             ease: 'Power1',
-            duration: 1000,
-            delay: 3000
+            duration: 1500,
+            onComplete: splashScene.loadProfileManagement
         });
-
-        this.time.delayedCall(4000, this.loadProfileManagement, [], this);
     }
 
-    loadProfileManagement() {
-        this.scene.start('profileManagement');
+    static loadProfileManagement() {
+        game.scene.start('profileManagement');
+    }
+
+    activatePointer() {
+        this.input.on('pointerdown', this.fadeSplash, this);
     }
 }
