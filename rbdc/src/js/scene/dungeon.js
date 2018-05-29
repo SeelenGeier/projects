@@ -1,7 +1,7 @@
 class dungeonScene extends Phaser.Scene {
 
     constructor() {
-        super({key: 'Dungeon'});
+        super({key: 'dungeon'});
     }
 
     preload() {

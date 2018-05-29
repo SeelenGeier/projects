@@ -1,7 +1,7 @@
 class profileOverviewScene extends Phaser.Scene {
 
     constructor() {
-        super({key: 'Profile Overview'});
+        super({key: 'profileOverview'});
     }
 
     preload() {

@@ -1,7 +1,7 @@
 class shopScene extends Phaser.Scene {
 
     constructor() {
-        super({key: 'Shop'});
+        super({key: 'shop'});
     }
 
     preload() {

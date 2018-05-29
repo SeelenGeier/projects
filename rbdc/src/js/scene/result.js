@@ -1,7 +1,7 @@
 class resultScene extends Phaser.Scene {
 
     constructor() {
-        super({key: 'Result'});
+        super({key: 'result'});
     }
 
     preload() {

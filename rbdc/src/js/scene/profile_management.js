@@ -1,7 +1,7 @@
 class profileManagementScene extends Phaser.Scene {
 
     constructor() {
-        super({key: 'Profile Management'});
+        super({key: 'profileManagement'});
     }
 
     preload() {

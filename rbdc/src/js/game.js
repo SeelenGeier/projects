@@ -6,13 +6,11 @@
 
 let config = {
     type: Phaser.AUTO,
-    width: 720,
-    height: 1280,
+    width: 360,
+    height: 640,
     backgroundColor: '#000000',
     //game starts with first provided scene (splashScene)
     scene: [splashScene, profileManagementScene, profileOverviewScene, configScene, shopScene, dungeonScene, resultScene]
 };
 
 let game = new Phaser.Game(config);
-
-//this.scene.start('sceneA');
