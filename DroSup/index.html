@@ -8,25 +8,35 @@
         body {
             margin: 0;
         }
-		canvas {
-			position: absolute;
-			top: 45%;
-			left: 50%;
-			margin-left: -400px;
-			margin-top: -300px;
-		}
+        
+        canvas {
+                position: absolute;
+                top: 45%;
+                left: 50%;
+                margin-left: -400px;
+                margin-top: -300px;
+        }
     </style>
 </head>
 <body>
-	<script type="text/javascript" src="js/game.js"></script>
-	<script type="text/javascript" src="js/input.js"></script>
-	<script type="text/javascript" src="js/background.js"></script>
-	<script type="text/javascript" src="js/player.js"></script>
-	<script type="text/javascript" src="js/entity.js"></script>
-	<script type="text/javascript" src="js/turret.js"></script>
-	<script type="text/javascript" src="js/explosion.js"></script>
-	<script type="text/javascript" src="js/enemy.js"></script>
-	<script type="text/javascript" src="js/projectile.js"></script>
-	<script type="text/javascript" src="js/state.js"></script>
+    <script type="text/javascript" src="js/game.js"></script>
+    <script type="text/javascript" src="js/input.js"></script>
+    <script type="text/javascript" src="js/background.js"></script>
+    <script type="text/javascript" src="js/player.js"></script>
+    <script type="text/javascript" src="js/entity.js"></script>
+    <script type="text/javascript" src="js/turret.js"></script>
+    <script type="text/javascript" src="js/explosion.js"></script>
+    <script type="text/javascript" src="js/enemy.js"></script>
+    <script type="text/javascript" src="js/projectile.js"></script>
+    <script type="text/javascript" src="js/state.js"></script>
+    <script type="text/javascript">
+        //necessary hack for bitmaps to be usable
+        window.onload = function() {
+            if(!window.location.hash) {
+                window.location = window.location + '#loaded';
+                window.location.reload();
+            }
+        };
+    </script>
 </body>
 </html>
