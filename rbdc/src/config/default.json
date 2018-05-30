@@ -1,0 +1,15 @@
+{
+  "setting": {
+    "music": true,
+    "sound": true
+  },
+  "equipment": {
+    "weapon": "knife",
+    "armor": "light_leather",
+    "offhand": null,
+    "trinket": null
+  },
+  "inventorySize": 30,
+  "currency": 0,
+  "health": 100
+}

@@ -4,22 +4,18 @@
 !define attribute(x) <color:green>x</color>
 
 package Configurations{
-    object global {
-        screen
-            attribute(\twidth) -> type(int)
-            attribute(\theight) -> type(int)
-        default
+    object default {
+        setting
             attribute(\tmusic) -> type(bool)
             attribute(\tsound) -> type(bool)
-        attribute(inventorySize) -> type(int)
-        defaultEquipment
+        equipment
             attribute(\tweapon) -> type(string)
             attribute(\tarmor) -> type(string)
             attribute(\toffhand) -> type(string)
             attribute(\ttrinket) -> type(string)
-        startingValues
-            attribute(\tcurrency) -> type(int)
-            attribute(\thealth) -> type(int)
+        attribute(currency) -> type(int)
+        attribute(health) -> type(int)
+        attribute(inventorySize) -> type(int)
     }
 
     package TypeLists{
