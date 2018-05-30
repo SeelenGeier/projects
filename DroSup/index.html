@@ -31,8 +31,8 @@
     <script type="text/javascript" src="js/state.js"></script>
     <script type="text/javascript">
         //necessary hack for bitmaps to be usable
-        window.onload = function() {
-            if(!window.location.hash) {
+        window.onfocus = function() {
+            if (!window.location.hash) {
                 window.location = window.location + '#loaded';
                 window.location.reload();
             }
