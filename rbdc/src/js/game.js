@@ -1,16 +1,49 @@
 /* global Phaser */
 
-//load configuration files
-
-//load save data and change starting scene accordingly
-
-let config = {
+let gameConfig = {
     type: Phaser.AUTO,
     width: 360,
-    height: 640,
+    height: 480,
     backgroundColor: '#000000',
-    //game starts with first provided scene (splashScene)
-    scene: [splashScene, profileManagementScene, profileOverviewScene, configScene, shopScene, dungeonScene, resultScene]
+    scene: [{preload: preload, create: create},splashScene,profileManagementScene,profileOverviewScene,configScene,shopScene,dungeonScene,resultScene]
 };
 
-let game = new Phaser.Game(config);
+let game = new Phaser.Game(gameConfig);
+
+// set global config (e.g. config.weapons[config.default.equipment.weapon])
+let config;
+
+function preload() {
+    //load configuration files
+    this.load.json('default', 'config/default.json');
+    this.load.json('damage_types', 'config/damage_types.json');
+    this.load.json('trap_types', 'config/trap_types.json');
+    this.load.json('monsters', 'config/monsters.json');
+    this.load.json('traps', 'config/traps.json');
+    this.load.json('weapons', 'config/weapons.json');
+    this.load.json('armors', 'config/armors.json');
+    this.load.json('offhands', 'config/offhands.json');
+    this.load.json('trinkets', 'config/trinkets.json');
+    this.load.json('valuables', 'config/valuables.json');
+}
+
+function create() {
+    //register configuration for easier access
+    config = {
+        default: this.cache.json.get('default'),
+        damage_types: this.cache.json.get('damage_types'),
+        trap_types: this.cache.json.get('trap_types'),
+        monsters: this.cache.json.get('monsters'),
+        traps: this.cache.json.get('traps'),
+        weapons: this.cache.json.get('weapons'),
+        armors: this.cache.json.get('armors'),
+        offhands: this.cache.json.get('offhands'),
+        trinkets: this.cache.json.get('trinkets'),
+        valuables: this.cache.json.get('valuables')
+    };
+
+    //load save data and change starting scene accordingly
+
+    //start splash screen as default
+    game.scene.start('splash');
+}
