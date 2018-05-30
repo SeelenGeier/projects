@@ -18,19 +18,22 @@ function preload() {
 	game.load.image('turret_gun', 'assets/turret_gun.png');
 	game.load.spritesheet('explosion', 'assets/explosion.png', 32, 32);
 	game.load.spritesheet('enemy', 'assets/enemy.png', 32, 32);
-	
-	//create sprite for drawing colored rectangles (see turret health bars)
+
+    //create sprite for drawing colored rectangles (see turret health bars)
     bmd = game.add.bitmapData(game.world.width, game.world.height);
-	bmd.clear();
+    bmd.clear();
     bmd.ctx.beginPath();
     bmd.ctx.fillStyle = '#FFFFFF';
     bmd.ctx.rect(0, 0, game.world.width, game.world.height);
     bmd.ctx.fill();
-	bmd.generateTexture('blank');
+
+    //workaround for bitmap cache issue
+    this.load.image('blank', bmd.canvas.toDataURL());
+    bmd.destroy();
 }
 
 function create() {
-	//generate groups for easier handling
+    //generate groups for easier handling
 	groups.map = game.add.group();
 	groups.turret = {
 		base: game.add.group(),

@@ -19,6 +19,7 @@
     </style>
 </head>
 <body>
+    <p>Please reload the page once to display hitbars</p>
     <script type="text/javascript" src="js/game.js"></script>
     <script type="text/javascript" src="js/input.js"></script>
     <script type="text/javascript" src="js/background.js"></script>
@@ -29,14 +30,5 @@
     <script type="text/javascript" src="js/enemy.js"></script>
     <script type="text/javascript" src="js/projectile.js"></script>
     <script type="text/javascript" src="js/state.js"></script>
-    <script type="text/javascript">
-        //necessary hack for bitmaps to be usable
-        window.onfocus = function() {
-            if (!window.location.hash) {
-                window.location = window.location + '#loaded';
-                window.location.reload();
-            }
-        };
-    </script>
 </body>
 </html>
