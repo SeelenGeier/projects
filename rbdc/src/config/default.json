@@ -9,7 +9,9 @@
     "offhand": null,
     "trinket": null
   },
-  "inventorySize": 30,
-  "currency": 0,
-  "health": 100
+  "status": {
+    "inventorySize": 30,
+    "currency": 0,
+    "health": 100
+  }
 }

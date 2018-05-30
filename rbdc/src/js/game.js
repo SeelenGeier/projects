@@ -1,5 +1,3 @@
-/* global Phaser */
-
 let gameConfig = {
     type: Phaser.AUTO,
     width: 360,
