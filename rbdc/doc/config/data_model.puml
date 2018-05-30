@@ -13,9 +13,10 @@ package Configurations{
             attribute(\tarmor) -> type(string)
             attribute(\toffhand) -> type(string)
             attribute(\ttrinket) -> type(string)
-        attribute(currency) -> type(int)
-        attribute(health) -> type(int)
-        attribute(inventorySize) -> type(int)
+        status
+            attribute(\tcurrency) -> type(int)
+            attribute(\thealth) -> type(int)
+            attribute(\tinventorySize) -> type(int)
     }
 
     package TypeLists{

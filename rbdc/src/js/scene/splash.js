@@ -5,12 +5,12 @@ class splashScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("red","../assets/mockup/64x64/red.png");
+        this.load.image('red','../assets/mockup/64x64/red.png');
     }
 
     create() {
         //TODO: replace mockup image with splash screen
-        this.splashImage = this.add.sprite(0,0,"red").setOrigin(0,0);
+        this.splashImage = this.add.sprite(this.sys.game.config.width/2,this.sys.game.config.height/2,'red');
 
         this.time.delayedCall(2000, this.activatePointer, [], this);
     }
