@@ -1,7 +1,8 @@
 {
   "setting": {
     "music": true,
-    "sound": true
+    "sound": true,
+    "saveName": "RBDC_SAVEDATA"
   },
   "equipment": {
     "weapon": "knife",
