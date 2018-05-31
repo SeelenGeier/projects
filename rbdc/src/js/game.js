@@ -8,8 +8,30 @@ let gameConfig = {
 
 let game = new Phaser.Game(gameConfig);
 
-// set global config (e.g. config.weapons[config.default.equipment.weapon])
+//global config (e.g. config.weapons[config.default.equipment.weapon])
 let config;
+
+//global save object for storage
+let saveObject;
+
+function saveData() {
+    //save data as json in local storage
+    localStorage.setItem(config.default.setting.saveName, JSON.stringify(saveObject));
+}
+
+function loadData() {
+    //check for existing save data
+    if(localStorage.getItem(config.default.setting.saveName) !== null) {
+        //TODO: validate save data
+        saveObject = JSON.parse(localStorage.getItem(config.default.setting.saveName));
+    }else{
+        //initialize saveObject and save in local storage
+        saveObject = {
+            profiles: {}
+        };
+        saveData();
+    }
+}
 
 function preload() {
     //load configuration files
@@ -41,7 +63,9 @@ function create() {
     };
 
     //load save data and change starting scene accordingly
+    loadData();
 
     //start splash screen as default
-    game.scene.start('splash');
+    //game.scene.start('splash'); SKIP DURING DEVELOPMENT
+    game.scene.start('profileManagement');
 }
