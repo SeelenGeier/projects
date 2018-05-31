@@ -66,6 +66,6 @@ function create() {
     loadData();
 
     //start splash screen as default
-    //game.scene.start('splash'); SKIP DURING DEVELOPMENT
+    //game.scene.start('splash'); //SKIP DURING DEVELOPMENT
     game.scene.start('profileManagement');
 }
