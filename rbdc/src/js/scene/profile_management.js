@@ -5,15 +5,21 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.spritesheet('button', '../assets/mockup/64x64/button.png', { frameWidth: 64, frameHeight: 64 });
+        this.load.spritesheet('buttonNew', '../assets/mockup/64x64/button.png', { frameWidth: 64, frameHeight: 64 });
+        this.load.spritesheet('buttonSelect', '../assets/mockup/64x64/button.png', { frameWidth: 64, frameHeight: 64 });
+        this.load.spritesheet('buttonDelete', '../assets/buttonDelete.png', { frameWidth: 38, frameHeight: 36 });
     }
 
     create() {
+        //add input field for new profile name
         this.addProfileNameField();
-        new Button('newProfile', 'button', 200, 70, this);
+        
+        //add button for creating new profile
+        new Button('newProfile', 'buttonNew', 200, 70, this);
         this.newProfile.on('pointerup', this.createNewProfile, this);
+        
         //show all profiles in a list
-        this.showAllProfiles(80, 100);
+        this.showAllProfiles();
     }
 
     update() {
@@ -32,8 +38,10 @@ class profileManagementScene extends Phaser.Scene {
         document.getElementById('newProfileName').style.visibility = "hidden";
     }
     
-    showAllProfiles(x, y) {
+    showAllProfiles() {
         var counter;
+        var x = 80;
+        var y = 100;
         
         //clear previous profiles
         counter = 0;
@@ -45,20 +53,22 @@ class profileManagementScene extends Phaser.Scene {
         }
         
         this.profileText = {};
+        
         //add each profile individually to list
         counter = 0;
         for(var profile in saveObject.profiles) {
             //add profile name
-            this.profileText[counter] = this.add.text(x, y+96*counter+20, profile, { fontFamily: 'Arial', fontSize: 24, color: '#ffffff' });
+            this.profileText[counter] = this.add.text(x, y+64*counter+6, profile, { fontFamily: 'Arial', fontSize: 24, color: '#ffffff' });
+            this.profileText[counter].on('pointerup', this.selectProfile, this['profile'+counter+'_select']);
             
             //add select profile button
-            new Button('profile'+counter+'_select', 'button', x+200, y+96*counter, this);
+            new Button('profile'+counter+'_select', 'buttonSelect', x+200, y+64*counter, this);
             this['profile'+counter+'_select'].setOrigin(0,0);
             this['profile'+counter+'_select'].profile = profile;
             this['profile'+counter+'_select'].on('pointerup', this.selectProfile, this['profile'+counter+'_select']);
             
             //add delete profile button
-            new Button('profile'+counter+'_delete', 'button', x-70, y+96*counter, this);
+            new Button('profile'+counter+'_delete', 'buttonDelete', x-50, y+64*counter, this);
             this['profile'+counter+'_delete'].setOrigin(0,0);
             this['profile'+counter+'_delete'].profile = profile;
             this['profile'+counter+'_delete'].on('pointerup', this.deleteProfile, this['profile'+counter+'_delete']);
@@ -70,6 +80,7 @@ class profileManagementScene extends Phaser.Scene {
     createNewProfile(){
         //get profile name from DOM input
         var newProfileName = document.getElementById('newProfileName').value;
+        document.getElementById('newProfileName').value = '';
         
         //check for input
         if(newProfileName !== '') {
@@ -84,8 +95,9 @@ class profileManagementScene extends Phaser.Scene {
                 saveData();
             }
         }
+        
         //update profile list
-        this.showAllProfiles(80, 100);
+        this.showAllProfiles();
     }
     
     deleteProfile(){
@@ -96,7 +108,7 @@ class profileManagementScene extends Phaser.Scene {
         saveData();
         
         //update profile list
-        this.scene.showAllProfiles(70, 100);
+        this.scene.showAllProfiles();
     }
     
     selectProfile(){
@@ -106,6 +118,7 @@ class profileManagementScene extends Phaser.Scene {
         //save data
         saveData();
         
+        //hide input field and load profile overview
         this.scene.hideProfileNameField();
         this.scene.scene.setVisible(false);
         this.scene.scene.start(saveObject.profiles[saveObject.currentProfile].scene);
