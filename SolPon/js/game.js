@@ -1,5 +1,5 @@
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 //define global variables
 var rail;
@@ -12,13 +12,13 @@ var highscore;
 
 function preload() {
     //load paddle asset
-	game.load.image('paddle', 'assets/paddle_w.png');
+    game.load.image('paddle', 'assets/paddle_w.png');
     
     //load ball asset
-	game.load.image('ball', 'assets/ball_w.png');
+    game.load.image('ball', 'assets/ball_w.png');
     
     //load ring of rails (rail) asset
-	game.load.image('rail', 'assets/rail_w.png');
+    game.load.image('rail', 'assets/rail_w.png');
 }
 
 function create() {
@@ -31,7 +31,7 @@ function create() {
     
     //spawn paddle on random position on rail
     paddle = game.add.sprite(game.width/2, game.height/2, 'paddle');
-	paddle.anchor.setTo(0.5, 0.5);
+    paddle.anchor.setTo(0.5, 0.5);
     paddle.tint = 0x00ff00;
     
     //spawn ball in center of rail
@@ -41,14 +41,14 @@ function create() {
     ball.released = false;
     
     //activate P2 physics and configure to bounce objects
-	game.physics.startSystem(Phaser.Physics.P2JS);
+    game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.applyDamping = false;
     game.physics.p2.restitution = 1;
     game.physics.p2.friction = 0;
     game.physics.p2.setImpactEvents(true);
     
-	//enable p2 physics for paddle and ball
-	game.physics.p2.enable([ paddle, ball ]);
+    //enable p2 physics for paddle and ball
+    game.physics.p2.enable([ paddle, ball ]);
     ball.body.setCircle(ball.width/2);
     
     //make paddle unaffected by collisions
@@ -85,16 +85,13 @@ function update() {
     paddle.rotation = game.math.angleBetween(paddle.x, paddle.y, game.width/2, game.height/2);
     paddle.body.rotation = paddle.rotation;
     
-    //if ball is not released yet and user leftclicks
-    if(ball.released == false && game.input.activePointer.leftButton.isDown)
+    //if ball is not released yet and user clicks
+    if(ball.released == false && game.input.activePointer.isDown)
     {
         //launch ball in random direction
         ball.body.applyImpulse([4, 4], game.width/2, game.height/2);
         ball.released = true;
     }
-}
-
-function render() {
 }
 
 function paddleHit(ballBody, paddleBody) {
