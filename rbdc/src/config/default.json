@@ -2,7 +2,9 @@
   "setting": {
     "music": true,
     "sound": true,
-    "saveName": "RBDC_SAVEDATA"
+    "saveName": "RBDC_SAVEDATA",
+    "title": "Room Based Dungeon Crawler",
+    "author": "SeelenGeier"
   },
   "equipment": {
     "weapon": "knife",

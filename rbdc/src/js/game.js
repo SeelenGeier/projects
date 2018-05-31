@@ -2,6 +2,7 @@ let gameConfig = {
     type: Phaser.AUTO,
     width: 360,
     height: 480,
+    parent: 'rbdcGame',
     backgroundColor: '#000000',
     scene: [{preload: preload, create: create},splashScene,profileManagementScene,profileOverviewScene,configScene,shopScene,dungeonScene,resultScene]
 };
@@ -66,6 +67,6 @@ function create() {
     loadData();
 
     //start splash screen as default
-    //this.scene.start('splash'); //SKIP DURING DEVELOPMENT
-    this.scene.start('profileManagement');
+    this.scene.start('splash'); //SKIP DURING DEVELOPMENT
+    //this.scene.start('profileManagement');
 }

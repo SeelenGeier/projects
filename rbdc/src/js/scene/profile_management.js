@@ -30,8 +30,8 @@ class profileManagementScene extends Phaser.Scene {
         var input = document.createElement('input');
         input.type = 'text';
         input.id = 'newProfileName';
-        input.style = 'position: fixed';
-        document.getElementById('gameForms').appendChild(input);
+        input.style = 'position: fixed'; //has to be changed to correct position
+        document.getElementById('rbdcGame').appendChild(input);
     }
     
     hideProfileNameField(){

@@ -5,7 +5,7 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('green','../assets/mockup/64x64/green.png');
+        this.load.image('green','../assets/mockup/green.png');
     }
 
     create() {
