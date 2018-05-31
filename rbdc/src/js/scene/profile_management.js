@@ -5,9 +5,9 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.spritesheet('buttonNew', '../assets/mockup/64x64/button.png', { frameWidth: 64, frameHeight: 64 });
-        this.load.spritesheet('buttonSelect', '../assets/mockup/64x64/button.png', { frameWidth: 64, frameHeight: 64 });
-        this.load.spritesheet('buttonDelete', '../assets/buttonDelete.png', { frameWidth: 38, frameHeight: 36 });
+        this.load.spritesheet('buttonNew', '../assets/buttonNew.png', { frameWidth: 21, frameHeight: 20 });
+        this.load.spritesheet('buttonSelect', '../assets/buttonSelect.png', { frameWidth: 39, frameHeight: 28 });
+        this.load.spritesheet('buttonDelete', '../assets/buttonDelete.png', { frameWidth: 18, frameHeight: 18 });
     }
 
     create() {
@@ -58,17 +58,17 @@ class profileManagementScene extends Phaser.Scene {
         counter = 0;
         for(var profile in saveObject.profiles) {
             //add profile name
-            this.profileText[counter] = this.add.text(x, y+64*counter+6, profile, { fontFamily: 'Arial', fontSize: 24, color: '#ffffff' });
+            this.profileText[counter] = this.add.text(x, y+52*counter+6, profile, { fontFamily: 'Arial', fontSize: 24, color: '#ffffff' });
             this.profileText[counter].on('pointerup', this.selectProfile, this['profile'+counter+'_select']);
             
             //add select profile button
-            new Button('profile'+counter+'_select', 'buttonSelect', x+200, y+64*counter, this);
+            new Button('profile'+counter+'_select', 'buttonSelect', x+this.profileText[counter].width+5, y+52*counter+5, this);
             this['profile'+counter+'_select'].setOrigin(0,0);
             this['profile'+counter+'_select'].profile = profile;
             this['profile'+counter+'_select'].on('pointerup', this.selectProfile, this['profile'+counter+'_select']);
             
             //add delete profile button
-            new Button('profile'+counter+'_delete', 'buttonDelete', x-50, y+64*counter, this);
+            new Button('profile'+counter+'_delete', 'buttonDelete', x-28, y+52*counter+10, this);
             this['profile'+counter+'_delete'].setOrigin(0,0);
             this['profile'+counter+'_delete'].profile = profile;
             this['profile'+counter+'_delete'].on('pointerup', this.deleteProfile, this['profile'+counter+'_delete']);
