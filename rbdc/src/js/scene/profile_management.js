@@ -28,6 +28,10 @@ class profileManagementScene extends Phaser.Scene {
         document.getElementById('gameForms').appendChild(input);
     }
     
+    hideProfileNameField(){
+        document.getElementById('newProfileName').style.visibility = "hidden";
+    }
+    
     showAllProfiles(x, y) {
         var counter;
         
@@ -102,6 +106,8 @@ class profileManagementScene extends Phaser.Scene {
         //save data
         saveData();
         
-        game.scene.start(saveObject.profiles[saveObject.currentProfile].scene);
+        this.scene.hideProfileNameField();
+        this.scene.scene.setVisible(false);
+        this.scene.scene.start(saveObject.profiles[saveObject.currentProfile].scene);
     }
 }

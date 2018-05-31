@@ -26,7 +26,8 @@ class splashScene extends Phaser.Scene {
     }
 
     static loadProfileManagement() {
-        game.scene.start('profileManagement');
+        this.parent.scene.scene.setVisible(false);
+        this.parent.scene.scene.start('profileManagement');
     }
 
     activatePointer() {
