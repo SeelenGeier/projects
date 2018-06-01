@@ -12,7 +12,7 @@ class profileManagementScene extends Phaser.Scene {
 
     create() {
         //add button for creating new profile
-        new Button('buttonNewProfile', 'buttonNew', 210, 70, this);
+        new Button('buttonNewProfile', 'buttonNew', 245, 70, this);
         this.buttonNewProfile.on('pointerup', this.createNewProfile, this);
         this.input.keyboard.on('keydown_ENTER', this.createNewProfile, this);
 
@@ -29,7 +29,7 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     addProfileNameLabel(){
-        this.buttonNewProfileLabel = this.add.text(this.buttonNewProfile.x-155, this.buttonNewProfile.y-30, 'New Profile:', { fontFamily: 'Arial', fontSize: 16, color: '#ffffff' });
+        this.buttonNewProfileLabel = this.add.text(this.buttonNewProfile.x-190, this.buttonNewProfile.y-30, 'New Profile:', { fontFamily: 'Arial', fontSize: 16, color: '#ffffff' });
     }
 
     addProfileNameField(){
@@ -42,7 +42,7 @@ class profileManagementScene extends Phaser.Scene {
             input.type = 'text';
             input.id = 'newProfileName';
             //set position relative to confirmation button
-            input.style = 'position: relative; left: '+(this.buttonNewProfile.x-155)+'px; bottom: '+(this.sys.game.config.height-this.buttonNewProfile.y+13)+'px;';
+            input.style = 'position: relative; left: '+(this.buttonNewProfile.x-190)+'px; bottom: '+(this.sys.game.config.height-this.buttonNewProfile.y+13)+'px; width: 165px;';
             document.getElementById('rbdcGame').appendChild(input);
         }
     }
