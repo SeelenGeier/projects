@@ -95,15 +95,16 @@ class profileManagementScene extends Phaser.Scene {
                 
                 //save new data
                 saveData();
+
+                //update profile list
+                this.showAllProfiles();
+            }else{
+                new Dialog('Delete Profile', 'Profile \''+newProfileName+'\' already exists?', this.scene);
             }
         }
-
-        //update profile list
-        this.showAllProfiles();
     }
 
     confirmDeleteProfile(){
-        // new Dialog('Delete Profile', 'Do you want to delete this profile?', this, true);
         new Dialog('Delete Profile', 'Do you want to delete \''+this.profile+'\'?', this, true);
         this.scene.buttonYES.on('pointerup', this.scene.deleteProfile, this);
     }

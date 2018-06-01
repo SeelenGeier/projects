@@ -3,6 +3,12 @@ class Dialog {
         this.parent = parent;
         this.confirm = confirm;
 
+        //add grey background to block input outside of dialog box
+        this.greyBackground = parent.scene.add.sprite(parent.scene.sys.game.config.width/2,parent.scene.sys.game.config.height/2,'blackBackground');
+        this.greyBackground.setScale(parent.scene.sys.game.config.width/this.greyBackground.width,parent.scene.sys.game.config.height/this.greyBackground.height);
+        this.greyBackground.alpha = 0.7;
+        this.greyBackground.setInteractive();
+
         //add dialog box in center of screen
         this.dialogBackground = parent.scene.add.sprite(parent.scene.sys.game.config.width/2,parent.scene.sys.game.config.height/2,'dialogBackground');
 
@@ -14,6 +20,7 @@ class Dialog {
         this.message = parent.scene.add.text(parent.scene.sys.game.config.width/2, parent.scene.sys.game.config.height/2, message, { fontFamily: 'Arial', fontSize: 16, color: '#ffffff' });
         this.message.setOrigin(0.5, 0.5);
 
+        //scale dialog box to fit title and message
         var backgroundScale = (this.message.width+40)/this.dialogBackground.width;
         if(((this.title.width+40)/this.dialogBackground.width) > backgroundScale){
             backgroundScale = (this.title.width+40)/this.dialogBackground.width;
@@ -45,5 +52,6 @@ class Dialog {
         this.message.destroy();
         this.title.destroy();
         this.dialogBackground.destroy();
+        this.greyBackground.destroy();
     }
 }
