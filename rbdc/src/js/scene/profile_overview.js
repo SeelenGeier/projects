@@ -5,11 +5,16 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     preload() {
+        this.load.image('background', '../assets/background.png');
         //TODO: replace button with return button
         this.load.spritesheet('buttonProfileManagement', '../assets/buttonDelete.png', { frameWidth: 18, frameHeight: 18 });
     }
 
     create() {
+        //add background
+        this.backgroundImage = this.add.sprite(this.sys.game.config.width/2,this.sys.game.config.height/2,'background');
+        this.backgroundImage.setScale(this.sys.game.config.width+10/this.backgroundImage.width, this.sys.game.config.height+10/this.backgroundImage.height);
+        
         new Button('buttonProfileManagement', 'buttonProfileManagement', this.sys.game.config.width-30, 30, this);
         this.buttonProfileManagement.on('pointerup', this.goToProfileManagement, this);
 

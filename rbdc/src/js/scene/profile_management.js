@@ -5,12 +5,17 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     preload() {
+        this.load.image('background', '../assets/background.png');
         this.load.spritesheet('buttonNew', '../assets/buttonNew.png', { frameWidth: 21, frameHeight: 20 });
         this.load.spritesheet('buttonSelect', '../assets/buttonSelect.png', { frameWidth: 39, frameHeight: 28 });
         this.load.spritesheet('buttonDelete', '../assets/buttonDelete.png', { frameWidth: 18, frameHeight: 18 });
     }
 
     create() {
+        //add background
+        this.backgroundImage = this.add.sprite(this.sys.game.config.width/2,this.sys.game.config.height/2,'background');
+        this.backgroundImage.setScale(this.sys.game.config.width+10/this.backgroundImage.width, this.sys.game.config.height+10/this.backgroundImage.height);
+        
         //add button for creating new profile
         new Button('buttonNewProfile', 'buttonNew', 245, 70, this);
         this.buttonNewProfile.on('pointerup', this.createNewProfile, this);
@@ -29,7 +34,7 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     addProfileNameLabel(){
-        this.buttonNewProfileLabel = this.add.text(this.buttonNewProfile.x-190, this.buttonNewProfile.y-30, 'New Profile:', { fontFamily: 'Arial', fontSize: 16, color: '#ffffff' });
+        this.buttonNewProfileLabel = this.add.text(this.buttonNewProfile.x-190, this.buttonNewProfile.y-30, 'New Profile:', { fontFamily: 'Arial', fontSize: 16, color: '#000000' });
     }
 
     addProfileNameField(){
@@ -134,7 +139,7 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     addProfileNameList(x, y, counter, profile) {
-        this.profileText[counter] = this.add.text(x, y+52*counter+6, profile, { fontFamily: 'Arial', fontSize: 24, color: '#ffffff' });
+        this.profileText[counter] = this.add.text(x, y+52*counter+6, profile, { fontFamily: 'Arial', fontSize: 24, color: '#000000' });
         this.profileText[counter].setInteractive();
         this.profileText[counter].profile = profile;
         this.profileText[counter].on('pointerup', this.selectProfile, this.profileText[counter]);
