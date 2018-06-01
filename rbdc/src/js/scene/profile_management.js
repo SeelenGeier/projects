@@ -11,12 +11,14 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     create() {
-        //add input field for new profile name
-        this.addProfileNameField();
-        
         //add button for creating new profile
-        new Button('newProfile', 'buttonNew', 200, 70, this);
-        this.newProfile.on('pointerup', this.createNewProfile, this);
+        new Button('buttonNewProfile', 'buttonNew', 210, 70, this);
+        this.buttonNewProfile.on('pointerup', this.createNewProfile, this);
+        this.input.keyboard.on('keydown_ENTER', this.createNewProfile, this);
+
+        //add label and input field for new profile name
+        this.addProfileNameLabel();
+        this.addProfileNameField();
         
         //show all profiles in a list
         this.showAllProfiles();
@@ -25,56 +27,57 @@ class profileManagementScene extends Phaser.Scene {
     update() {
         
     }
-    
-    addProfileNameField(){
-        var input = document.createElement('input');
-        input.type = 'text';
-        input.id = 'newProfileName';
-        input.style = 'position: fixed'; //has to be changed to correct position
-        document.getElementById('rbdcGame').appendChild(input);
+
+    addProfileNameLabel(){
+        this.buttonNewProfileLabel = this.add.text(this.buttonNewProfile.x-155, this.buttonNewProfile.y-30, 'New Profile:', { fontFamily: 'Arial', fontSize: 16, color: '#ffffff' });
     }
-    
+
+    addProfileNameField(){
+        //check if input field already exists
+        if(document.getElementById('newProfileName') !== null) {
+            this.showProfileNameField();
+        }else{
+            //create input field
+            var input = document.createElement('input');
+            input.type = 'text';
+            input.id = 'newProfileName';
+            //set position relative to confirmation button
+            input.style = 'position: relative; left: '+(this.buttonNewProfile.x-155)+'px; bottom: '+(this.sys.game.config.height-this.buttonNewProfile.y+13)+'px;';
+            document.getElementById('rbdcGame').appendChild(input);
+        }
+    }
+
     hideProfileNameField(){
         document.getElementById('newProfileName').style.visibility = "hidden";
     }
-    
+
+    showProfileNameField(){
+        document.getElementById('newProfileName').style.visibility = "";
+    }
+
     showAllProfiles() {
-        var counter;
         var x = 80;
         var y = 100;
-        
-        //clear previous profiles
-        counter = 0;
-        for(var profile in this.profileText) {
-            this.profileText[counter].destroy();
-            this['profile'+counter+'_select'].destroy();
-            this['profile'+counter+'_delete'].destroy();
-            counter++;
-        }
-        
+
+        this.clearProfileList();
+
         this.profileText = {};
         
         //add each profile individually to list
-        counter = 0;
+        var counter = 0;
         for(var profile in saveObject.profiles) {
             //add profile name
-            this.profileText[counter] = this.add.text(x, y+52*counter+6, profile, { fontFamily: 'Arial', fontSize: 24, color: '#ffffff' });
-            this.profileText[counter].on('pointerup', this.selectProfile, this['profile'+counter+'_select']);
+            this.addProfileNameList(x, y, counter, profile);
             
             //add select profile button
-            new Button('profile'+counter+'_select', 'buttonSelect', x+this.profileText[counter].width+5, y+52*counter+5, this);
-            this['profile'+counter+'_select'].setOrigin(0,0);
-            this['profile'+counter+'_select'].profile = profile;
-            this['profile'+counter+'_select'].on('pointerup', this.selectProfile, this['profile'+counter+'_select']);
+            this.addProfileSelectButtonList(x, y, counter, profile);
             
             //add delete profile button
-            new Button('profile'+counter+'_delete', 'buttonDelete', x-28, y+52*counter+10, this);
-            this['profile'+counter+'_delete'].setOrigin(0,0);
-            this['profile'+counter+'_delete'].profile = profile;
-            this['profile'+counter+'_delete'].on('pointerup', this.deleteProfile, this['profile'+counter+'_delete']);
+            this.addProfileDeleteButtonList(x, y, counter, profile);
             
             counter++;
         }
+        console.log(this.profileText);
     }
     
     createNewProfile(){
@@ -112,15 +115,47 @@ class profileManagementScene extends Phaser.Scene {
     }
     
     selectProfile(){
-        //delete profile from saveObject
+        //set selected profile as current profile
         saveObject.currentProfile = this.profile;
-        
+
         //save data
         saveData();
-        
+
         //hide input field and load profile overview
         this.scene.hideProfileNameField();
         this.scene.scene.setVisible(false);
         this.scene.scene.start(saveObject.profiles[saveObject.currentProfile].scene);
+    }
+
+    addProfileNameList(x, y, counter, profile) {
+        this.profileText[counter] = this.add.text(x, y+52*counter+6, profile, { fontFamily: 'Arial', fontSize: 24, color: '#ffffff' });
+        this.profileText[counter].setInteractive();
+        this.profileText[counter].profile = profile;
+        this.profileText[counter].on('pointerup', this.selectProfile, this.profileText[counter]);
+    }
+
+    addProfileSelectButtonList(x, y, counter, profile) {
+        new Button('profile'+counter+'_select', 'buttonSelect', x+this.profileText[counter].width+5, y+52*counter+5, this);
+        this['profile'+counter+'_select'].setOrigin(0,0);
+        this['profile'+counter+'_select'].profile = profile;
+        this['profile'+counter+'_select'].on('pointerup', this.selectProfile, this['profile'+counter+'_select']);
+    }
+
+    addProfileDeleteButtonList(x, y, counter, profile) {
+        new Button('profile'+counter+'_delete', 'buttonDelete', x-28, y+52*counter+10, this);
+        this['profile'+counter+'_delete'].setOrigin(0,0);
+        this['profile'+counter+'_delete'].profile = profile;
+        this['profile'+counter+'_delete'].on('pointerup', this.deleteProfile, this['profile'+counter+'_delete']);
+    }
+
+    clearProfileList() {
+        //clear previous profiles
+        var counter = 0;
+        for(var profile in this.profileText) {
+            this.profileText[counter].destroy();
+            this['profile'+counter+'_select'].destroy();
+            this['profile'+counter+'_delete'].destroy();
+            counter++;
+        }
     }
 }
