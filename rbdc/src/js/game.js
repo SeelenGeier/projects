@@ -46,6 +46,11 @@ function preload() {
     this.load.json('offhands', 'config/offhands.json');
     this.load.json('trinkets', 'config/trinkets.json');
     this.load.json('valuables', 'config/valuables.json');
+
+    //load dialog background and buttons
+    this.load.image('dialogBackground','../assets/dialogBackground.png');
+    this.load.spritesheet('buttonYes', '../assets/buttonNew.png', { frameWidth: 21, frameHeight: 20 });
+    this.load.spritesheet('buttonNo', '../assets/buttonDelete.png', { frameWidth: 18, frameHeight: 18 });
 }
 
 function create() {
@@ -67,6 +72,6 @@ function create() {
     loadData();
 
     //start splash screen as default
-    this.scene.start('splash'); //SKIP DURING DEVELOPMENT
-    //this.scene.start('profileManagement');
+    //this.scene.start('splash'); //SKIP DURING DEVELOPMENT
+    this.scene.start('profileManagement');
 }

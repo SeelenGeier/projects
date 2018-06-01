@@ -77,7 +77,6 @@ class profileManagementScene extends Phaser.Scene {
             
             counter++;
         }
-        console.log(this.profileText);
     }
     
     createNewProfile(){
@@ -98,11 +97,17 @@ class profileManagementScene extends Phaser.Scene {
                 saveData();
             }
         }
-        
+
         //update profile list
         this.showAllProfiles();
     }
-    
+
+    confirmDeleteProfile(){
+        // new Dialog('Delete Profile', 'Do you want to delete this profile?', this, true);
+        new Dialog('Delete Profile', 'Do you want to delete \''+this.profile+'\'?', this, true);
+        this.scene.buttonYES.on('pointerup', this.scene.deleteProfile, this);
+    }
+
     deleteProfile(){
         //delete profile from saveObject
         delete saveObject.profiles[this.profile];
@@ -113,7 +118,7 @@ class profileManagementScene extends Phaser.Scene {
         //update profile list
         this.scene.showAllProfiles();
     }
-    
+
     selectProfile(){
         //set selected profile as current profile
         saveObject.currentProfile = this.profile;
@@ -145,7 +150,7 @@ class profileManagementScene extends Phaser.Scene {
         new Button('profile'+counter+'_delete', 'buttonDelete', x-28, y+52*counter+10, this);
         this['profile'+counter+'_delete'].setOrigin(0,0);
         this['profile'+counter+'_delete'].profile = profile;
-        this['profile'+counter+'_delete'].on('pointerup', this.deleteProfile, this['profile'+counter+'_delete']);
+        this['profile'+counter+'_delete'].on('pointerup', this.confirmDeleteProfile, this['profile'+counter+'_delete']);
     }
 
     clearProfileList() {
