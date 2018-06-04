@@ -96,8 +96,8 @@ function update() {
 
 function paddleHit(ballBody, paddleBody) {
     //change speed of ball after collision
-    ballBody.velocity.x = ballBody.velocity.x * (1 + 0.1*Math.pow(0.8, hits));
-    ballBody.velocity.y = ballBody.velocity.y * (1 + 0.1*Math.pow(0.8, hits));
+    ballBody.velocity.x = ballBody.velocity.x * (1 + 0.002*hits);
+    ballBody.velocity.y = ballBody.velocity.y * (1 + 0.002*hits);
     
     //add a hit to the hit counter
     hits++;
