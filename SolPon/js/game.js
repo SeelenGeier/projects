@@ -89,15 +89,15 @@ function update() {
     if(ball.released == false && game.input.activePointer.isDown)
     {
         //launch ball in random direction
-        ball.body.applyImpulse([4, 4], game.width/2, game.height/2);
+        ball.body.applyImpulse([8, 8], game.width/2, game.height/2);
         ball.released = true;
     }
 }
 
 function paddleHit(ballBody, paddleBody) {
     //change speed of ball after collision
-    ballBody.velocity.x = ballBody.velocity.x * (1 + 0.1*Math.pow(0.9, hits));
-    ballBody.velocity.y = ballBody.velocity.y * (1 + 0.1*Math.pow(0.9, hits));
+    ballBody.velocity.x = ballBody.velocity.x * (1 + 0.1*Math.pow(0.8, hits));
+    ballBody.velocity.y = ballBody.velocity.y * (1 + 0.1*Math.pow(0.8, hits));
     
     //add a hit to the hit counter
     hits++;
