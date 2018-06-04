@@ -15,15 +15,18 @@ class profileManagementScene extends Phaser.Scene {
         // add background
         this.backgroundImage = this.add.sprite(this.sys.game.config.width/2,this.sys.game.config.height/2,'background');
         this.backgroundImage.setScale(this.sys.game.config.width+10/this.backgroundImage.width, this.sys.game.config.height+10/this.backgroundImage.height);
+
+        // add headline
+        this.addProfileHeadline();
         
         // add button for creating new profile
-        new Button('buttonNewProfile', 'buttonNew', 245, 70, this);
+        new Button('buttonNewProfile', 'buttonNew', 245, 120, this);
         this.buttonNewProfile.on('pointerup', this.createNewProfile, this);
         this.input.keyboard.on('keydown_ENTER', this.createNewProfile, this);
 
         // add label and input field for new profile name
-        this.addProfileNameLabel();
-        this.addProfileNameField();
+        this.addNewProfileNameLabel();
+        this.addNewProfileNameField();
         
         // show all profiles in a list
         this.showAllProfiles();
@@ -33,11 +36,15 @@ class profileManagementScene extends Phaser.Scene {
         
     }
 
-    addProfileNameLabel(){
-        this.buttonNewProfileLabel = this.add.text(this.buttonNewProfile.x-190, this.buttonNewProfile.y-30, 'New Profile:', { fontFamily: config.default.setting.fontFamily, fontSize: 16, color: '#000000' });
+    addProfileHeadline(){
+        this.add.text(40, 30, 'Select a Profile', { fontFamily: config.default.setting.fontFamily, fontSize: 32, color: '#000000' });
     }
 
-    addProfileNameField(){
+    addNewProfileNameLabel(){
+        this.add.text(this.buttonNewProfile.x-190, this.buttonNewProfile.y-30, 'New Profile:', { fontFamily: config.default.setting.fontFamily, fontSize: 16, color: '#000000' });
+    }
+
+    addNewProfileNameField(){
         // check if input field already exists
         if(document.getElementById('newProfileName') !== null) {
             this.showProfileNameField();
@@ -62,7 +69,7 @@ class profileManagementScene extends Phaser.Scene {
 
     showAllProfiles() {
         var x = 80;
-        var y = 100;
+        var y = 150;
 
         this.clearProfileList();
 
