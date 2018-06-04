@@ -5,18 +5,26 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', '../assets/background.png');
-        // TODO: replace button with return button
+        // TODO: replace buttons
         this.load.spritesheet('buttonProfileManagement', '../assets/buttonDelete.png', { frameWidth: 18, frameHeight: 18 });
+        this.load.spritesheet('buttonConfig', '../assets/mockup/button.png', { frameWidth: 64, frameHeight: 64 });
+        this.load.spritesheet('buttonShop', '../assets/mockup/button.png', { frameWidth: 64, frameHeight: 64 });
+        this.load.spritesheet('buttonDungeon', '../assets/mockup/button.png', { frameWidth: 64, frameHeight: 64 });
     }
 
     create() {
-        // add background
-        this.backgroundImage = this.add.sprite(this.sys.game.config.width/2,this.sys.game.config.height/2,'background');
-        this.backgroundImage.setScale(this.sys.game.config.width+10/this.backgroundImage.width, this.sys.game.config.height+10/this.backgroundImage.height);
-        
-        new Button('buttonProfileManagement', 'buttonProfileManagement', this.sys.game.config.width-30, 30, this);
-        this.buttonProfileManagement.on('pointerup', this.goToProfileManagement, this);
+        saveObject.profiles[saveObject.currentProfile].scene = 'profileOverview';
+        new Button('buttonConfig', 'buttonConfig', this.sys.game.config.width/2, 30, this);
+        this.buttonConfig.on('pointerup', this.goToConfig, this);
+        this.buttonConfig.setScale(0.5, 0.5);
+
+        new Button('buttonShop', 'buttonShop', 30, this.sys.game.config.height/2, this);
+        this.buttonShop.on('pointerup', this.goToShop, this);
+        this.buttonShop.setScale(0.5, 0.5);
+
+        new Button('buttonDungeon', 'buttonDungeon', this.sys.game.config.width-30, this.sys.game.config.height/2, this);
+        this.buttonDungeon.on('pointerup', this.goToDungeon, this);
+        this.buttonDungeon.setScale(0.5, 0.5);
 
         this.showProfileName(this.sys.game.config.width/2, 100);
     }
@@ -25,16 +33,22 @@ class profileOverviewScene extends Phaser.Scene {
 
     }
 
-    goToProfileManagement(){
-        // unset current profile
-        saveObject.currentProfile = undefined;
-
-        // save data
-        saveData();
-
-        // hide current scene and start profile management scene
+    goToConfig(){
+        // hide current scene and start config scene
         this.scene.setVisible(false);
-        this.scene.start('profileManagement');
+        this.scene.start('config');
+    }
+
+    goToShop(){
+        // hide current scene and start config scene
+        this.scene.setVisible(false);
+        this.scene.start('shop');
+    }
+
+    goToDungeon(){
+        // hide current scene and start config scene
+        this.scene.setVisible(false);
+        this.scene.start('dungeon');
     }
 
     showProfileName(x, y) {

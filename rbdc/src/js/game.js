@@ -25,10 +25,12 @@ function loadData() {
     if(localStorage.getItem(config.default.setting.saveName) !== null) {
         // TODO: validate save data
         saveObject = JSON.parse(localStorage.getItem(config.default.setting.saveName));
+        console.log(saveObject.profiles[saveObject.currentProfile]);
     }else{
         // initialize saveObject and save in local storage
         saveObject = {
-            profiles: {}
+            profiles: {},
+            currentProfile: undefined
         };
         saveData();
     }
@@ -73,6 +75,5 @@ function create() {
     loadData();
 
     // start splash screen as default
-    this.scene.start('splash'); // SKIP DURING DEVELOPMENT
-    // this.scene.start('profileManagement');
+    this.scene.start('splash');
 }

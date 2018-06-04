@@ -9,7 +9,7 @@ class shopScene extends Phaser.Scene {
     }
 
     create() {
-
+        saveObject.profiles[saveObject.currentProfile].scene = 'shop';
     }
 
     update() {

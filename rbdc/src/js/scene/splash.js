@@ -29,13 +29,17 @@ class splashScene extends Phaser.Scene {
             alpha: 0,
             ease: 'Power1',
             duration: 1500,
-            onComplete: splashScene.loadProfileManagement
+            onComplete: splashScene.loadNextScene
         });
     }
 
-    static loadProfileManagement() {
+    static loadNextScene() {
         this.parent.scene.scene.setVisible(false);
-        this.parent.scene.scene.start('profileManagement');
+        if(saveObject.currentProfile != undefined) {
+            this.parent.scene.scene.start(saveObject.profiles[saveObject.currentProfile].scene);
+        }else {
+            this.parent.scene.scene.start('profileManagement');
+        }
     }
 
     activatePointer() {
