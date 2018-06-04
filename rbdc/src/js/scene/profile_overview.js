@@ -6,12 +6,12 @@ class profileOverviewScene extends Phaser.Scene {
 
     preload() {
         this.load.image('background', '../assets/background.png');
-        //TODO: replace button with return button
+        // TODO: replace button with return button
         this.load.spritesheet('buttonProfileManagement', '../assets/buttonDelete.png', { frameWidth: 18, frameHeight: 18 });
     }
 
     create() {
-        //add background
+        // add background
         this.backgroundImage = this.add.sprite(this.sys.game.config.width/2,this.sys.game.config.height/2,'background');
         this.backgroundImage.setScale(this.sys.game.config.width+10/this.backgroundImage.width, this.sys.game.config.height+10/this.backgroundImage.height);
         
@@ -26,19 +26,19 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     goToProfileManagement(){
-        //unset current profile
+        // unset current profile
         saveObject.currentProfile = undefined;
 
-        //save data
+        // save data
         saveData();
 
-        //hide current scene and start profile management scene
+        // hide current scene and start profile management scene
         this.scene.setVisible(false);
         this.scene.start('profileManagement');
     }
 
     showProfileName(x, y) {
-        this.profileName = this.add.text(x, y, saveObject.currentProfile, { fontFamily: 'Arial', fontSize: 24, color: '#ffffff' });
+        this.profileName = this.add.text(x, y, saveObject.currentProfile, { fontFamily: config.default.setting.fontFamily, fontSize: 24, color: '#ffffff' });
         this.profileName.setOrigin(0.5, 0.5);
     }
 }

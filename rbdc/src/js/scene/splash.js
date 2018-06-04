@@ -9,11 +9,11 @@ class splashScene extends Phaser.Scene {
     }
 
     create() {
-        //TODO: replace mockup image with splash screen
-        this.splashTitle = this.add.text(this.sys.game.config.width/2-165, this.sys.game.config.height/2-128, config.default.setting.title, { fontFamily: 'Arial', fontSize: 24, color: '#ffffff' });
+        // TODO: replace mockup image with splash screen
+        this.splashTitle = this.add.text(this.sys.game.config.width/2-165, this.sys.game.config.height/2-128, config.default.setting.title, { fontFamily: config.default.setting.fontFamily, fontSize: 24, color: '#ffffff' });
         this.splashImage = this.add.sprite(this.sys.game.config.width/2,this.sys.game.config.height/2,'splash');
-        this.splashBy = this.add.text(this.sys.game.config.width/2-12, this.sys.game.config.height/2+100, 'by', { fontFamily: 'Arial', fontSize: 24, color: '#ffffff' });
-        this.splashAuthor = this.add.text(this.sys.game.config.width/2-64, this.sys.game.config.height/2+132, config.default.setting.author, { fontFamily: 'Arial', fontSize: 24, color: '#ffffff' });
+        this.splashBy = this.add.text(this.sys.game.config.width/2-12, this.sys.game.config.height/2+100, 'by', { fontFamily: config.default.setting.fontFamily, fontSize: 24, color: '#ffffff' });
+        this.splashAuthor = this.add.text(this.sys.game.config.width/2-64, this.sys.game.config.height/2+132, config.default.setting.author, { fontFamily: config.default.setting.fontFamily, fontSize: 24, color: '#ffffff' });
 
         this.time.delayedCall(2000, this.activatePointer, [], this);
     }

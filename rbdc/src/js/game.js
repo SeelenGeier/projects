@@ -9,24 +9,24 @@ let gameConfig = {
 
 let game = new Phaser.Game(gameConfig);
 
-//global config (e.g. config.weapons[config.default.equipment.weapon])
+// global config (e.g. config.weapons[config.default.equipment.weapon])
 let config;
 
-//global save object for storage
+// global save object for storage
 let saveObject;
 
 function saveData() {
-    //save data as json in local storage
+    // save data as json in local storage
     localStorage.setItem(config.default.setting.saveName, JSON.stringify(saveObject));
 }
 
 function loadData() {
-    //check for existing save data
+    // check for existing save data
     if(localStorage.getItem(config.default.setting.saveName) !== null) {
-        //TODO: validate save data
+        // TODO: validate save data
         saveObject = JSON.parse(localStorage.getItem(config.default.setting.saveName));
     }else{
-        //initialize saveObject and save in local storage
+        // initialize saveObject and save in local storage
         saveObject = {
             profiles: {}
         };
@@ -35,7 +35,7 @@ function loadData() {
 }
 
 function preload() {
-    //load configuration files
+    // load configuration files
     this.load.json('default', 'config/default.json');
     this.load.json('damage_types', 'config/damage_types.json');
     this.load.json('trap_types', 'config/trap_types.json');
@@ -47,7 +47,7 @@ function preload() {
     this.load.json('trinkets', 'config/trinkets.json');
     this.load.json('valuables', 'config/valuables.json');
 
-    //load dialog background and buttons
+    // load dialog background and buttons
     this.load.image('blackBackground','../assets/blackBackground.png');
     this.load.image('dialogBackground','../assets/dialogBackground.png');
     this.load.spritesheet('buttonYes', '../assets/buttonNew.png', { frameWidth: 21, frameHeight: 20 });
@@ -55,7 +55,7 @@ function preload() {
 }
 
 function create() {
-    //register configuration for easier access
+    // register configuration for easier access
     config = {
         default: this.cache.json.get('default'),
         damage_types: this.cache.json.get('damage_types'),
@@ -69,10 +69,10 @@ function create() {
         valuables: this.cache.json.get('valuables')
     };
 
-    //load save data and change starting scene accordingly
+    // load save data and change starting scene accordingly
     loadData();
 
-    //start splash screen as default
-    this.scene.start('splash'); //SKIP DURING DEVELOPMENT
-    //this.scene.start('profileManagement');
+    // start splash screen as default
+    // this.scene.start('splash'); // SKIP DURING DEVELOPMENT
+    this.scene.start('profileManagement');
 }

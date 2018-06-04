@@ -8,6 +8,10 @@ package Configurations{
         setting
             attribute(\tmusic) -> type(bool)
             attribute(\tsound) -> type(bool)
+            attribute(\tsaveName) -> type(string)
+            attribute(\ttitle) -> type(string)
+            attribute(\tauthor) -> type(string)
+            attribute(\tfontFamily) -> type(string)
         equipment
             attribute(\tweapon) -> type(string)
             attribute(\tarmor) -> type(string)

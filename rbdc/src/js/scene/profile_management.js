@@ -12,20 +12,20 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     create() {
-        //add background
+        // add background
         this.backgroundImage = this.add.sprite(this.sys.game.config.width/2,this.sys.game.config.height/2,'background');
         this.backgroundImage.setScale(this.sys.game.config.width+10/this.backgroundImage.width, this.sys.game.config.height+10/this.backgroundImage.height);
         
-        //add button for creating new profile
+        // add button for creating new profile
         new Button('buttonNewProfile', 'buttonNew', 245, 70, this);
         this.buttonNewProfile.on('pointerup', this.createNewProfile, this);
         this.input.keyboard.on('keydown_ENTER', this.createNewProfile, this);
 
-        //add label and input field for new profile name
+        // add label and input field for new profile name
         this.addProfileNameLabel();
         this.addProfileNameField();
         
-        //show all profiles in a list
+        // show all profiles in a list
         this.showAllProfiles();
     }
 
@@ -34,19 +34,19 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     addProfileNameLabel(){
-        this.buttonNewProfileLabel = this.add.text(this.buttonNewProfile.x-190, this.buttonNewProfile.y-30, 'New Profile:', { fontFamily: 'Arial', fontSize: 16, color: '#000000' });
+        this.buttonNewProfileLabel = this.add.text(this.buttonNewProfile.x-190, this.buttonNewProfile.y-30, 'New Profile:', { fontFamily: config.default.setting.fontFamily, fontSize: 16, color: '#000000' });
     }
 
     addProfileNameField(){
-        //check if input field already exists
+        // check if input field already exists
         if(document.getElementById('newProfileName') !== null) {
             this.showProfileNameField();
         }else{
-            //create input field
+            // create input field
             var input = document.createElement('input');
             input.type = 'text';
             input.id = 'newProfileName';
-            //set position relative to confirmation button
+            // set position relative to confirmation button
             input.style = 'position: relative; left: '+(this.buttonNewProfile.x-190)+'px; bottom: '+(this.sys.game.config.height-this.buttonNewProfile.y+13)+'px; width: 165px;';
             document.getElementById('rbdcGame').appendChild(input);
         }
@@ -68,16 +68,16 @@ class profileManagementScene extends Phaser.Scene {
 
         this.profileText = {};
         
-        //add each profile individually to list
+        // add each profile individually to list
         var counter = 0;
         for(var profile in saveObject.profiles) {
-            //add profile name
+            // add profile name
             this.addProfileNameList(x, y, counter, profile);
             
-            //add select profile button
+            // add select profile button
             this.addProfileSelectButtonList(x, y, counter, profile);
             
-            //add delete profile button
+            // add delete profile button
             this.addProfileDeleteButtonList(x, y, counter, profile);
             
             counter++;
@@ -85,26 +85,26 @@ class profileManagementScene extends Phaser.Scene {
     }
     
     createNewProfile(){
-        //get profile name from DOM input
+        // get profile name from DOM input
         var newProfileName = document.getElementById('newProfileName').value;
         document.getElementById('newProfileName').value = '';
         
-        //check for input
+        // check for input
         if(newProfileName !== '') {
-            //check if profile already exists
+            // check if profile already exists
             if(saveObject.profiles[newProfileName] == undefined) {
-                //create new profile
+                // create new profile
                 saveObject.profiles[newProfileName] = {
-                    scene: 'profileOverview' //always start new profiles in overview scene
+                    scene: 'profileOverview' // always start new profiles in overview scene
                 };
                 
-                //save new data
+                // save new data
                 saveData();
 
-                //update profile list
+                // update profile list
                 this.showAllProfiles();
             }else{
-                new Dialog('Delete Profile', 'Profile \''+newProfileName+'\' already exists?', this.scene);
+                new Dialog('Name Invalid', 'Profile \''+newProfileName+'\' already exists.', this.scene);
             }
         }
     }
@@ -115,31 +115,31 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     deleteProfile(){
-        //delete profile from saveObject
+        // delete profile from saveObject
         delete saveObject.profiles[this.profile];
         
-        //save data
+        // save data
         saveData();
         
-        //update profile list
+        // update profile list
         this.scene.showAllProfiles();
     }
 
     selectProfile(){
-        //set selected profile as current profile
+        // set selected profile as current profile
         saveObject.currentProfile = this.profile;
 
-        //save data
+        // save data
         saveData();
 
-        //hide input field and load profile overview
+        // hide input field and load profile overview
         this.scene.hideProfileNameField();
         this.scene.scene.setVisible(false);
         this.scene.scene.start(saveObject.profiles[saveObject.currentProfile].scene);
     }
 
     addProfileNameList(x, y, counter, profile) {
-        this.profileText[counter] = this.add.text(x, y+52*counter+6, profile, { fontFamily: 'Arial', fontSize: 24, color: '#000000' });
+        this.profileText[counter] = this.add.text(x, y+52*counter+6, profile, { fontFamily: config.default.setting.fontFamily, fontSize: 24, color: '#000000' });
         this.profileText[counter].setInteractive();
         this.profileText[counter].profile = profile;
         this.profileText[counter].on('pointerup', this.selectProfile, this.profileText[counter]);
@@ -160,7 +160,7 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     clearProfileList() {
-        //clear previous profiles
+        // clear previous profiles
         var counter = 0;
         for(var profile in this.profileText) {
             this.profileText[counter].destroy();

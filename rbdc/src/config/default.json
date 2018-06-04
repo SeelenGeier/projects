@@ -4,7 +4,8 @@
     "sound": true,
     "saveName": "RBDC_SAVEDATA",
     "title": "Room Based Dungeon Crawler",
-    "author": "SeelenGeier"
+    "author": "SeelenGeier",
+    "fontFamily": "MedievalSharp"
   },
   "equipment": {
     "weapon": "knife",
