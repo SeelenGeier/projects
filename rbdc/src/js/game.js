@@ -73,6 +73,6 @@ function create() {
     loadData();
 
     // start splash screen as default
-    // this.scene.start('splash'); // SKIP DURING DEVELOPMENT
-    this.scene.start('profileManagement');
+    this.scene.start('splash'); // SKIP DURING DEVELOPMENT
+    // this.scene.start('profileManagement');
 }
