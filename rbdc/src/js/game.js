@@ -1,7 +1,7 @@
 let gameConfig = {
     type: Phaser.AUTO,
-    width: 360,
-    height: 480,
+    width: 384,
+    height: 512,
     parent: 'rbdcGame',
     backgroundColor: '#000000',
     scene: [{
@@ -10,7 +10,16 @@ let gameConfig = {
     }, splashScene, profileManagementScene, profileOverviewScene, configScene, shopScene, dungeonScene, resultScene]
 };
 
+// always keep the screen centered in the browser
+let canvas = document.getElementById(gameConfig.parent);
+canvas.style.maxWidth = gameConfig.width+'px';
+canvas.style.margin = '50px auto';
+
 let game = new Phaser.Game(gameConfig);
+
+// start game in fullscreen
+// window[gameConfig.parent][game.device.fullscreen.request]()
+// window.innerWidth
 
 // global config (e.g. config.weapons[config.default.equipment.weapon])
 let config;
@@ -19,6 +28,7 @@ let config;
 let saveObject;
 
 function preload() {
+
     // load configuration files
     this.load.json('default', 'config/default.json');
     this.load.json('damage_types', 'config/damage_types.json');

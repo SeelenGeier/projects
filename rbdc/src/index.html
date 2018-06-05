@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <title>RDBC - Room Based Dungeon Crawler</title>
     <!-- import Phaser 3 Game Framework -->
-    <script src="js/phaser.min.js"></script>
+    <!-- TODO: replace with minified version -->
+    <script src="js/phaser.js"></script>
     <style>
         .game {
-            max-width: 360px;
             margin: 50px auto;
         }
     </style>
@@ -20,6 +20,11 @@
             }
         });
     </script>
+</head>
+<body>
+    <div><a href="../../index.html">Back to Overview</a></div>
+    <div class="game" id="rbdcGame"></div>
+
     <!-- import components -->
     <script src="js/component/button.js"></script>
     <script src="js/component/dialog.js"></script>
@@ -33,9 +38,5 @@
     <script src="js/scene/result.js"></script>
     <!-- start game -->
     <script src="js/game.js"></script>
-</head>
-<body>
-    <div><a href="../../index.html">Back to Overview</a></div>
-    <div class="game" id="rbdcGame"></div>
 </body>
 </html>
