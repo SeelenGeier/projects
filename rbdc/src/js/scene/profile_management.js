@@ -102,7 +102,9 @@ class profileManagementScene extends Phaser.Scene {
             if(saveObject.profiles[newProfileName] == undefined) {
                 // create new profile
                 saveObject.profiles[newProfileName] = {
-                    scene: 'profileOverview' // always start new profiles in overview scene
+                    scene: 'profileOverview', // always start new profiles in overview scene
+                    sound: true,
+                    music: true
                 };
                 
                 // save new data
