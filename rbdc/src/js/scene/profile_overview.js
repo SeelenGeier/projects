@@ -17,19 +17,19 @@ class profileOverviewScene extends Phaser.Scene {
 
     create() {
         saveObject.profiles[saveObject.currentProfile].scene = 'profileOverview';
-        new Button('buttonConfig', 'buttonConfig', this.sys.game.config.width / 2, 30, this);
-        this.buttonConfig.on('pointerup', this.goToConfig, this);
-        this.buttonConfig.setScale(0.5, 0.5);
+        saveData();
 
-        new Button('buttonShop', 'buttonShop', 30, this.sys.game.config.height / 2, this);
-        this.buttonShop.on('pointerup', this.goToShop, this);
-        this.buttonShop.setScale(0.5, 0.5);
+        // add button to navigate to config
+        this.addNavigationConfig(this.sys.game.config.width / 2, 30);
 
-        new Button('buttonDungeon', 'buttonDungeon', this.sys.game.config.width - 30, this.sys.game.config.height / 2, this);
-        this.buttonDungeon.on('pointerup', this.goToDungeon, this);
-        this.buttonDungeon.setScale(0.5, 0.5);
+        // add button to navigate to the shop
+        this.addNavigationShop(30, this.sys.game.config.height / 2);
 
-        this.showProfileName(this.sys.game.config.width / 2, 100);
+        // add button to navigate to the dungeon
+        this.addNavigationDungeon(this.sys.game.config.width - 30, this.sys.game.config.height / 2);
+
+        // add profile name in the top center
+        this.addProfileName(this.sys.game.config.width / 2, 100);
     }
 
     update() {
@@ -54,12 +54,31 @@ class profileOverviewScene extends Phaser.Scene {
         this.scene.start('dungeon');
     }
 
-    showProfileName(x, y) {
+    addProfileName(x, y) {
+        // show profile name in top center of the screen
         this.profileName = this.add.text(x, y, saveObject.currentProfile, {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 24,
             color: '#ffffff'
         });
         this.profileName.setOrigin(0.5, 0.5);
+    }
+
+    addNavigationConfig(x, y) {
+        new Button('buttonConfig', 'buttonConfig', x, y, this);
+        this.buttonConfig.on('pointerup', this.goToConfig, this);
+        this.buttonConfig.setScale(0.5, 0.5);
+    }
+
+    addNavigationShop(x, y) {
+        new Button('buttonShop', 'buttonShop', x, y, this);
+        this.buttonShop.on('pointerup', this.goToShop, this);
+        this.buttonShop.setScale(0.5, 0.5);
+    }
+
+    addNavigationDungeon(x, y) {
+        new Button('buttonDungeon', 'buttonDungeon', x, y, this);
+        this.buttonDungeon.on('pointerup', this.goToDungeon, this);
+        this.buttonDungeon.setScale(0.5, 0.5);
     }
 }

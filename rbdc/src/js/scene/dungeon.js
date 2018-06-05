@@ -10,6 +10,7 @@ class dungeonScene extends Phaser.Scene {
 
     create() {
         saveObject.profiles[saveObject.currentProfile].scene = 'dungeon';
+        saveData();
     }
 
     update() {
