@@ -50,7 +50,7 @@ class profileManagementScene extends Phaser.Scene {
             input.type = 'text';
             input.id = 'newProfileName';
             input.style = 'position: relative; left: '+x+'px; bottom: '+y+'px; width: 165px;';
-            document.getElementById('rbdcGame').appendChild(input);
+            document.getElementById(gameConfig.parent).appendChild(input);
         }
     }
 
