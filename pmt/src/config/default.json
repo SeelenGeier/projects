@@ -1,0 +1,11 @@
+{
+  "setting": {
+    "music": true,
+    "sound": true,
+    "saveName": "PMT_SAVEDATA",
+    "title": "Profile Management Template",
+    "author": "SeelenGeier",
+    "fontFamily": "MedievalSharp",
+    "credits": "Code\nSeelenGeier\n\nAssets\nUI: Kenney (www.kenney.nl)"
+  }
+}
