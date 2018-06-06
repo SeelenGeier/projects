@@ -18,26 +18,31 @@ class Dialog {
 
         // add text to dialog box
         this.message = parent.scene.add.text(parent.scene.sys.game.config.width/2, parent.scene.sys.game.config.height/2, message, { fontFamily: config.default.setting.fontFamily, fontSize: 16, color: '#ffffff' });
-        this.message.setOrigin(0.5, 0.5);
+
+        // fix positions of title and message
+        this.message.x = parent.scene.sys.game.config.width/2 - this.message.width/2;
+        this.message.y = parent.scene.sys.game.config.height/2 - this.message.height/2;
+        this.title.y = parent.scene.sys.game.config.height/2 - this.message.height/2 - 10;
 
         // scale dialog box to fit title and message
-        var backgroundScale = (this.message.width+40)/this.dialogBackground.width;
-        if(((this.title.width+40)/this.dialogBackground.width) > backgroundScale){
-            backgroundScale = (this.title.width+40)/this.dialogBackground.width;
+        var backgroundScaleWidth = (this.message.width+40)/this.dialogBackground.width;
+        if(((this.title.width+40)/this.dialogBackground.width) > backgroundScaleWidth){
+            backgroundScaleWidth = (this.title.width+40)/this.dialogBackground.width;
         }
-        this.dialogBackground.setScale(backgroundScale, 1);
+        var backgroundScaleHeight = (this.message.height+this.title.height+60)/this.dialogBackground.height;
+        this.dialogBackground.setScale(backgroundScaleWidth, backgroundScaleHeight);
 
         if(confirm){
             // add YES Button
-            new Button('buttonYES', 'buttonYes', parent.scene.sys.game.config.width/2+30, parent.scene.sys.game.config.height/2+30, parent.scene);
+            new Button('buttonYES', 'buttonYes', parent.scene.sys.game.config.width/2+30, parent.scene.sys.game.config.height/2+this.message.height/2+15, parent.scene);
             parent.scene.buttonYES.on('pointerup', this.stopDialog, this);
 
             // add NO Button
-            new Button('buttonNO', 'buttonNo', parent.scene.sys.game.config.width/2-30, parent.scene.sys.game.config.height/2+30, parent.scene);
+            new Button('buttonNO', 'buttonNo', parent.scene.sys.game.config.width/2-30, parent.scene.sys.game.config.height/2+this.message.height/2+15, parent.scene);
             parent.scene.buttonNO.on('pointerup', this.stopDialog, this);
         }else{
             // add OK Button
-            new Button('buttonOK', 'buttonYes', parent.scene.sys.game.config.width/2, parent.scene.sys.game.config.height/2+30, parent.scene);
+            new Button('buttonOK', 'buttonYes', parent.scene.sys.game.config.width/2, parent.scene.sys.game.config.height/2+this.message.height/2+15, parent.scene);
             parent.scene.buttonOK.on('pointerup', this.stopDialog, this);
         }
     }

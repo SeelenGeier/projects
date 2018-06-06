@@ -16,6 +16,7 @@ class configScene extends Phaser.Scene {
         this.load.spritesheet('buttonToggleSoundOff', '../assets/buttonDelete.png', {frameWidth: 18, frameHeight: 18});
         this.load.spritesheet('buttonToggleMusicOn', '../assets/buttonNew.png', {frameWidth: 21, frameHeight: 20});
         this.load.spritesheet('buttonToggleMusicOff', '../assets/buttonDelete.png', {frameWidth: 18, frameHeight: 18});
+        this.load.spritesheet('buttonCredits', '../assets/buttonNew.png', {frameWidth: 21, frameHeight: 20});
     }
 
     create() {
@@ -27,6 +28,9 @@ class configScene extends Phaser.Scene {
 
         // add option to return to profile overview in top right corner
         this.addReturnButton(this.sys.game.config.width - 40, 30);
+
+        // add button to toggle music setting
+        this.addCredits(70, 150);
 
         // add button to toggle sound setting
         this.addToggleSound(70, 200);
@@ -103,9 +107,9 @@ class configScene extends Phaser.Scene {
         this.buttonToggleSoundLabel.setInteractive();
         this.buttonToggleSoundLabel.on('pointerup', this.toggleSound, this);
         if (saveObject.profiles[saveObject.currentProfile].sound == true) {
-            new Button('buttonToggleSound', 'buttonToggleSoundOn', this.buttonToggleSoundLabel.x + 80, this.buttonToggleSoundLabel.y + 3, this);
+            new Button('buttonToggleSound', 'buttonToggleSoundOn', this.buttonToggleSoundLabel.x + this.buttonToggleSoundLabel.width + 5, this.buttonToggleSoundLabel.y + 3, this);
         } else {
-            new Button('buttonToggleSound', 'buttonToggleSoundOff', this.buttonToggleSoundLabel.x + 80, this.buttonToggleSoundLabel.y + 3, this);
+            new Button('buttonToggleSound', 'buttonToggleSoundOff', this.buttonToggleSoundLabel.x + this.buttonToggleSoundLabel.width + 5, this.buttonToggleSoundLabel.y + 3, this);
         }
         this.buttonToggleSound.on('pointerup', this.toggleSound, this);
         this.buttonToggleSound.setOrigin(0, 0);
@@ -121,9 +125,9 @@ class configScene extends Phaser.Scene {
         this.buttonToggleMusicLabel.setInteractive();
         this.buttonToggleMusicLabel.on('pointerup', this.toggleMusic, this);
         if (saveObject.profiles[saveObject.currentProfile].music == true) {
-            new Button('buttonToggleMusic', 'buttonToggleMusicOn', this.buttonToggleMusicLabel.x + 80, this.buttonToggleMusicLabel.y + 3, this);
+            new Button('buttonToggleMusic', 'buttonToggleMusicOn', this.buttonToggleMusicLabel.x + this.buttonToggleMusicLabel.width + 5, this.buttonToggleMusicLabel.y + 3, this);
         } else {
-            new Button('buttonToggleMusic', 'buttonToggleMusicOff', this.buttonToggleMusicLabel.x + 80, this.buttonToggleMusicLabel.y + 3, this);
+            new Button('buttonToggleMusic', 'buttonToggleMusicOff', this.buttonToggleMusicLabel.x + this.buttonToggleMusicLabel.width + 5, this.buttonToggleMusicLabel.y + 3, this);
         }
         this.buttonToggleMusic.on('pointerup', this.toggleMusic, this);
         this.buttonToggleMusic.setOrigin(0, 0);
@@ -138,5 +142,27 @@ class configScene extends Phaser.Scene {
     addBackground() {
         this.backgroundImage = this.add.sprite(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'background');
         this.backgroundImage.setScale(this.sys.game.config.width + 10 / this.backgroundImage.width, this.sys.game.config.height + 10 / this.backgroundImage.height);
+    }
+
+    addCredits(x, y) {
+        // add label
+        this.buttonCreditsLabel = this.add.text(x, y, 'Credits', {
+            fontFamily: config.default.setting.fontFamily,
+            fontSize: 24,
+            color: '#ffffff'
+        });
+        this.buttonCreditsLabel.setInteractive();
+        this.buttonCreditsLabel.on('pointerup', this.showCredits, this);
+
+        // add button
+        new Button('buttonCredits', 'buttonCredits', this.buttonCreditsLabel.x + this.buttonCreditsLabel.width + 5, this.buttonCreditsLabel.y + 3, this);
+        this.buttonCredits.on('pointerup', this.showCredits, this);
+        this.buttonCredits.setOrigin(0, 0);
+    }
+
+    showCredits() {
+        // TODO: add necessary credits in config json
+        // show credits in dialog box
+        this.credits = new Dialog('Credits', config.default.setting.credits, this.scene);
     }
 }

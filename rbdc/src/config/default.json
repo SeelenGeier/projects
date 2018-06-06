@@ -5,7 +5,8 @@
     "saveName": "RBDC_SAVEDATA",
     "title": "Room Based Dungeon Crawler",
     "author": "SeelenGeier",
-    "fontFamily": "MedievalSharp"
+    "fontFamily": "MedievalSharp",
+    "credits": "Code\nSeelenGeier\n\nAssets\nUI: Kenney (www.kenney.nl)"
   },
   "equipment": {
     "weapon": "knife",
