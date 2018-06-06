@@ -168,6 +168,8 @@ class profileManagementScene extends Phaser.Scene {
 
     addBackground() {
         this.backgroundImage = this.add.sprite(this.sys.game.config.width/2,this.sys.game.config.height/2,'background');
+
+        // scale background to screen size and add a few more pixels to prevent flickering
         this.backgroundImage.setScale(this.sys.game.config.width+10/this.backgroundImage.width, this.sys.game.config.height+10/this.backgroundImage.height);
     }
 
