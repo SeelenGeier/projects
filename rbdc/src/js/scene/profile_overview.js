@@ -6,7 +6,7 @@ class profileOverviewScene extends Phaser.Scene {
 
     preload() {
         // TODO: replace button images
-        this.load.spritesheet('buttonProfileManagement', '../assets/buttonDelete.png', {
+        this.load.spritesheet('buttonProfileManagement', '../assets/button/cross.png', {
             frameWidth: 18,
             frameHeight: 18
         });

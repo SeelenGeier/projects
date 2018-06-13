@@ -17,10 +17,6 @@ canvas.style.margin = '50px auto';
 
 let game = new Phaser.Game(gameConfig);
 
-// start game in fullscreen
-// window[gameConfig.parent][game.device.fullscreen.request]()
-// window.innerWidth
-
 // global config (e.g. config.weapons[config.default.equipment.weapon])
 let config;
 
@@ -42,10 +38,10 @@ function preload() {
     this.load.json('valuables', 'config/valuables.json');
 
     // load dialog background and buttons
-    this.load.image('blackBackground', '../assets/blackBackground.png');
-    this.load.image('dialogBackground', '../assets/dialogBackground.png');
-    this.load.spritesheet('buttonYes', '../assets/buttonNew.png', {frameWidth: 21, frameHeight: 20});
-    this.load.spritesheet('buttonNo', '../assets/buttonDelete.png', {frameWidth: 18, frameHeight: 18});
+    this.load.image('backgroundBlack', '../assets/background/black.png');
+    this.load.image('backgroundDialog', '../assets/background/dialog.png');
+    this.load.spritesheet('buttonYes', '../assets/button/check.png', {frameWidth: 21, frameHeight: 20});
+    this.load.spritesheet('buttonNo', '../assets/button/cross.png', {frameWidth: 18, frameHeight: 18});
 }
 
 function create() {

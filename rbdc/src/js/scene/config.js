@@ -5,18 +5,18 @@ class configScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', '../assets/background.png');
+        this.load.image('background', '../assets/background/brownLight.png');
         // TODO: replace button images
-        this.load.spritesheet('buttonProfileManagement', '../assets/buttonDelete.png', {
+        this.load.spritesheet('buttonProfileManagement', '../assets/button/cross.png', {
             frameWidth: 18,
             frameHeight: 18
         });
-        this.load.spritesheet('buttonProfileOverview', '../assets/buttonSelect.png', {frameWidth: 39, frameHeight: 28});
-        this.load.spritesheet('buttonToggleSoundOn', '../assets/buttonNew.png', {frameWidth: 21, frameHeight: 20});
-        this.load.spritesheet('buttonToggleSoundOff', '../assets/buttonDelete.png', {frameWidth: 18, frameHeight: 18});
-        this.load.spritesheet('buttonToggleMusicOn', '../assets/buttonNew.png', {frameWidth: 21, frameHeight: 20});
-        this.load.spritesheet('buttonToggleMusicOff', '../assets/buttonDelete.png', {frameWidth: 18, frameHeight: 18});
-        this.load.spritesheet('buttonCredits', '../assets/buttonNew.png', {frameWidth: 21, frameHeight: 20});
+        this.load.spritesheet('buttonProfileOverview', '../assets/button/cross.png', {frameWidth: 18, frameHeight: 18});
+        this.load.spritesheet('buttonToggleSoundOn', '../assets/button/check.png', {frameWidth: 21, frameHeight: 20});
+        this.load.spritesheet('buttonToggleSoundOff', '../assets/button/cross.png', {frameWidth: 18, frameHeight: 18});
+        this.load.spritesheet('buttonToggleMusicOn', '../assets/button/check.png', {frameWidth: 21, frameHeight: 20});
+        this.load.spritesheet('buttonToggleMusicOff', '../assets/button/cross.png', {frameWidth: 18, frameHeight: 18});
+        this.load.spritesheet('buttonCredits', '../assets/button/check.png', {frameWidth: 21, frameHeight: 20});
     }
 
     create() {

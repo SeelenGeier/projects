@@ -4,13 +4,13 @@ class Dialog {
         this.confirm = confirm;
 
         // add grey background to block input outside of dialog box
-        this.greyBackground = parent.scene.add.sprite(parent.scene.sys.game.config.width/2,parent.scene.sys.game.config.height/2,'blackBackground');
+        this.greyBackground = parent.scene.add.sprite(parent.scene.sys.game.config.width/2,parent.scene.sys.game.config.height/2,'backgroundBlack');
         this.greyBackground.setScale(parent.scene.sys.game.config.width/this.greyBackground.width,parent.scene.sys.game.config.height/this.greyBackground.height);
         this.greyBackground.alpha = 0.7;
         this.greyBackground.setInteractive();
 
         // add dialog box in center of screen
-        this.dialogBackground = parent.scene.add.sprite(parent.scene.sys.game.config.width/2,parent.scene.sys.game.config.height/2,'dialogBackground');
+        this.dialogBackground = parent.scene.add.sprite(parent.scene.sys.game.config.width/2,parent.scene.sys.game.config.height/2,'backgroundDialog');
 
         // add title to message box
         this.title = parent.scene.add.text(parent.scene.sys.game.config.width/2, parent.scene.sys.game.config.height/2-30, title, { fontFamily: config.default.setting.fontFamily, fontSize: 16, color: '#ffffff' });

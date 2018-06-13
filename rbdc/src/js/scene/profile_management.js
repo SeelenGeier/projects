@@ -5,10 +5,9 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', '../assets/background.png');
-        this.load.spritesheet('buttonNew', '../assets/buttonNew.png', { frameWidth: 21, frameHeight: 20 });
-        this.load.spritesheet('buttonSelect', '../assets/buttonSelect.png', { frameWidth: 39, frameHeight: 28 });
-        this.load.spritesheet('buttonDelete', '../assets/buttonDelete.png', { frameWidth: 18, frameHeight: 18 });
+        this.load.image('background', '../assets/background/brownLight.png');
+        this.load.spritesheet('buttonNew', '../assets/button/check.png', { frameWidth: 21, frameHeight: 20 });
+        this.load.spritesheet('buttonDelete', '../assets/button/cross.png', { frameWidth: 18, frameHeight: 18 });
     }
 
     create() {
@@ -72,10 +71,7 @@ class profileManagementScene extends Phaser.Scene {
         for(var profile in saveObject.profiles) {
             // add profile name
             this.addProfileNameList(this.profileListPosition.x, this.profileListPosition.y, counter, profile);
-            
-            // add select profile button
-            this.addProfileSelectButtonList(this.profileListPosition.x, this.profileListPosition.y, counter, profile);
-            
+
             // add delete profile button
             this.addProfileDeleteButtonList(this.profileListPosition.x, this.profileListPosition.y, counter, profile);
             
@@ -141,13 +137,6 @@ class profileManagementScene extends Phaser.Scene {
         this.profileText[counter].on('pointerup', this.selectProfile, this.profileText[counter]);
     }
 
-    addProfileSelectButtonList(x, y, counter, profile) {
-        new Button('profile'+counter+'_select', 'buttonSelect', x+this.profileText[counter].width+5, y+52*counter+5, this);
-        this['profile'+counter+'_select'].setOrigin(0,0);
-        this['profile'+counter+'_select'].profile = profile;
-        this['profile'+counter+'_select'].on('pointerup', this.selectProfile, this['profile'+counter+'_select']);
-    }
-
     addProfileDeleteButtonList(x, y, counter, profile) {
         new Button('profile'+counter+'_delete', 'buttonDelete', x-28, y+52*counter+10, this);
         this['profile'+counter+'_delete'].setOrigin(0,0);
@@ -160,7 +149,6 @@ class profileManagementScene extends Phaser.Scene {
         var counter = 0;
         for(var profile in this.profileText) {
             this.profileText[counter].destroy();
-            this['profile'+counter+'_select'].destroy();
             this['profile'+counter+'_delete'].destroy();
             counter++;
         }
