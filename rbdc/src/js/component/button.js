@@ -10,20 +10,20 @@ class Button {
         parent[name].on('pointerup', this.buttonUp, this);
     }
 
-    buttonDown(){
+    buttonDown() {
         this.parent[this.name].setFrame(1);
     }
 
-    buttonUp(){
+    buttonUp() {
         this.parent[this.name].setFrame(0);
     }
 
-    hoverOff(){
+    hoverOff() {
         this.buttonUp();
     }
 
-    hoverOn(){
-        if(this.parent.input.activePointer.isDown){
+    hoverOn() {
+        if (this.parent.input.activePointer.isDown) {
             this.buttonDown();
         }
     }

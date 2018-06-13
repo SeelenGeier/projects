@@ -12,7 +12,7 @@ let gameConfig = {
 
 // always keep the screen centered in the browser
 let canvas = document.getElementById(gameConfig.parent);
-canvas.style.maxWidth = gameConfig.width+'px';
+canvas.style.maxWidth = gameConfig.width + 'px';
 canvas.style.margin = '50px auto';
 
 let game = new Phaser.Game(gameConfig);
@@ -94,9 +94,9 @@ function initializeSaveObject() {
     };
 
     // backup found data before overwriting
-    if(localStorage.getItem(config.default.setting.saveName) != undefined) {
+    if (localStorage.getItem(config.default.setting.saveName) != undefined) {
         console.log('Invalid data saved as _BACKUP.');
-        localStorage.setItem(config.default.setting.saveName+'_BACKUP', localStorage.getItem(config.default.setting.saveName));
+        localStorage.setItem(config.default.setting.saveName + '_BACKUP', localStorage.getItem(config.default.setting.saveName));
     }
 
     saveData();
@@ -161,7 +161,7 @@ function validateSaveData() {
                 checkSuccesful = false;
             } else {
                 // check if the provided scene exists
-                if (game.scene.getScene(saveObject.profiles[profile].scene) == null ) {
+                if (game.scene.getScene(saveObject.profiles[profile].scene) == null) {
                     console.log('Profile references an invalid scene.');
                     checkSuccesful = false;
                 }
