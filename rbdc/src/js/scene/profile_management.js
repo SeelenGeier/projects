@@ -6,8 +6,8 @@ class profileManagementScene extends Phaser.Scene {
 
     preload() {
         this.load.image('background', '../assets/background/brownLight.png');
-        this.load.spritesheet('buttonNew', '../assets/button/check.png', {frameWidth: 21});
-        this.load.spritesheet('buttonDelete', '../assets/button/cross.png', {frameWidth: 18});
+        this.load.spritesheet('buttonNew', '../assets/button/check.png', {frameWidth: 21, frameHeight: 20});
+        this.load.spritesheet('buttonDelete', '../assets/button/cross.png', {frameWidth: 18, frameHeight: 18});
     }
 
     create() {
