@@ -73,6 +73,7 @@ class profileManagementScene extends Phaser.Scene {
         this.clearProfileList();
 
         this.profileText = {};
+        this.profileNameBackground = {};
 
         // add each profile individually to list
         var counter = 0;
@@ -139,6 +140,10 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     addProfileNameList(x, y, counter, profile) {
+        // add background for profile
+        this.profileNameBackground[counter] = this.add.sprite(x, y, 'uipack_rpg').setFrame('buttonLong_grey.png');
+        this.profileNameBackground[counter].setOrigin(0,0);
+
         this.profileText[counter] = this.add.text(x, y + 52 * counter + 6, profile, {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 24,
@@ -147,11 +152,14 @@ class profileManagementScene extends Phaser.Scene {
         this.profileText[counter].setInteractive();
         this.profileText[counter].profile = profile;
         this.profileText[counter].on('pointerup', this.selectProfile, this.profileText[counter]);
+
+        this.profileNameBackground[counter].setX(this.profileText[counter].x-10);
+        this.profileNameBackground[counter].setY(this.profileText[counter].y-5);
+        this.profileNameBackground[counter].setScale((this.profileText[counter].width+20)/this.profileNameBackground[counter].width, (this.profileText[counter].height+10)/this.profileNameBackground[counter].height);
     }
 
     addProfileDeleteButtonList(x, y, counter, profile) {
-        new Button('profile' + counter + '_delete', 'buttonDelete', x - 28, y + 52 * counter + 10, this);
-        this['profile' + counter + '_delete'].setOrigin(0, 0);
+        new Button('profile' + counter + '_delete', 'buttonDelete', x - 36, y + 52 * counter + 20, this);
         this['profile' + counter + '_delete'].profile = profile;
         this['profile' + counter + '_delete'].on('pointerup', this.confirmDeleteProfile, this['profile' + counter + '_delete']);
     }
@@ -161,6 +169,7 @@ class profileManagementScene extends Phaser.Scene {
         var counter = 0;
         for (var profile in this.profileText) {
             this.profileText[counter].destroy();
+            this.profileNameBackground[counter].destroy();
             this['profile' + counter + '_delete'].destroy();
             counter++;
         }

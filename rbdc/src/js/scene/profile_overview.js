@@ -9,7 +9,6 @@ class profileOverviewScene extends Phaser.Scene {
         this.load.spritesheet('buttonConfig', '../assets/mockup/button.png', {frameWidth: 64, frameHeight: 64});
         this.load.spritesheet('buttonShop', '../assets/mockup/button.png', {frameWidth: 64, frameHeight: 64});
         this.load.spritesheet('buttonDungeon', '../assets/mockup/button.png', {frameWidth: 64, frameHeight: 64});
-        // this.load.spritesheet('uipack_rpg', '../assets/spritesheet/uipack_rpg.xml');
     }
 
     create() {
@@ -64,18 +63,15 @@ class profileOverviewScene extends Phaser.Scene {
     addNavigationConfig(x, y) {
         new Button('buttonConfig', 'buttonConfig', x, y, this);
         this.buttonConfig.on('pointerup', this.goToConfig, this);
-        this.buttonConfig.setScale(0.5, 0.5);
     }
 
     addNavigationShop(x, y) {
         new Button('buttonShop', 'buttonShop', x, y, this);
         this.buttonShop.on('pointerup', this.goToShop, this);
-        this.buttonShop.setScale(0.5, 0.5);
     }
 
     addNavigationDungeon(x, y) {
         new Button('buttonDungeon', 'buttonDungeon', x, y, this);
         this.buttonDungeon.on('pointerup', this.goToDungeon, this);
-        this.buttonDungeon.setScale(0.5, 0.5);
     }
 }
