@@ -5,7 +5,7 @@ class configScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', '../assets/background/brownLight.png');
+        this.load.image('background', '../assets/background/beige.png');
         this.load.image('buttonProfileManagement', '../assets/button/menu.png');
         this.load.image('buttonProfileOverview', '../assets/button/return.png');
         this.load.image('buttonToggleSoundOn', '../assets/button/soundOn.png');

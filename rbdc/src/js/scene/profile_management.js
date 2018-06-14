@@ -5,7 +5,7 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', '../assets/background/brownLight.png');
+        this.load.image('background', '../assets/background/beige.png');
     }
 
     create() {
