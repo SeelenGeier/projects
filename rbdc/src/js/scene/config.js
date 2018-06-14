@@ -21,7 +21,7 @@ class configScene extends Phaser.Scene {
         this.addBackground();
 
         // add button to return to profile management
-        this.addLogout(70, 300);
+        this.addLogout(70, 350);
 
         // add option to return to profile overview in top right corner
         this.addReturnButton(this.sys.game.config.width - 40, 30);
@@ -60,11 +60,11 @@ class configScene extends Phaser.Scene {
         if (saveObject.profiles[saveObject.currentProfile].sound == true) {
             saveObject.profiles[saveObject.currentProfile].sound = false;
             saveData();
-            this.buttonToggleSound.setTexture('buttonToggleSoundOff');
+            this.buttonToggleSound.buttonImage.setTexture('buttonToggleSoundOff');
         } else {
             saveObject.profiles[saveObject.currentProfile].sound = true;
             saveData();
-            this.buttonToggleSound.setTexture('buttonToggleSoundOn');
+            this.buttonToggleSound.buttonImage.setTexture('buttonToggleSoundOn');
         }
     }
 
@@ -72,26 +72,25 @@ class configScene extends Phaser.Scene {
         if (saveObject.profiles[saveObject.currentProfile].music == true) {
             saveObject.profiles[saveObject.currentProfile].music = false;
             saveData();
-            this.buttonToggleMusic.setTexture('buttonToggleMusicOff');
+            this.buttonToggleMusic.buttonImage.setTexture('buttonToggleMusicOff');
         } else {
             saveObject.profiles[saveObject.currentProfile].music = true;
             saveData();
-            this.buttonToggleMusic.setTexture('buttonToggleMusicOn');
+            this.buttonToggleMusic.buttonImage.setTexture('buttonToggleMusicOn');
         }
     }
 
     addLogout(x, y) {
         // add option to log out of profile
-        this.buttonProfileManagementLabel = this.add.text(x, y, 'return to profiles', {
+        this.buttonProfileManagementLabel = this.add.text(x, y, 'log out', {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 24,
             color: '#ffffff'
         });
         this.buttonProfileManagementLabel.setInteractive();
         this.buttonProfileManagementLabel.on('pointerup', this.goToProfileManagement, this);
-        new Button('buttonProfileManagement', 'buttonProfileManagement', this.buttonProfileManagementLabel.x - 22, this.buttonProfileManagementLabel.y + 7, this);
+        new Button('buttonProfileManagement', 'buttonProfileManagement', this.buttonProfileManagementLabel.x - 25, this.buttonProfileManagementLabel.y + this.buttonProfileManagementLabel.height/2, this);
         this.buttonProfileManagement.on('pointerup', this.goToProfileManagement, this);
-        this.buttonProfileManagement.setOrigin(0, 0);
     }
 
     addToggleSound(x, y) {
@@ -104,12 +103,11 @@ class configScene extends Phaser.Scene {
         this.buttonToggleSoundLabel.setInteractive();
         this.buttonToggleSoundLabel.on('pointerup', this.toggleSound, this);
         if (saveObject.profiles[saveObject.currentProfile].sound == true) {
-            new Button('buttonToggleSound', 'buttonToggleSoundOn', this.buttonToggleSoundLabel.x + this.buttonToggleSoundLabel.width + 5, this.buttonToggleSoundLabel.y + 3, this);
+            new Button('buttonToggleSound', 'buttonToggleSoundOn', this.buttonToggleSoundLabel.x - 25, this.buttonToggleSoundLabel.y + this.buttonToggleSoundLabel.height/2, this);
         } else {
-            new Button('buttonToggleSound', 'buttonToggleSoundOff', this.buttonToggleSoundLabel.x + this.buttonToggleSoundLabel.width + 5, this.buttonToggleSoundLabel.y + 3, this);
+            new Button('buttonToggleSound', 'buttonToggleSoundOff', this.buttonToggleSoundLabel.x - 25, this.buttonToggleSoundLabel.y + this.buttonToggleSoundLabel.height/2, this);
         }
         this.buttonToggleSound.on('pointerup', this.toggleSound, this);
-        this.buttonToggleSound.setOrigin(0, 0);
     }
 
     addToggleMusic(x, y) {
@@ -122,12 +120,11 @@ class configScene extends Phaser.Scene {
         this.buttonToggleMusicLabel.setInteractive();
         this.buttonToggleMusicLabel.on('pointerup', this.toggleMusic, this);
         if (saveObject.profiles[saveObject.currentProfile].music == true) {
-            new Button('buttonToggleMusic', 'buttonToggleMusicOn', this.buttonToggleMusicLabel.x + this.buttonToggleMusicLabel.width + 5, this.buttonToggleMusicLabel.y + 3, this);
+            new Button('buttonToggleMusic', 'buttonToggleMusicOn', this.buttonToggleMusicLabel.x - 25, this.buttonToggleMusicLabel.y + this.buttonToggleMusicLabel.height/2, this);
         } else {
-            new Button('buttonToggleMusic', 'buttonToggleMusicOff', this.buttonToggleMusicLabel.x + this.buttonToggleMusicLabel.width + 5, this.buttonToggleMusicLabel.y + 3, this);
+            new Button('buttonToggleMusic', 'buttonToggleMusicOff', this.buttonToggleMusicLabel.x - 25, this.buttonToggleMusicLabel.y + this.buttonToggleMusicLabel.height/2, this);
         }
         this.buttonToggleMusic.on('pointerup', this.toggleMusic, this);
-        this.buttonToggleMusic.setOrigin(0, 0);
     }
 
     addReturnButton(x, y) {
@@ -152,9 +149,8 @@ class configScene extends Phaser.Scene {
         this.buttonCreditsLabel.on('pointerup', this.showCredits, this);
 
         // add button
-        new Button('buttonCredits', 'buttonCredits', this.buttonCreditsLabel.x + this.buttonCreditsLabel.width + 5, this.buttonCreditsLabel.y + 3, this);
+        new Button('buttonCredits', 'buttonCredits', this.buttonCreditsLabel.x - 25, this.buttonCreditsLabel.y + this.buttonCreditsLabel.height/2, this);
         this.buttonCredits.on('pointerup', this.showCredits, this);
-        this.buttonCredits.setOrigin(0, 0);
     }
 
     showCredits() {

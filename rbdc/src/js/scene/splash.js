@@ -32,7 +32,7 @@ class splashScene extends Phaser.Scene {
         });
         this.splashAuthor.x = this.sys.game.config.width / 2 - this.splashAuthor.width / 2;
 
-        this.time.delayedCall(2000, this.activatePointer, [], this);
+        this.time.delayedCall(20, this.activatePointer, [], this);
     }
 
     fadeSplash() {

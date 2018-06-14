@@ -154,12 +154,12 @@ class profileManagementScene extends Phaser.Scene {
         this.profileText[counter].on('pointerup', this.selectProfile, this.profileText[counter]);
 
         this.profileNameBackground[counter].setX(this.profileText[counter].x-10);
-        this.profileNameBackground[counter].setY(this.profileText[counter].y-5);
-        this.profileNameBackground[counter].setScale((this.profileText[counter].width+20)/this.profileNameBackground[counter].width, (this.profileText[counter].height+10)/this.profileNameBackground[counter].height);
+        this.profileNameBackground[counter].setY(this.profileText[counter].y-10);
+        this.profileNameBackground[counter].setScale((this.profileText[counter].width+20)/this.profileNameBackground[counter].width, (this.profileText[counter].height+20)/this.profileNameBackground[counter].height);
     }
 
     addProfileDeleteButtonList(x, y, counter, profile) {
-        new Button('profile' + counter + '_delete', 'buttonDelete', x - 36, y + 52 * counter + 20, this);
+        new Button('profile' + counter + '_delete', 'buttonDelete', x - 36, y + 52 * counter + 18, this);
         this['profile' + counter + '_delete'].profile = profile;
         this['profile' + counter + '_delete'].on('pointerup', this.confirmDeleteProfile, this['profile' + counter + '_delete']);
     }
