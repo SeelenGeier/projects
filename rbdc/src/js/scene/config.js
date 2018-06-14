@@ -6,14 +6,13 @@ class configScene extends Phaser.Scene {
 
     preload() {
         this.load.image('background', '../assets/background/brownLight.png');
-        // TODO: replace button images
-        this.load.spritesheet('buttonProfileManagement', '../assets/button/cross.png', {frameWidth: 18, frameHeight: 18});
-        this.load.spritesheet('buttonProfileOverview', '../assets/button/cross.png', {frameWidth: 18, frameHeight: 18});
-        this.load.spritesheet('buttonToggleSoundOn', '../assets/button/check.png', {frameWidth: 21, frameHeight: 20});
-        this.load.spritesheet('buttonToggleSoundOff', '../assets/button/cross.png', {frameWidth: 18, frameHeight: 18});
-        this.load.spritesheet('buttonToggleMusicOn', '../assets/button/check.png', {frameWidth: 21, frameHeight: 20});
-        this.load.spritesheet('buttonToggleMusicOff', '../assets/button/cross.png', {frameWidth: 18, frameHeight: 18});
-        this.load.spritesheet('buttonCredits', '../assets/button/check.png', {frameWidth: 21, frameHeight: 20});
+        this.load.image('buttonProfileManagement', '../assets/button/menu.png');
+        this.load.image('buttonProfileOverview', '../assets/button/return.png');
+        this.load.image('buttonToggleSoundOn', '../assets/button/soundOn.png');
+        this.load.image('buttonToggleSoundOff', '../assets/button/soundOff.png');
+        this.load.image('buttonToggleMusicOn', '../assets/button/musicOn.png');
+        this.load.image('buttonToggleMusicOff', '../assets/button/musicOff.png');
+        this.load.image('buttonCredits', '../assets/button/credits.png');
     }
 
     create() {
@@ -60,11 +59,11 @@ class configScene extends Phaser.Scene {
         if (saveObject.profiles[saveObject.currentProfile].sound == true) {
             saveObject.profiles[saveObject.currentProfile].sound = false;
             saveData();
-            this.buttonToggleSound.buttonImage.setTexture('buttonToggleSoundOff');
+            this.buttonToggleSound.setTexture('buttonToggleSoundOff');
         } else {
             saveObject.profiles[saveObject.currentProfile].sound = true;
             saveData();
-            this.buttonToggleSound.buttonImage.setTexture('buttonToggleSoundOn');
+            this.buttonToggleSound.setTexture('buttonToggleSoundOn');
         }
     }
 
@@ -72,11 +71,11 @@ class configScene extends Phaser.Scene {
         if (saveObject.profiles[saveObject.currentProfile].music == true) {
             saveObject.profiles[saveObject.currentProfile].music = false;
             saveData();
-            this.buttonToggleMusic.buttonImage.setTexture('buttonToggleMusicOff');
+            this.buttonToggleMusic.setTexture('buttonToggleMusicOff');
         } else {
             saveObject.profiles[saveObject.currentProfile].music = true;
             saveData();
-            this.buttonToggleMusic.buttonImage.setTexture('buttonToggleMusicOn');
+            this.buttonToggleMusic.setTexture('buttonToggleMusicOn');
         }
     }
 

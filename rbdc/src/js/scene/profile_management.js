@@ -6,8 +6,8 @@ class profileManagementScene extends Phaser.Scene {
 
     preload() {
         this.load.image('background', '../assets/background/brownLight.png');
-        this.load.spritesheet('buttonNew', '../assets/button/check.png', {frameWidth: 21, frameHeight: 20});
-        this.load.spritesheet('buttonDelete', '../assets/button/cross.png', {frameWidth: 18, frameHeight: 18});
+        this.load.image('buttonNew', '../assets/button/check.png');
+        this.load.image('buttonDelete', '../assets/button/cross.png');
     }
 
     create() {
@@ -141,7 +141,7 @@ class profileManagementScene extends Phaser.Scene {
 
     addProfileNameList(x, y, counter, profile) {
         // add background for profile
-        this.profileNameBackground[counter] = this.add.sprite(x, y, 'uipack_rpg').setFrame('buttonLong_grey.png');
+        this.profileNameBackground[counter] = this.add.sprite(x, y, 'uipack_rpg', 'buttonLong_grey.png');
         this.profileNameBackground[counter].setOrigin(0,0);
 
         this.profileText[counter] = this.add.text(x, y + 52 * counter + 6, profile, {

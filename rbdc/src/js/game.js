@@ -39,9 +39,6 @@ function preload() {
 
     // load dialog background and buttons
     this.load.image('backgroundBlack', '../assets/background/black.png');
-    this.load.image('backgroundDialog', '../assets/background/dialog.png');
-    this.load.spritesheet('buttonYes', '../assets/button/check.png', {frameWidth: 21, frameHeight: 20});
-    this.load.spritesheet('buttonNo', '../assets/button/cross.png', {frameWidth: 18, frameHeight: 18});
     this.load.atlasXML('uipack_rpg', '../assets/spritesheet/uipack_rpg.png', '../assets/spritesheet/uipack_rpg.xml');
 }
 

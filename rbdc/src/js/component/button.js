@@ -2,8 +2,14 @@ class Button {
     constructor(name, buttonImage, x, y, parent) {
         this.parent = parent;
         this.name = name;
-        parent[name] = parent.add.sprite(x, y, 'uipack_rpg').setFrame('buttonSquare_beige.png');
-        parent[name].buttonImage = parent.add.image(parent[name].x, parent[name].y, buttonImage);
+        if(Array.isArray(buttonImage)) {
+            parent[name] = parent.add.sprite(x, y, buttonImage[0], buttonImage[1]);
+            if(buttonImage.length > 2) {
+                parent[name].setTint(buttonImage[2]);
+            }
+        }else {
+            parent[name] = parent.add.image(x, y, buttonImage);
+        }
         // add clickable overlay
         parent[name].setInteractive();
         parent[name].on('pointerover', this.hoverOn, this);
@@ -13,13 +19,11 @@ class Button {
     }
 
     buttonDown() {
-        this.parent[this.name].setFrame('buttonSquare_beige_pressed.png');
-        this.parent[this.name].buttonImage.y = this.parent[this.name].buttonImage.y + 2;
+        this.parent[this.name].y = this.parent[this.name].y + 2;
     }
 
     buttonUp() {
-        this.parent[this.name].setFrame('buttonSquare_beige.png');
-        this.parent[this.name].buttonImage.y = this.parent[this.name].buttonImage.y - 2;
+        this.parent[this.name].y = this.parent[this.name].y - 2;
     }
 
     hoverOff() {

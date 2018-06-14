@@ -6,9 +6,9 @@ class profileOverviewScene extends Phaser.Scene {
 
     preload() {
         // TODO: replace button images
-        this.load.spritesheet('buttonConfig', '../assets/mockup/button.png', {frameWidth: 64, frameHeight: 64});
-        this.load.spritesheet('buttonShop', '../assets/mockup/button.png', {frameWidth: 64, frameHeight: 64});
-        this.load.spritesheet('buttonDungeon', '../assets/mockup/button.png', {frameWidth: 64, frameHeight: 64});
+        this.load.image('buttonConfig', '../assets/button/options.png');
+        this.load.image('buttonShop', '../assets/button/menu.png');
+        this.load.image('buttonDungeon', '../assets/button/menu.png');
     }
 
     create() {
