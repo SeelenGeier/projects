@@ -1,4 +1,4 @@
-<TextureAtlas imagePath="uipack_rpg.png">
+<TextureAtlas imagePath="sheet.png">
 	<SubTexture name="arrowBeige_left.png" x="303" y="486" width="22" height="21"/>
 	<SubTexture name="arrowBeige_right.png" x="171" y="486" width="22" height="21"/>
 	<SubTexture name="arrowBlue_left.png" x="193" y="486" width="22" height="21"/>

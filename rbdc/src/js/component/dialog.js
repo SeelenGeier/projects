@@ -42,15 +42,15 @@ class Dialog {
 
         if (confirm) {
             // add YES Button
-            new Button('buttonYES', ['uipack_rpg', 'iconCheck_beige.png', 0xff4444], parent.scene.sys.game.config.width / 2 + 30, parent.scene.sys.game.config.height / 2 + this.message.height / 2 + 35, parent.scene);
+            new Button('buttonYES', ['uipack_green', 'green_boxCheckmark.png'], parent.scene.sys.game.config.width / 2 + 30, parent.scene.sys.game.config.height / 2 + this.message.height / 2 + 35, parent.scene);
             parent.scene.buttonYES.on('pointerup', this.stopDialog, this);
 
             // add NO Button
-            new Button('buttonNO', ['uipack_rpg', 'iconCross_beige.png', 0x00cc66], parent.scene.sys.game.config.width / 2 - 30, parent.scene.sys.game.config.height / 2 + this.message.height / 2 + 35, parent.scene);
+            new Button('buttonNO', ['uipack_red', 'red_boxCross.png'], parent.scene.sys.game.config.width / 2 - 30, parent.scene.sys.game.config.height / 2 + this.message.height / 2 + 35, parent.scene);
             parent.scene.buttonNO.on('pointerup', this.stopDialog, this);
         } else {
             // add OK Button
-            new Button('buttonOK', ['uipack_rpg', 'iconCircle_beige.png', 0x66ccff], parent.scene.sys.game.config.width / 2, parent.scene.sys.game.config.height / 2 + this.message.height / 2 + 35, parent.scene);
+            new Button('buttonOK', ['uipack_blue', 'blue_boxTick.png'], parent.scene.sys.game.config.width / 2, parent.scene.sys.game.config.height / 2 + this.message.height / 2 + 35, parent.scene);
             parent.scene.buttonOK.on('pointerup', this.stopDialog, this);
         }
     }

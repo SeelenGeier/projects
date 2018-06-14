@@ -6,8 +6,6 @@ class profileManagementScene extends Phaser.Scene {
 
     preload() {
         this.load.image('background', '../assets/background/brownLight.png');
-        this.load.image('buttonNew', '../assets/button/check.png');
-        this.load.image('buttonDelete', '../assets/button/cross.png');
     }
 
     create() {
@@ -56,7 +54,7 @@ class profileManagementScene extends Phaser.Scene {
             var input = document.createElement('input');
             input.type = 'text';
             input.id = 'newProfileName';
-            input.style = 'position: relative; left: ' + x + 'px; bottom: ' + y + 'px; width: 165px;';
+            input.style = 'position: relative; left: ' + x + 'px; bottom: ' + y + 'px; width: 155px;';
             document.getElementById(gameConfig.parent).appendChild(input);
         }
     }
@@ -159,7 +157,7 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     addProfileDeleteButtonList(x, y, counter, profile) {
-        new Button('profile' + counter + '_delete', 'buttonDelete', x - 36, y + 52 * counter + 18, this);
+        new Button('profile' + counter + '_delete', ['uipack_red', 'red_boxCross.png'], x - 40, y + 52 * counter + 18, this);
         this['profile' + counter + '_delete'].profile = profile;
         this['profile' + counter + '_delete'].on('pointerup', this.confirmDeleteProfile, this['profile' + counter + '_delete']);
     }
@@ -183,7 +181,7 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     addNewProfileButton(x, y) {
-        new Button('buttonNewProfile', 'buttonNew', x, y, this);
+        new Button('buttonNewProfile', ['uipack_green', 'green_boxCheckmark.png'], x, y, this);
         this.buttonNewProfile.on('pointerup', this.createNewProfile, this);
         this.input.keyboard.on('keydown_ENTER', this.createNewProfile, this);
     }

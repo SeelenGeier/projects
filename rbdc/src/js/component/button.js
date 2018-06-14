@@ -4,9 +4,6 @@ class Button {
         this.name = name;
         if(Array.isArray(buttonImage)) {
             parent[name] = parent.add.sprite(x, y, buttonImage[0], buttonImage[1]);
-            if(buttonImage.length > 2) {
-                parent[name].setTint(buttonImage[2]);
-            }
         }else {
             parent[name] = parent.add.image(x, y, buttonImage);
         }
