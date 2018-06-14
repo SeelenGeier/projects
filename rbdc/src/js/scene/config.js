@@ -20,19 +20,19 @@ class configScene extends Phaser.Scene {
         this.addBackground();
 
         // add button to return to profile management
-        this.addLogout(70, 350);
+        this.addLogout(80, 350);
 
         // add option to return to profile overview in top right corner
         this.addReturnButton(this.sys.game.config.width - 40, 30);
 
         // add button to toggle music setting
-        this.addCredits(70, 150);
+        this.addCredits(80, 150);
 
         // add button to toggle sound setting
-        this.addToggleSound(70, 200);
+        this.addToggleSound(80, 200);
 
         // add button to toggle music setting
-        this.addToggleMusic(70, 250);
+        this.addToggleMusic(80, 250);
     }
 
     update() {
@@ -88,7 +88,7 @@ class configScene extends Phaser.Scene {
         });
         this.buttonProfileManagementLabel.setInteractive();
         this.buttonProfileManagementLabel.on('pointerup', this.goToProfileManagement, this);
-        new Button('buttonProfileManagement', 'buttonProfileManagement', this.buttonProfileManagementLabel.x - 25, this.buttonProfileManagementLabel.y + this.buttonProfileManagementLabel.height/2, this);
+        new Button('buttonProfileManagement', 'buttonProfileManagement', this.buttonProfileManagementLabel.x - 35, this.buttonProfileManagementLabel.y + this.buttonProfileManagementLabel.height/2, this);
         this.buttonProfileManagement.on('pointerup', this.goToProfileManagement, this);
     }
 
@@ -102,9 +102,9 @@ class configScene extends Phaser.Scene {
         this.buttonToggleSoundLabel.setInteractive();
         this.buttonToggleSoundLabel.on('pointerup', this.toggleSound, this);
         if (saveObject.profiles[saveObject.currentProfile].sound == true) {
-            new Button('buttonToggleSound', 'buttonToggleSoundOn', this.buttonToggleSoundLabel.x - 25, this.buttonToggleSoundLabel.y + this.buttonToggleSoundLabel.height/2, this);
+            new Button('buttonToggleSound', 'buttonToggleSoundOn', this.buttonToggleSoundLabel.x - 35, this.buttonToggleSoundLabel.y + this.buttonToggleSoundLabel.height/2, this);
         } else {
-            new Button('buttonToggleSound', 'buttonToggleSoundOff', this.buttonToggleSoundLabel.x - 25, this.buttonToggleSoundLabel.y + this.buttonToggleSoundLabel.height/2, this);
+            new Button('buttonToggleSound', 'buttonToggleSoundOff', this.buttonToggleSoundLabel.x -35, this.buttonToggleSoundLabel.y + this.buttonToggleSoundLabel.height/2, this);
         }
         this.buttonToggleSound.on('pointerup', this.toggleSound, this);
     }
@@ -119,9 +119,9 @@ class configScene extends Phaser.Scene {
         this.buttonToggleMusicLabel.setInteractive();
         this.buttonToggleMusicLabel.on('pointerup', this.toggleMusic, this);
         if (saveObject.profiles[saveObject.currentProfile].music == true) {
-            new Button('buttonToggleMusic', 'buttonToggleMusicOn', this.buttonToggleMusicLabel.x - 25, this.buttonToggleMusicLabel.y + this.buttonToggleMusicLabel.height/2, this);
+            new Button('buttonToggleMusic', 'buttonToggleMusicOn', this.buttonToggleMusicLabel.x - 35, this.buttonToggleMusicLabel.y + this.buttonToggleMusicLabel.height/2, this);
         } else {
-            new Button('buttonToggleMusic', 'buttonToggleMusicOff', this.buttonToggleMusicLabel.x - 25, this.buttonToggleMusicLabel.y + this.buttonToggleMusicLabel.height/2, this);
+            new Button('buttonToggleMusic', 'buttonToggleMusicOff', this.buttonToggleMusicLabel.x - 35, this.buttonToggleMusicLabel.y + this.buttonToggleMusicLabel.height/2, this);
         }
         this.buttonToggleMusic.on('pointerup', this.toggleMusic, this);
     }
@@ -148,7 +148,7 @@ class configScene extends Phaser.Scene {
         this.buttonCreditsLabel.on('pointerup', this.showCredits, this);
 
         // add button
-        new Button('buttonCredits', 'buttonCredits', this.buttonCreditsLabel.x - 25, this.buttonCreditsLabel.y + this.buttonCreditsLabel.height/2, this);
+        new Button('buttonCredits', 'buttonCredits', this.buttonCreditsLabel.x - 35, this.buttonCreditsLabel.y + this.buttonCreditsLabel.height/2, this);
         this.buttonCredits.on('pointerup', this.showCredits, this);
     }
 

@@ -50,7 +50,7 @@ class Dialog {
             parent.scene.buttonNO.on('pointerup', this.stopDialog, this);
         } else {
             // add OK Button
-            new Button('buttonOK', ['uipack_rpg', 'iconCheck_beige.png', 0x66ccff], parent.scene.sys.game.config.width / 2, parent.scene.sys.game.config.height / 2 + this.message.height / 2 + 35, parent.scene);
+            new Button('buttonOK', ['uipack_rpg', 'iconCircle_beige.png', 0x66ccff], parent.scene.sys.game.config.width / 2, parent.scene.sys.game.config.height / 2 + this.message.height / 2 + 35, parent.scene);
             parent.scene.buttonOK.on('pointerup', this.stopDialog, this);
         }
     }
