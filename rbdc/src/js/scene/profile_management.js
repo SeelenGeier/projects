@@ -139,13 +139,13 @@ class profileManagementScene extends Phaser.Scene {
 
     addProfileNameList(x, y, counter, profile) {
         // add background for profile
-        this.profileNameBackground[counter] = this.add.sprite(x, y, 'uipack_rpg', 'buttonLong_grey.png');
+        this.profileNameBackground[counter] = this.add.sprite(x, y, 'uipack_rpg', 'buttonLong_blue_pressed.png');
         this.profileNameBackground[counter].setOrigin(0,0);
 
         this.profileText[counter] = this.add.text(x, y + 52 * counter + 6, profile, {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 24,
-            color: '#000000'
+            color: '#eeeeff'
         });
         this.profileText[counter].setInteractive();
         this.profileText[counter].profile = profile;
