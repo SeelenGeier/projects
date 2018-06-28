@@ -37,8 +37,11 @@ function preload() {
     this.load.json('trinkets', 'config/trinkets.json');
     this.load.json('valuables', 'config/valuables.json');
 
-    // load dialog background and buttons
+    // load backgrounds
     this.load.image('backgroundBlack', '../assets/background/black.png');
+    this.load.image('backgroundParchment', '../assets/background/parchment.png');
+
+    // load texture atlases
     this.load.atlasXML('uipack_blue', '../assets/spritesheet/uipack_blue.png', '../assets/spritesheet/uipack_blue.xml');
     this.load.atlasXML('uipack_green', '../assets/spritesheet/uipack_green.png', '../assets/spritesheet/uipack_green.xml');
     this.load.atlasXML('uipack_grey', '../assets/spritesheet/uipack_grey.png', '../assets/spritesheet/uipack_grey.xml');

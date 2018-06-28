@@ -10,7 +10,7 @@ class Dialog {
         this.greyBackground.setInteractive();
 
         // add dialog box in center of screen
-        this.dialogBackground = parent.scene.add.sprite(parent.scene.sys.game.config.width / 2, parent.scene.sys.game.config.height / 2 + 15, 'uipack_rpg', 'panel_beige.png');
+        this.dialogBackground = parent.scene.add.sprite(parent.scene.sys.game.config.width / 2, parent.scene.sys.game.config.height / 2 + 15, 'backgroundParchment');
 
         // add title to message box
         this.title = parent.scene.add.text(parent.scene.sys.game.config.width / 2, parent.scene.sys.game.config.height / 2 - 30, title, {
@@ -33,9 +33,9 @@ class Dialog {
         this.title.y = parent.scene.sys.game.config.height / 2 - this.message.height / 2 - 10;
 
         // scale dialog box to fit title and message
-        var backgroundScaleWidth = (this.message.width + 40) / this.dialogBackground.width;
+        var backgroundScaleWidth = (this.message.width + 50) / this.dialogBackground.width;
         if (((this.title.width + 40) / this.dialogBackground.width) > backgroundScaleWidth) {
-            backgroundScaleWidth = (this.title.width + 40) / this.dialogBackground.width;
+            backgroundScaleWidth = (this.title.width + 50) / this.dialogBackground.width;
         }
         var backgroundScaleHeight = (this.message.height + this.title.height + 100) / this.dialogBackground.height;
         this.dialogBackground.setScale(backgroundScaleWidth, backgroundScaleHeight);
