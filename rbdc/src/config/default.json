@@ -6,7 +6,7 @@
     "title": "Room Based Dungeon Crawler",
     "author": "SeelenGeier",
     "fontFamily": "MedievalSharp",
-    "credits": "Code\nSeelenGeier\n\nAssets\nUI: Kenney (www.kenney.nl)"
+    "credits": "Code\nSeelenGeier\n\nAssets\nButtons: Kenney (www.kenney.nl)\nParchment: Ansimuz (ansimuz.itch.io)"
   },
   "equipment": {
     "weapon": "knife",
