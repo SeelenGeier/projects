@@ -108,145 +108,169 @@ function initializeSaveObject() {
     saveData();
 }
 
-function addItemToInventory(itemId) {
+function giveItem(itemType, durability) {
+    let type = itemType.split(".");
+    // check if durability is a number
+    if(typeof durability != 'number')
+    {
+        console.log('Item durability is not a number');
+        return false;
+    }
+    // check if item type contains two parts
+    if(type.length != 2){
+        console.log('Item type does not contain two parts (separated by .)');
+        return false;
+    }
+    // check if item category exists
+    if(!config.includes(type[0])) {
+        console.log('Item type category does not exist');
+        return false;
+    }
+    // check if item type exists
+    if(!config.type[0].includes(type[1])) {
+        console.log('Item type does not exist');
+        return false;
+    }
+    // add item to items in inventory
+    saveObject.profiles[saveObject.currentProfile].inventory.items[this.generateItemId()] = {
+            itemType: itemType,
+            durability: durability,
+            equipped: false
+    };
+    return true;
+}
 
+function generateItemId() {
+    let id = 0;
+    while (saveObject.profiles[saveObject.currentProfile].inventory.items.hasOwnProperty(id)) {
+        id++;
+    }
+    return id;
+}
+
+function toggleItemEquipped(id) {
+    saveObject.profiles[saveObject.currentProfile].inventory.items[id].equipped = !saveObject.profiles[saveObject.currentProfile].inventory.items[id].equipped;
 }
 
 function validateSaveData() {
     // skip validation if saveObject does not even exist
     if (saveObject == undefined) {
-        console.log('No save found, skipping validation.');
-        this.exitValidation(true);
+        this.exitValidation('No save found, skipping validation.');
     }
 
     // check if saveObject is indeed an object
     if (typeof saveObject != 'object') {
-        console.log('Save is not an object.');
-        return this.exitValidation(false);
+        return this.exitValidation('Save is not an object.');
     }
 
     // check if saveObject has an attribute called profiles
     if (!saveObject.hasOwnProperty('profiles')) {
-        console.log('Save does not have profiles property.');
-        return this.exitValidation(false);
+        return this.exitValidation('Save does not have profiles property.');
     }
 
     // check if the attribute profiles is an object
     if (typeof saveObject.profiles != 'object') {
-        console.log('Profiles are not saved as an object.');
-        return this.exitValidation(false);
+        return this.exitValidation('Profiles are not saved as an object.');
     }
 
     // check if a current profile is set
     if (saveObject.currentProfile != undefined) {
 
-        //check if the current profile contains a string
+        // check if the current profile contains a string
         if (typeof saveObject.currentProfile != 'string') {
-            console.log('Current profile is not saved as a string.');
-            return this.exitValidation(false);
+            return this.exitValidation('Current profile is not saved as a string.');
         }
 
         // check if the current profile exists within the saved profiles list
         if (!saveObject.profiles.hasOwnProperty(saveObject.currentProfile)) {
-            console.log('Current profile does not exist in profiles.');
-            return this.exitValidation(false);
+            return this.exitValidation('Current profile does not exist in profiles.');
         }
-    }
-    if(saveObject.profiles == undefined) {
-        console.log('Save data validation failed!');
-        return false;
     }
     // check if at least one profile exists
     if (Object.keys(saveObject.profiles).length > 0) {
-        //check all profiles
+        // check all profiles
         for (profile in saveObject.profiles) {
-
             // check if the profile is an object
             if (typeof saveObject.profiles[profile] != 'object') {
-                console.log('Profile is not saved as an object.');
-                return this.exitValidation(false);
+                return this.exitValidation('Profile is not saved as an object.');
             }
 
             // check if the profile contains a scene
             if (!saveObject.profiles[profile].hasOwnProperty('scene')) {
-                console.log('Profile does not have scene property.');
-                return this.exitValidation(false);
+                return this.exitValidation('Profile does not have scene property.');
             } else {
                 // check if the provided scene exists
                 if (game.scene.getScene(saveObject.profiles[profile].scene) == null) {
-                    console.log('Profile references an invalid scene.');
-                    return this.exitValidation(false);
+                    return this.exitValidation('Profile references an invalid scene.');
                 }
             }
 
             // check if the profile contains a sound setting
             if (!saveObject.profiles[profile].hasOwnProperty('sound')) {
-                console.log('Profile does not have sound property.');
-                return this.exitValidation(false);
+                return this.exitValidation('Profile does not have sound property.');
             } else {
-                //check if the sound setting contains a boolean
+                // check if the sound setting contains a boolean
                 if (typeof saveObject.profiles[profile].sound != 'boolean') {
-                    console.log('Sound setting is not boolean.');
-                    return this.exitValidation(false);
+                    return this.exitValidation('Sound setting is not boolean.');
                 }
             }
 
             // check if the profile contains a music setting
             if (!saveObject.profiles[profile].hasOwnProperty('music')) {
-                console.log('Profile does not have music property.');
-                return this.exitValidation(false);
+                return this.exitValidation('Profile does not have music property.');
             } else {
-                //check if the music setting contains a boolean
+                // check if the music setting contains a boolean
                 if (typeof saveObject.profiles[profile].music != 'boolean') {
-                    console.log('Music setting is not boolean.');
-                    return this.exitValidation(false);
+                    return this.exitValidation('Music setting is not boolean.');
                 }
             }
 
-            // check if the profile contains a music setting
+            // check if the profile contains an inventory
             if (!saveObject.profiles[profile].hasOwnProperty('inventory')) {
-                console.log('Profile does not have inventory property.');
-                return this.exitValidation(false);
+                return this.exitValidation('Profile does not have inventory property.');
             } else {
-                //check if the inventory contains an object
+                // check if the inventory is an object
                 if (typeof saveObject.profiles[profile].inventory != 'object') {
-                    console.log('Inventory is not an object.');
-                    return this.exitValidation(false);
+                    return this.exitValidation('Inventory is not an object.');
                 }
             }
             // check if the inventory of the current profile contains a currency value
             if (!saveObject.profiles[profile].inventory.hasOwnProperty('currency')) {
-                console.log('Inventory does not have currency property.');
-                return this.exitValidation(false);
+                return this.exitValidation('Inventory does not have currency property.');
             } else {
-                //check if the inventory contains an object
+                // check if the currency is a number
                 if (typeof saveObject.profiles[profile].inventory.currency != 'number') {
-                    console.log('Currency is not a number.');
-                    return this.exitValidation(false);
+                    return this.exitValidation('Currency is not a number.');
                 }
             }
             if (!saveObject.profiles[profile].inventory.hasOwnProperty('items')) {
-                console.log('Inventory does not have items property.');
-                return this.exitValidation(false);
+                return this.exitValidation('Inventory does not have items property.');
             }
-            //check if inventory contains more items than possible
-            if(Object.keys(saveObject.profiles[profile].inventory.items).length > config.default.status.inventorySize) {
-                console.log('Inventory contains more than ' + config.default.status.inventorySize + ' Items.');
-                return this.exitValidation(false);
+            // check if inventory contains more items than possible
+            if (Object.keys(saveObject.profiles[profile].inventory.items).length > config.default.status.inventorySize) {
+                return this.exitValidation('Inventory contains more than ' + config.default.status.inventorySize + ' Items.');
             }
-            //check all inventory items
-            for (profile in saveObject.profiles[profile].inventory.items) {
+            // check all inventory items
+            for (item in saveObject.profiles[profile].inventory.items) {
+                // check if item has id property
+                // check if item id is unique
+                // check if item has type property
+                // check if item type exists
+                // check if item has durability property
+                // check if durability is a number
+                // check if item has equipped property
+                // check if item equipped status is boolean
             }
         }
     }
-    return this.exitValidation(true);
+    return this.exitValidation();
 }
 
-function exitValidation(success) {
-    if (success) {
+function exitValidation(error_message = undefined) {
+    if (error_message == undefined) {
         return true;
     } else {
-        console.log('Save data validation failed!');
+        console.log(error_message);
         return false;
     }
 }
