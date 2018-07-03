@@ -6,14 +6,17 @@ class profileOverviewScene extends Phaser.Scene {
 
     preload() {
         // TODO: replace button images
+        this.load.image('backgroundProfileOverview', '../assets/background/profile_overview_mockup.png');
         this.load.image('buttonConfig', '../assets/button/options.png');
         this.load.image('buttonShop', '../assets/button/menu.png');
-        this.load.image('buttonDungeon', '../assets/button/menu.png');
     }
 
     create() {
         saveObject.profiles[saveObject.currentProfile].scene = 'profileOverview';
         saveData();
+
+        // add button to navigate to config
+        this.addBackground();
 
         // add button to navigate to config
         this.addNavigationConfig(this.sys.game.config.width / 2, 30);
@@ -25,7 +28,7 @@ class profileOverviewScene extends Phaser.Scene {
         this.addNavigationDungeon(this.sys.game.config.width - 30, this.sys.game.config.height / 2);
 
         // add profile name in the top center
-        this.addProfileName(this.sys.game.config.width / 2, 100);
+        this.addProfileName(this.sys.game.config.width / 2, 150);
     }
 
     update() {
@@ -71,7 +74,13 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     addNavigationDungeon(x, y) {
-        new Button('buttonDungeon', 'buttonDungeon', x, y, this);
+        new Button('buttonDungeon', ['uipack_rpg', 'cursorSword_silver.png'], x, y, this);
         this.buttonDungeon.on('pointerup', this.goToDungeon, this);
+    }
+
+    addBackground() {
+        this.backgroundImage = this.add.sprite(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'backgroundProfileOverview');
+        // scale background to screen size and add a few more pixels to prevent flickering
+        this.backgroundImage.setScale((this.sys.game.config.width + 10) / this.backgroundImage.width, (this.sys.game.config.height + 10) / this.backgroundImage.height);
     }
 }

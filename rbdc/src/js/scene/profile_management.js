@@ -139,13 +139,13 @@ class profileManagementScene extends Phaser.Scene {
 
     addProfileNameList(x, y, counter, profile) {
         // add background for profile
-        this.profileNameBackground[counter] = this.add.sprite(x, y, 'uipack_rpg', 'buttonLong_blue_pressed.png');
+        this.profileNameBackground[counter] = this.add.sprite(x, y, 'uipack_rpg', 'buttonLong_grey_pressed.png');
         this.profileNameBackground[counter].setOrigin(0,0);
 
         this.profileText[counter] = this.add.text(x, y + 52 * counter + 6, profile, {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 24,
-            color: '#eeeeff'
+            color: '#000000'
         });
         this.profileText[counter].setInteractive();
         this.profileText[counter].profile = profile;
@@ -177,7 +177,7 @@ class profileManagementScene extends Phaser.Scene {
         this.backgroundImage = this.add.sprite(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'background');
 
         // scale background to screen size and add a few more pixels to prevent flickering
-        this.backgroundImage.setScale(this.sys.game.config.width + 10 / this.backgroundImage.width, this.sys.game.config.height + 10 / this.backgroundImage.height);
+        this.backgroundImage.setScale((this.sys.game.config.width + 10) / this.backgroundImage.width, (this.sys.game.config.height + 10) / this.backgroundImage.height);
     }
 
     addNewProfileButton(x, y) {

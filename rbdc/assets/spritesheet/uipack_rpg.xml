@@ -63,9 +63,9 @@
 	<SubTexture name="cursorHand_beige.png" x="90" y="482" width="27" height="28"/>
 	<SubTexture name="cursorHand_blue.png" x="117" y="482" width="27" height="28"/>
 	<SubTexture name="cursorHand_grey.png" x="144" y="482" width="27" height="28"/>
-	<SubTexture name="cursorSword_bronze.png" x="338" y="331" width="34" height="37"/>
-	<SubTexture name="cursorSword_gold.png" x="338" y="294" width="34" height="37"/>
-	<SubTexture name="cursorSword_silver.png" x="335" y="152" width="34" height="37"/>
+	<SubTexture name="cursorSword_bronze.png" x="338" y="331" width="34" height="36"/>
+	<SubTexture name="cursorSword_gold.png" x="338" y="294" width="34" height="36"/>
+	<SubTexture name="cursorSword_silver.png" x="335" y="152" width="34" height="36"/>
 	<SubTexture name="iconCheck_beige.png" x="369" y="184" width="16" height="15"/>
 	<SubTexture name="iconCheck_blue.png" x="370" y="30" width="16" height="15"/>
 	<SubTexture name="iconCheck_bronze.png" x="370" y="45" width="16" height="15"/>

@@ -1,7 +1,7 @@
 let gameConfig = {
     type: Phaser.AUTO,
-    width: 384,
-    height: 512,
+    width: 750 / 2,
+    height: 1334 / 2,
     parent: 'rbdcGame',
     backgroundColor: '#000000',
     scene: [{
