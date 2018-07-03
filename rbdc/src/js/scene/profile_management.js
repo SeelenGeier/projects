@@ -100,7 +100,10 @@ class profileManagementScene extends Phaser.Scene {
                     scene: 'profileOverview', // always start new profiles in overview scene
                     sound: true,
                     music: true,
-                    inventory: {}
+                    inventory: {
+                        currency: config.default.status.currency,
+                        items: {}
+                    }
                 };
 
                 saveData();
