@@ -151,7 +151,7 @@ function validateSaveData() {
         }
     }
     // check if at least one profile exists
-    if (Object.keys(saveObject.profiles).length > 0) {
+    if (saveObject.profiles != undefined && Object.keys(saveObject.profiles).length > 0) {
         //check all profiles
         for (profile in saveObject.profiles) {
 
@@ -178,7 +178,7 @@ function validateSaveData() {
                 console.log('Profile does not have sound property.');
                 checkSuccesful = false;
             } else {
-                //check if the current profile contains a string
+                //check if the sound setting contains a boolean
                 if (typeof saveObject.profiles[profile].sound != 'boolean') {
                     console.log('Sound setting is not boolean.');
                     checkSuccesful = false;
@@ -190,10 +190,28 @@ function validateSaveData() {
                 console.log('Profile does not have music property.');
                 checkSuccesful = false;
             } else {
-                //check if the current profile contains a string
+                //check if the music setting contains a boolean
                 if (typeof saveObject.profiles[profile].music != 'boolean') {
                     console.log('Music setting is not boolean.');
                     checkSuccesful = false;
+                }
+            }
+
+            // check if the profile contains a music setting
+            if (saveObject.profiles[profile].hasOwnProperty('inventory') == -1) {
+                console.log('Profile does not have inventory property.');
+                checkSuccesful = false;
+            } else {
+                //check if the inventory contains an object
+                if (typeof saveObject.profiles[profile].inventory != 'object') {
+                    console.log('Inventory is not an object.');
+                    checkSuccesful = false;
+                }
+            }
+            // check if at least one inventory item exists
+            if (saveObject.profiles[profile].inventory != undefined && Object.keys(saveObject.profiles[profile].inventory).length > 0) {
+                //check all inventory items
+                for (profile in saveObject.profiles[profile].inventory) {
                 }
             }
         }

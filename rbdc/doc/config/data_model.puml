@@ -152,12 +152,23 @@ package Memory{
 
 database Storage {
     object saveObject {
-        attribute(scene) -> type(string)
-        attribute(music) -> type(bool)
-        attribute(sound) -> type(bool)
-        attribute(inventory) -> type(inventory)
-        attribute(character) -> type(character)
-        attribute(room) -> type(room)
+        profiles
+            \tprofileA
+                attribute(\t\tscene) -> type(string)
+                attribute(\t\tmusic) -> type(bool)
+                attribute(\t\tsound) -> type(bool)
+                attribute(\t\tinventory) -> type(inventory)
+                attribute(\t\tcharacter) -> type(character)
+                attribute(\t\troom) -> type(room)
+            \tprofileB
+                attribute(\t\tscene) -> type(string)
+                attribute(\t\tmusic) -> type(bool)
+                attribute(\t\tsound) -> type(bool)
+                attribute(\t\tinventory) -> type(inventory)
+                attribute(\t\tcharacter) -> type(character)
+                attribute(\t\troom) -> type(room)
+            \t...
+        attribute(current_profile) -> type(string)
     }
 }
 
