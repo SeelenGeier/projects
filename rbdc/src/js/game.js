@@ -39,6 +39,7 @@ function preload() {
 
     // load backgrounds
     this.load.image('backgroundBlack', '../assets/background/black.png');
+    this.load.image('backgroundBeige', '../assets/background/beige.png');
     this.load.image('backgroundParchment', '../assets/background/parchment.png');
 
     // load texture atlases
