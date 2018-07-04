@@ -104,6 +104,7 @@ class profileManagementScene extends Phaser.Scene {
                         items: {}
                     }
                 };
+                this.setInitialEquipment(newProfileName);
 
                 saveData();
 
@@ -187,5 +188,22 @@ class profileManagementScene extends Phaser.Scene {
         new Button('buttonNewProfile', ['uipack_green', 'green_boxCheckmark.png'], x, y, this);
         this.buttonNewProfile.on('pointerup', this.createNewProfile, this);
         this.input.keyboard.on('keydown_ENTER', this.createNewProfile, this);
+    }
+
+    setInitialEquipment(profile) {
+        let initialEquipment = {};
+
+        // go through all default equipment
+        for (var item in config.default.equipment) {
+            // check if any equipment is set
+            if(config.default.equipment[item] != null) {
+                // give item to profile
+                let id = giveItem(item, config.default.equipment[item], null, profile);
+                // equip initial items immediately
+                equipItem(id, profile);
+            }
+        }
+
+        return initialEquipment;
     }
 }

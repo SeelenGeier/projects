@@ -113,58 +113,6 @@ function initializeSaveObject() {
     saveData();
 }
 
-function giveItem(itemType, itemName, durability) {
-    // check if inventory is not full
-    if(Object.keys(saveObject.profiles[saveObject.currentProfile].inventory.items).length >= config.default.status.inventorySize) {
-        console.log('Inventory full, maximum of ' + config.default.status.inventorySize + ' reached');
-        return false;
-    }
-    // check if durability is a number
-    if (typeof durability != 'number') {
-        console.log('Item durability is not a number');
-        return false;
-    }
-    // check if item type exists
-    if (!config.hasOwnProperty(itemType)) {
-        console.log('Item type does not exist');
-        return false;
-    }
-    // check if item exists in item type
-    if (!config[itemType].hasOwnProperty(itemName)) {
-        console.log('Item does not exist in item type');
-        return false;
-    }
-    // add item to items in inventory
-    saveObject.profiles[saveObject.currentProfile].inventory.items[this.generateItemId()] = {
-        itemType: itemType,
-        itemName: itemName,
-        durability: durability,
-        equipped: false
-    };
-
-    saveData();
-    return true;
-}
-
-function generateItemId() {
-    let id = 0;
-    while (saveObject.profiles[saveObject.currentProfile].inventory.items.hasOwnProperty(id)) {
-        id++;
-    }
-    return id;
-}
-
-function equipItem(id) {
-    // unequip all other items with same itemType
-    for (item in saveObject.profiles[profile].inventory.items) {
-        if(item.itemType == saveObject.profiles[saveObject.currentProfile].inventory.items[id].itemType) {
-            saveObject.profiles[saveObject.currentProfile].inventory.items[id].equipped = false;
-        }
-    }
-    // set item as equipped
-    saveObject.profiles[saveObject.currentProfile].inventory.items[id].equipped = !saveObject.profiles[saveObject.currentProfile].inventory.items[id].equipped;
-}
-
 function validateSaveData() {
     // skip validation if saveObject does not even exist
     if (saveObject == undefined) {
@@ -261,6 +209,21 @@ function validateSaveData() {
             }
             // check all inventory items
             for (item in saveObject.profiles[profile].inventory.items) {
+                // check if durability is a number
+                if (saveObject.profiles[profile].inventory.items[item].durability != null && typeof saveObject.profiles[profile].inventory.items[item].durability != 'number') {
+                    console.log('Item durability is not a number');
+                    return false;
+                }
+                // check if item type exists
+                if (!config.hasOwnProperty(saveObject.profiles[profile].inventory.items[item].itemType)) {
+                    console.log('Item type does not exist');
+                    return false;
+                }
+                // check if item exists in item type
+                if (!config[saveObject.profiles[profile].inventory.items[item].itemType].hasOwnProperty(saveObject.profiles[profile].inventory.items[item].itemName)) {
+                    console.log('Item does not exist in item type');
+                    return false;
+                }
                 // check if item has id property
                 // check if item id is unique
                 // check if item has type property
