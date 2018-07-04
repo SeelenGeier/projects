@@ -37,7 +37,7 @@ function initializeSaveObject() {
 function validateSaveData() {
     // skip validation if saveObject does not even exist
     if (saveObject == undefined) {
-        this.exitValidation('No save found, skipping validation.');
+        return this.exitValidation('No save found, skipping validation.');
     }
 
     // check if saveObject is indeed an object
@@ -130,29 +130,34 @@ function validateSaveData() {
             }
             // check all inventory items
             for (item in saveObject.profiles[profile].inventory.items) {
+                // check if item has durability property
+                if (!saveObject.profiles[profile].inventory.items[item].hasOwnProperty('durability')) {
+                    return this.exitValidation('Item does not have durability property.');
+                }
                 // check if durability is a number
                 if (saveObject.profiles[profile].inventory.items[item].durability != null && typeof saveObject.profiles[profile].inventory.items[item].durability != 'number') {
-                    console.log('Item durability is not a number');
-                    return false;
+                    return this.exitValidation('Item durability is not a number or null');
+                }
+                // check if item has itemType property
+                if (!saveObject.profiles[profile].inventory.items[item].hasOwnProperty('itemType')) {
+                    return this.exitValidation('Item does not have item type property.');
                 }
                 // check if item type exists
                 if (!config.hasOwnProperty(saveObject.profiles[profile].inventory.items[item].itemType)) {
-                    console.log('Item type does not exist');
-                    return false;
+                    return this.exitValidation('Item type does not exist');
                 }
                 // check if item exists in item type
                 if (!config[saveObject.profiles[profile].inventory.items[item].itemType].hasOwnProperty(saveObject.profiles[profile].inventory.items[item].itemName)) {
-                    console.log('Item does not exist in item type');
-                    return false;
+                    return this.exitValidation('Item does not exist in item type');
                 }
-                // check if item has id property
-                // check if item id is unique
-                // check if item has type property
-                // check if item type exists
-                // check if item has durability property
-                // check if durability is a number
                 // check if item has equipped property
+                if (!saveObject.profiles[profile].inventory.items[item].hasOwnProperty('equipped')) {
+                    return this.exitValidation('Item does not have equipped property.');
+                }
                 // check if item equipped status is boolean
+                if (typeof saveObject.profiles[profile].inventory.items[item].equipped != 'boolean') {
+                    return this.exitValidation('Item equipped property is not a boolean');
+                }
             }
         }
     }
