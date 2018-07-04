@@ -7,8 +7,6 @@ class profileOverviewScene extends Phaser.Scene {
     preload() {
         // TODO: replace button images
         this.load.image('backgroundProfileOverview', '../assets/background/profile_overview_mockup.png');
-        this.load.image('buttonConfig', '../assets/button/options.png');
-        this.load.image('buttonShop', '../assets/button/menu.png');
     }
 
     create() {
@@ -64,17 +62,17 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     addNavigationConfig(x, y) {
-        new Button('buttonConfig', 'buttonConfig', x, y, this);
+        new Button('buttonConfig', ['gameicons_white', 'gear.png'], x, y, this);
         this.buttonConfig.on('pointerup', this.goToConfig, this);
     }
 
     addNavigationShop(x, y) {
-        new Button('buttonShop', 'buttonShop', x, y, this);
+        new Button('buttonShop', ['gameicons_white', 'cart.png'], x, y, this);
         this.buttonShop.on('pointerup', this.goToShop, this);
     }
 
     addNavigationDungeon(x, y) {
-        new Button('buttonDungeon', ['uipack_rpg', 'cursorSword_silver.png'], x, y, this);
+        new Button('buttonDungeon', ['gameicons_exp_white', 'fightFist.png'], x, y, this);
         this.buttonDungeon.on('pointerup', this.goToDungeon, this);
     }
 

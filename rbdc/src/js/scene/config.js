@@ -6,13 +6,6 @@ class configScene extends Phaser.Scene {
 
     preload() {
         this.load.image('background', '../assets/background/beige.png');
-        this.load.image('buttonProfileManagement', '../assets/button/menu.png');
-        this.load.image('buttonProfileOverview', '../assets/button/return.png');
-        this.load.image('buttonToggleSoundOn', '../assets/button/soundOn.png');
-        this.load.image('buttonToggleSoundOff', '../assets/button/soundOff.png');
-        this.load.image('buttonToggleMusicOn', '../assets/button/musicOn.png');
-        this.load.image('buttonToggleMusicOff', '../assets/button/musicOff.png');
-        this.load.image('buttonCredits', '../assets/button/credits.png');
     }
 
     create() {
@@ -59,11 +52,15 @@ class configScene extends Phaser.Scene {
         if (saveObject.profiles[saveObject.currentProfile].sound == true) {
             saveObject.profiles[saveObject.currentProfile].sound = false;
             saveData();
-            this.buttonToggleSound.setTexture('buttonToggleSoundOff');
+            this.buttonToggleSound.setTexture('gameicons_black');
+            this.buttonToggleSound.setFrame('audioOff.png');
+            this.buttonToggleSoundLabel.setColor('#000000');
         } else {
             saveObject.profiles[saveObject.currentProfile].sound = true;
             saveData();
-            this.buttonToggleSound.setTexture('buttonToggleSoundOn');
+            this.buttonToggleSound.setTexture('gameicons_white');
+            this.buttonToggleSound.setFrame('audioOn.png');
+            this.buttonToggleSoundLabel.setColor('#ffffff');
         }
     }
 
@@ -71,11 +68,15 @@ class configScene extends Phaser.Scene {
         if (saveObject.profiles[saveObject.currentProfile].music == true) {
             saveObject.profiles[saveObject.currentProfile].music = false;
             saveData();
-            this.buttonToggleMusic.setTexture('buttonToggleMusicOff');
+            this.buttonToggleMusic.setTexture('gameicons_black');
+            this.buttonToggleMusic.setFrame('musicOff.png');
+            this.buttonToggleMusicLabel.setColor('#000000');
         } else {
             saveObject.profiles[saveObject.currentProfile].music = true;
             saveData();
-            this.buttonToggleMusic.setTexture('buttonToggleMusicOn');
+            this.buttonToggleMusic.setTexture('gameicons_white');
+            this.buttonToggleMusic.setFrame('musicOn.png');
+            this.buttonToggleMusicLabel.setColor('#ffffff');
         }
     }
 
@@ -88,7 +89,7 @@ class configScene extends Phaser.Scene {
         });
         this.buttonProfileManagementLabel.setInteractive();
         this.buttonProfileManagementLabel.on('pointerup', this.goToProfileManagement, this);
-        new Button('buttonProfileManagement', 'buttonProfileManagement', this.buttonProfileManagementLabel.x - 35, this.buttonProfileManagementLabel.y + this.buttonProfileManagementLabel.height/2, this);
+        new Button('buttonProfileManagement', ['gameicons_white', 'menuList.png'], this.buttonProfileManagementLabel.x - 35, this.buttonProfileManagementLabel.y + this.buttonProfileManagementLabel.height/2, this);
         this.buttonProfileManagement.on('pointerup', this.goToProfileManagement, this);
     }
 
@@ -102,9 +103,10 @@ class configScene extends Phaser.Scene {
         this.buttonToggleSoundLabel.setInteractive();
         this.buttonToggleSoundLabel.on('pointerup', this.toggleSound, this);
         if (saveObject.profiles[saveObject.currentProfile].sound == true) {
-            new Button('buttonToggleSound', 'buttonToggleSoundOn', this.buttonToggleSoundLabel.x - 35, this.buttonToggleSoundLabel.y + this.buttonToggleSoundLabel.height/2, this);
+            new Button('buttonToggleSound', ['gameicons_white', 'audioOn.png'], this.buttonToggleSoundLabel.x - 35, this.buttonToggleSoundLabel.y + this.buttonToggleSoundLabel.height/2, this);
         } else {
-            new Button('buttonToggleSound', 'buttonToggleSoundOff', this.buttonToggleSoundLabel.x -35, this.buttonToggleSoundLabel.y + this.buttonToggleSoundLabel.height/2, this);
+            new Button('buttonToggleSound', ['gameicons_black', 'audioOff.png'], this.buttonToggleSoundLabel.x -35, this.buttonToggleSoundLabel.y + this.buttonToggleSoundLabel.height/2, this);
+            this.buttonToggleSoundLabel.setColor('#000000');
         }
         this.buttonToggleSound.on('pointerup', this.toggleSound, this);
     }
@@ -119,16 +121,17 @@ class configScene extends Phaser.Scene {
         this.buttonToggleMusicLabel.setInteractive();
         this.buttonToggleMusicLabel.on('pointerup', this.toggleMusic, this);
         if (saveObject.profiles[saveObject.currentProfile].music == true) {
-            new Button('buttonToggleMusic', 'buttonToggleMusicOn', this.buttonToggleMusicLabel.x - 35, this.buttonToggleMusicLabel.y + this.buttonToggleMusicLabel.height/2, this);
+            new Button('buttonToggleMusic', ['gameicons_white', 'musicOn.png'], this.buttonToggleMusicLabel.x - 35, this.buttonToggleMusicLabel.y + this.buttonToggleMusicLabel.height/2, this);
         } else {
-            new Button('buttonToggleMusic', 'buttonToggleMusicOff', this.buttonToggleMusicLabel.x - 35, this.buttonToggleMusicLabel.y + this.buttonToggleMusicLabel.height/2, this);
+            new Button('buttonToggleMusic', ['gameicons_black', 'musicOff.png'], this.buttonToggleMusicLabel.x - 35, this.buttonToggleMusicLabel.y + this.buttonToggleMusicLabel.height/2, this);
+            this.buttonToggleMusicLabel.setColor('#000000');
         }
         this.buttonToggleMusic.on('pointerup', this.toggleMusic, this);
     }
 
     addReturnButton(x, y) {
         // add button to return to overview
-        new Button('buttonProfileOverview', 'buttonProfileOverview', x, y, this);
+        new Button('buttonProfileOverview', ['gameicons_white', 'return.png'], x, y, this);
         this.buttonProfileOverview.on('pointerup', this.goToProfileOverview, this);
     }
 
@@ -148,7 +151,7 @@ class configScene extends Phaser.Scene {
         this.buttonCreditsLabel.on('pointerup', this.showCredits, this);
 
         // add button
-        new Button('buttonCredits', 'buttonCredits', this.buttonCreditsLabel.x - 35, this.buttonCreditsLabel.y + this.buttonCreditsLabel.height/2, this);
+        new Button('buttonCredits', ['gameicons_white', 'massiveMultiplayer.png'], this.buttonCreditsLabel.x - 35, this.buttonCreditsLabel.y + this.buttonCreditsLabel.height/2, this);
         this.buttonCredits.on('pointerup', this.showCredits, this);
     }
 
