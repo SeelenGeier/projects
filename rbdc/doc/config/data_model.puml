@@ -140,10 +140,12 @@ package Memory{
         items
             \titemA
                 attribute(\t\titemType) -> type(string)
+                attribute(\t\titemName) -> type(string)
                 attribute(\t\tdurability) -> type(int)
                 attribute(\t\tequipped) -> type(bool)
             \titemB
                 attribute(\t\titemType) -> type(string)
+                attribute(\t\titemName) -> type(string)
                 attribute(\t\tdurability) -> type(int)
                 attribute(\t\tequipped) -> type(bool)
             \t...

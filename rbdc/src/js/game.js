@@ -17,7 +17,7 @@ canvas.style.margin = '50px auto';
 
 let game = new Phaser.Game(gameConfig);
 
-// global config (e.g. config.weapons[config.default.equipment.weapon])
+// global config (e.g. config.weapon[config.default.equipment.weapon])
 let config;
 
 // global save object for storage
@@ -27,15 +27,15 @@ function preload() {
 
     // load configuration files
     this.load.json('default', 'config/default.json');
-    this.load.json('damage_types', 'config/damage_types.json');
-    this.load.json('trap_types', 'config/trap_types.json');
-    this.load.json('monsters', 'config/monsters.json');
-    this.load.json('traps', 'config/traps.json');
-    this.load.json('weapons', 'config/weapons.json');
-    this.load.json('armors', 'config/armors.json');
-    this.load.json('offhands', 'config/offhands.json');
-    this.load.json('trinkets', 'config/trinkets.json');
-    this.load.json('valuables', 'config/valuables.json');
+    this.load.json('damage_type', 'config/damage_type.json');
+    this.load.json('trap_type', 'config/trap_type.json');
+    this.load.json('monster', 'config/monster.json');
+    this.load.json('trap', 'config/trap.json');
+    this.load.json('weapon', 'config/weapon.json');
+    this.load.json('armor', 'config/armor.json');
+    this.load.json('offhand', 'config/offhand.json');
+    this.load.json('trinket', 'config/trinket.json');
+    this.load.json('valuable', 'config/valuable.json');
 
     // load backgrounds
     this.load.image('backgroundBlack', '../assets/background/black.png');
@@ -59,15 +59,15 @@ function create() {
     // register configuration for easier access
     config = {
         default: this.cache.json.get('default'),
-        damage_types: this.cache.json.get('damage_types'),
-        trap_types: this.cache.json.get('trap_types'),
-        monsters: this.cache.json.get('monsters'),
-        traps: this.cache.json.get('traps'),
-        weapons: this.cache.json.get('weapons'),
-        armors: this.cache.json.get('armors'),
-        offhands: this.cache.json.get('offhands'),
-        trinkets: this.cache.json.get('trinkets'),
-        valuables: this.cache.json.get('valuables')
+        damage_type: this.cache.json.get('damage_type'),
+        trap_type: this.cache.json.get('trap_type'),
+        monster: this.cache.json.get('monster'),
+        trap: this.cache.json.get('trap'),
+        weapon: this.cache.json.get('weapon'),
+        armor: this.cache.json.get('armor'),
+        offhand: this.cache.json.get('offhand'),
+        trinket: this.cache.json.get('trinket'),
+        valuable: this.cache.json.get('valuable')
     };
 
     // load possible save data
@@ -113,35 +113,36 @@ function initializeSaveObject() {
     saveData();
 }
 
-function giveItem(itemType, durability) {
-    let type = itemType.split(".");
+function giveItem(itemType, itemName, durability) {
+    // check if inventory is not full
+    if(Object.keys(saveObject.profiles[saveObject.currentProfile].inventory.items).length >= config.default.status.inventorySize) {
+        console.log('Inventory full, maximum of ' + config.default.status.inventorySize + ' reached');
+        return false;
+    }
     // check if durability is a number
-    if(typeof durability != 'number')
-    {
+    if (typeof durability != 'number') {
         console.log('Item durability is not a number');
         return false;
     }
-    // check if item type contains two parts
-    if(type.length != 2){
-        console.log('Item type does not contain two parts (separated by .)');
-        return false;
-    }
-    // check if item category exists
-    if(!config.includes(type[0])) {
-        console.log('Item type category does not exist');
-        return false;
-    }
     // check if item type exists
-    if(!config.type[0].includes(type[1])) {
+    if (!config.hasOwnProperty(itemType)) {
         console.log('Item type does not exist');
+        return false;
+    }
+    // check if item exists in item type
+    if (!config[itemType].hasOwnProperty(itemName)) {
+        console.log('Item does not exist in item type');
         return false;
     }
     // add item to items in inventory
     saveObject.profiles[saveObject.currentProfile].inventory.items[this.generateItemId()] = {
-            itemType: itemType,
-            durability: durability,
-            equipped: false
+        itemType: itemType,
+        itemName: itemName,
+        durability: durability,
+        equipped: false
     };
+
+    saveData();
     return true;
 }
 
@@ -153,7 +154,14 @@ function generateItemId() {
     return id;
 }
 
-function toggleItemEquipped(id) {
+function equipItem(id) {
+    // unequip all other items with same itemType
+    for (item in saveObject.profiles[profile].inventory.items) {
+        if(item.itemType == saveObject.profiles[saveObject.currentProfile].inventory.items[id].itemType) {
+            saveObject.profiles[saveObject.currentProfile].inventory.items[id].equipped = false;
+        }
+    }
+    // set item as equipped
     saveObject.profiles[saveObject.currentProfile].inventory.items[id].equipped = !saveObject.profiles[saveObject.currentProfile].inventory.items[id].equipped;
 }
 
@@ -250,10 +258,6 @@ function validateSaveData() {
             }
             if (!saveObject.profiles[profile].inventory.hasOwnProperty('items')) {
                 return this.exitValidation('Inventory does not have items property.');
-            }
-            // check if inventory contains more items than possible
-            if (Object.keys(saveObject.profiles[profile].inventory.items).length > config.default.status.inventorySize) {
-                return this.exitValidation('Inventory contains more than ' + config.default.status.inventorySize + ' Items.');
             }
             // check all inventory items
             for (item in saveObject.profiles[profile].inventory.items) {

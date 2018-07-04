@@ -27,6 +27,12 @@ class profileOverviewScene extends Phaser.Scene {
 
         // add profile name in the top center
         this.addProfileName(this.sys.game.config.width / 2, 150);
+
+        giveItem('weapon', 'knife', 5);
+        giveItem('armor', 'light_leather', 10);
+        giveItem('offhand', 'shield', 7);
+        giveItem('valuable', 'emblem', 1);
+        giveItem('trinket', 'lamp', 3);
     }
 
     update() {
