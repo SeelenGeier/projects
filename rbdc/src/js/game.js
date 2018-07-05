@@ -70,6 +70,7 @@ function create() {
         valuable: this.cache.json.get('valuable')
     };
 
+    // TODO: add fitting item images
     // load images for all available weapons
     for(let weapon in config.weapon) {
         if(config.weapon[weapon].image != null) {
