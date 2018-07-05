@@ -49,6 +49,7 @@ package Configurations{
         object weapon {
             attribute(name) -> type(string)
             attribute(description) -> type(string)
+            attribute(image) -> type(string|array)
             attribute(value) -> type(int)
             damage
                 \tdamageA -> type(int)
@@ -59,6 +60,7 @@ package Configurations{
         object armor {
             attribute(name) -> type(string)
             attribute(description) -> type(string)
+            attribute(image) -> type(string|array)
             attribute(value) -> type(int)
             resistance
                 \tdamageA -> type(int)
@@ -69,6 +71,7 @@ package Configurations{
         object trinket {
             attribute(name) -> type(string)
             attribute(description) -> type(string)
+            attribute(image) -> type(string|array)
             attribute(value) -> type(int)
             resistance
                 \tdamageA -> type(int)
@@ -83,6 +86,7 @@ package Configurations{
         object offhand {
             attribute(name) -> type(string)
             attribute(description) -> type(string)
+            attribute(image) -> type(string|array)
             attribute(value) -> type(int)
             resistance
                 \tdamageA -> type(int)
@@ -97,6 +101,7 @@ package Configurations{
         object valuable {
             attribute(name) -> type(string)
             attribute(description) -> type(string)
+            attribute(image) -> type(string|array)
             attribute(value) -> type(int)
         }
 
@@ -142,12 +147,10 @@ package Memory{
                 attribute(\t\titemType) -> type(string)
                 attribute(\t\titemName) -> type(string)
                 attribute(\t\tdurability) -> type(int)
-                attribute(\t\tequipped) -> type(bool)
             \titemB
                 attribute(\t\titemType) -> type(string)
                 attribute(\t\titemName) -> type(string)
                 attribute(\t\tdurability) -> type(int)
-                attribute(\t\tequipped) -> type(bool)
             \t...
     }
 }

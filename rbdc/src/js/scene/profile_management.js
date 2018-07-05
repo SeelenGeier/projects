@@ -102,6 +102,12 @@ class profileManagementScene extends Phaser.Scene {
                     inventory: {
                         currency: config.default.status.currency,
                         items: {}
+                    },
+                    character: {
+                        weapon: null,
+                        armor: null,
+                        offhand: null,
+                        trinket: null
                     }
                 };
                 this.setInitialEquipment(newProfileName);

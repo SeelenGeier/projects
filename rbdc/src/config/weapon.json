@@ -2,6 +2,7 @@
   "knife": {
     "name": "Knife",
     "description": "A simple knife used for carving wood or meat.",
+    "image": "dagger.png",
     "value": 1,
     "damage": {
       "impact": 1,
@@ -12,6 +13,7 @@
   "slime": {
     "name": "Slime",
     "description": "A slime attacks with his body.",
+    "image": null,
     "value": 1,
     "damage": {
       "impact": 1

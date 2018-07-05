@@ -1,10 +1,10 @@
 function giveItem(itemType, itemName, durability, profile = saveObject.currentProfile) {
-    if(profile == null) {
+    if (profile == null) {
         console.log('No current profile to give Item to');
         return false;
     }
     // check if inventory is not full
-    if(Object.keys(saveObject.profiles[profile].inventory.items).length >= config.default.status.inventorySize) {
+    if (Object.keys(saveObject.profiles[profile].inventory.items).length >= config.default.status.inventorySize) {
         console.log('Inventory full, maximum of ' + config.default.status.inventorySize + ' reached');
         return false;
     }
@@ -28,8 +28,7 @@ function giveItem(itemType, itemName, durability, profile = saveObject.currentPr
     saveObject.profiles[profile].inventory.items[newId] = {
         itemType: itemType,
         itemName: itemName,
-        durability: durability,
-        equipped: false
+        durability: durability
     };
 
     saveData();
@@ -37,9 +36,14 @@ function giveItem(itemType, itemName, durability, profile = saveObject.currentPr
 }
 
 function removeItem(id, profile = saveObject.currentProfile) {
-    if(!saveObject.profiles[profile].inventory.items.hasOwnProperty(id)) {
+    if (!saveObject.profiles[profile].inventory.items.hasOwnProperty(id)) {
         console.log('Item id not in inventory');
         return false;
+    }
+    // unequip item if equipped (and not valuable)
+    if (getItem(id, profile).itemType != 'valuable' &&
+        saveObject.profiles[profile].character[getItem(id, profile).itemType] == id) {
+        saveObject.profiles[profile].character[getItem(id, profile).itemType] = null;
     }
     delete saveObject.profiles[profile].inventory.items[id];
     return true;
@@ -54,12 +58,11 @@ function generateItemId(profile = saveObject.currentProfile) {
 }
 
 function equipItem(id, profile = saveObject.currentProfile) {
-    // unequip all items with same itemType
-    for (item in saveObject.profiles[profile].inventory.items) {
-        if(item.itemType == saveObject.profiles[profile].inventory.items[id].itemType) {
-            saveObject.profiles[profile].inventory.items[id].equipped = false;
-        }
+    if (getItem(id, profile).itemType != 'valuable') {
+        saveObject.profiles[profile].character[getItem(id, profile).itemType] = id;
     }
-    // set item as equipped
-    saveObject.profiles[profile].inventory.items[id].equipped = !saveObject.profiles[profile].inventory.items[id].equipped;
+}
+
+function getItem(id, profile = saveObject.currentProfile) {
+    return saveObject.profiles[profile].inventory.items[id];
 }

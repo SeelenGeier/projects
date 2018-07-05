@@ -5,7 +5,7 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     preload() {
-        // TODO: replace button images
+        // TODO: replace background
         this.load.image('backgroundProfileOverview', '../assets/background/profile_overview_mockup.png');
     }
 
@@ -27,6 +27,9 @@ class profileOverviewScene extends Phaser.Scene {
 
         // add profile name in the top center
         this.addProfileName(this.sys.game.config.width / 2, 150);
+
+        // add profile name in the top center
+        this.addEquipment(this.sys.game.config.width / 2, (this.sys.game.config.height / 2) + 200);
     }
 
     update() {
@@ -80,5 +83,48 @@ class profileOverviewScene extends Phaser.Scene {
         this.backgroundImage = this.add.sprite(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'backgroundProfileOverview');
         // scale background to screen size and add a few more pixels to prevent flickering
         this.backgroundImage.setScale((this.sys.game.config.width + 10) / this.backgroundImage.width, (this.sys.game.config.height + 10) / this.backgroundImage.height);
+    }
+
+    addEquipment(x, y) {
+        this.addEquippedWeapon(x - 150, y);
+        this.addEquippedArmor(x - 50, y);
+        this.addEquippedOffhand(x + 50, y);
+        this.addEquippedTrinket(x + 150, y);
+    }
+
+    addEquippedWeapon(x, y) {
+        console.log(getItem(saveObject.profiles[saveObject.currentProfile].character.weapon).image);
+        // add image for weapon
+        this.backgroundImage = this.add.sprite(x, y, getItem(saveObject.profiles[saveObject.currentProfile].character.weapon));
+        // add up button to equip next weapon
+        // add down button to equip previous weapon
+    }
+
+    addEquippedArmor(x, y) {
+        // add image for armor
+        // add up button to equip next armor
+        // add down button to equip previous armor
+    }
+
+    addEquippedOffhand(x, y) {
+        // add image for offhand
+        // add up button to equip next offhand
+        // add down button to equip previous offhand
+
+    }
+
+    addEquippedTrinket(x, y) {
+        // add image for trinket
+        // add up button to equip next trinket
+        // add down button to equip previous trinket
+
+    }
+
+    equipItem(type, next) {
+        if (next) {
+            // get id for next item of given type
+        } else {
+            // get id for previous item of given type
+        }
     }
 }
