@@ -2,7 +2,7 @@
   "knife": {
     "name": "Knife",
     "description": "A simple knife used for carving wood or meat.",
-    "image": "dagger.png",
+    "image": "dagger",
     "value": 1,
     "damage": {
       "impact": 1,

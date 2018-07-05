@@ -2,6 +2,7 @@
   "shield": {
     "name": "Shield",
     "description": "A shield used for protection.",
+    "image": "shield_semi",
     "value": 1,
     "resistance": {
       "impact": 1,
@@ -12,6 +13,7 @@
   "torch": {
     "name": "Torch",
     "description": "A flaming wooden stick.",
+    "image": "wand",
     "value": 1,
     "damage": {
       "heat": 1
