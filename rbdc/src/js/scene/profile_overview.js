@@ -54,19 +54,20 @@ class profileOverviewScene extends Phaser.Scene {
         if(this.character.scaleX == 1) {
             this.character.setScale(-1,1);
         }
+        this.character.anims.play('characterRun');
 
         this.characterMovingTween = this.tweens.add({
             targets: [this.character],
             x: -100,
-            duration: 2000,
+            duration: (100 + this.character.x) * 5,
             onComplete: this.loadShopScene
         });
     }
 
     loadShopScene() {
         // hide current scene and start config scene
-        this.scene.setVisible(false);
-        this.scene.start('shop');
+        this.parent.scene.scene.setVisible(false);
+        this.parent.scene.scene.start('shop');
     }
 
     goToDungeon() {
@@ -78,19 +79,20 @@ class profileOverviewScene extends Phaser.Scene {
         if(this.character.scaleX == -1) {
             this.character.setScale(1,1);
         }
+        this.character.anims.play('characterRun');
 
         this.characterMovingTween = this.tweens.add({
             targets: [this.character],
             x: this.sys.game.config.width + 100,
-            duration: 2000,
+            duration: (this.sys.game.config.width + 100 - this.character.x) * 5,
             onComplete: this.loadDungeonScene
         });
     }
 
     loadDungeonScene() {
         // hide current scene and start config scene
-        this.scene.setVisible(false);
-        this.scene.start('dungeon');
+        this.parent.scene.scene.setVisible(false);
+        this.parent.scene.scene.start('dungeon');
     }
 
     addProfileName(x, y) {
@@ -246,9 +248,8 @@ class profileOverviewScene extends Phaser.Scene {
         this.characterEnterTween = this.tweens.add({
             targets: [this.character],
             x: x,
-            duration: 2000,
-            onComplete: this.characterIdle,
-            onCompleteParams: this.character,
+            duration: (x - this.character.x) * 5,
+            onComplete: this.characterIdle
         });
     }
 

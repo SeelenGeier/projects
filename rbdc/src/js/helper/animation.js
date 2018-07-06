@@ -8,7 +8,7 @@ function addCharacterAnimations(unit) {
         game.anims.create({
             key: 'characterIdle',
             frames: game.anims.generateFrameNumbers('character', { start: 38, end: 41 }),
-            frameRate: 8,
+            frameRate: 5,
             repeat: -1
         });
         game.anims.create({
