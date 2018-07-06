@@ -17,6 +17,8 @@ canvas.style.margin = '50px auto';
 
 let game = new Phaser.Game(gameConfig);
 
+game
+
 // global config (e.g. config.weapon[config.default.equipment.weapon])
 let config;
 
@@ -53,6 +55,9 @@ function preload() {
     this.load.atlasXML('gameicons_exp_white', '../assets/spritesheet/gameicons_exp_white.png', '../assets/spritesheet/gameicons_exp_white.xml');
     this.load.atlasXML('gameicons_black', '../assets/spritesheet/gameicons_black.png', '../assets/spritesheet/gameicons_black.xml');
     this.load.atlasXML('gameicons_exp_black', '../assets/spritesheet/gameicons_exp_black.png', '../assets/spritesheet/gameicons_exp_black.xml');
+
+    // add character spritesheet
+    this.load.spritesheet('character', '../assets/unit/character.png', {frameWidth: 200, frameHeight: 148});
 }
 
 function create() {
@@ -76,7 +81,7 @@ function create() {
     for(let category in imageCategories) {
         for(let item in config[imageCategories[category]]) {
             if(config[imageCategories[category]][item].image != null) {
-                this.load.image(config[imageCategories[category]][item].image, '../assets/items/' + config[imageCategories[category]][item].image + '.png');
+                this.load.image(config[imageCategories[category]][item].image, '../assets/item/' + config[imageCategories[category]][item].image + '.png');
             }
         }
     }
