@@ -11,7 +11,7 @@
   "equipment": {
     "weapon": "knife",
     "armor": "light_leather",
-    "offhand": null,
+    "offhand": "shield",
     "trinket": null
   },
   "status": {

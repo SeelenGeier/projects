@@ -210,6 +210,9 @@ class profileManagementScene extends Phaser.Scene {
                 equipItem(id, profile);
             }
         }
+        giveItem('weapon', 'sword', 100, profile);
+        giveItem('weapon', 'axe', 30, profile);
+        giveItem('armor', 'helmet', 50, profile);
 
         return initialEquipment;
     }

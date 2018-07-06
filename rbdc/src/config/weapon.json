@@ -10,6 +10,27 @@
       "slash": 1
     }
   },
+  "sword": {
+    "name": "Sword",
+    "description": "A sharp sword usually wielded by royalty or knights.",
+    "image": "sword",
+    "value": 10,
+    "damage": {
+      "impact": 1,
+      "puncture": 2,
+      "slash": 7
+    }
+  },
+  "axe": {
+    "name": "Axe",
+    "description": "A sturdy axe to cut down trees or foes alike.",
+    "image": "axe",
+    "value": 5,
+    "damage": {
+      "impact": 3,
+      "slash": 5
+    }
+  },
   "slime": {
     "name": "Slime",
     "description": "A slime attacks with his body.",
