@@ -86,60 +86,31 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     addEquipment(x, y) {
+        this.equippedItems = {};
         if(saveObject.profiles[saveObject.currentProfile].character.weapon != null) {
-            this.addEquippedWeapon(x - 90, y);
+            this.addEquipped(x - 90, y, 'weapon');
         }
         if(saveObject.profiles[saveObject.currentProfile].character.armor != null) {
-            this.addEquippedArmor(x - 30, y);
+            this.addEquipped(x - 30, y, 'armor');
         }
         if(saveObject.profiles[saveObject.currentProfile].character.offhand != null) {
-            this.addEquippedOffhand(x + 30, y);
+            this.addEquipped(x + 30, y, 'offhand');
         }
         if(saveObject.profiles[saveObject.currentProfile].character.trinket != null) {
-            this.addEquippedTrinket(x + 90, y);
+            this.addEquipped(x + 90, y, 'trinket');
         }
     }
 
-    addEquippedWeapon(x, y) {
+    addEquipped(x, y, type) {
         // get image from weapon config
-        let image = config.weapon[getItem(saveObject.profiles[saveObject.currentProfile].character.weapon).itemName].image;
+        let image = config[type][getItem(saveObject.profiles[saveObject.currentProfile].character[type]).itemName].image;
         // add image for weapon
-        this.equippedWeapon = this.add.sprite(x, y, image);
+        this.equippedItems[type] = this.add.sprite(x, y, image);
         // add up button to equip next weapon
         // add down button to equip previous weapon
     }
 
-    addEquippedArmor(x, y) {
-        // add image for armor
-        let image = config.armor[getItem(saveObject.profiles[saveObject.currentProfile].character.armor).itemName].image;
-        // add image for armor
-        console.log(image);
-        this.equippedArmor = this.add.sprite(x, y, image);
-        // add up button to equip next armor
-        // add down button to equip previous armor
-    }
-
-    addEquippedOffhand(x, y) {
-        // add image for offhand
-        let image = config.offhand[getItem(saveObject.profiles[saveObject.currentProfile].character.offhand).itemName].image;
-        // add image for offhand
-        this.equippedOffhand = this.add.sprite(x, y, image);
-        // add up button to equip next offhand
-        // add down button to equip previous offhand
-
-    }
-
-    addEquippedTrinket(x, y) {
-        // add image for trinket
-        let image = config.trinket[getItem(saveObject.profiles[saveObject.currentProfile].character.trinket).itemName].image;
-        // add image for trinket
-        this.equippedTrinket = this.add.sprite(x, y, image);
-        // add up button to equip next trinket
-        // add down button to equip previous trinket
-
-    }
-
-    equipItem(type, next) {
+    changeItem(type, next) {
         if (next) {
             // get id for next item of given type
         } else {

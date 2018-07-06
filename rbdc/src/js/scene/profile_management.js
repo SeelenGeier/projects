@@ -143,7 +143,6 @@ class profileManagementScene extends Phaser.Scene {
 
         // hide input field and load profile overview
         this.scene.hideProfileNameField();
-        console.log(this);
         this.scene.scene.setVisible(false);
         this.scene.scene.start(saveObject.profiles[saveObject.currentProfile].scene);
     }

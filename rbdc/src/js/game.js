@@ -71,32 +71,13 @@ function create() {
     };
 
     // TODO: add fitting item images
-    // load images for all available weapons
-    for(let weapon in config.weapon) {
-        if(config.weapon[weapon].image != null) {
-            this.load.image(config.weapon[weapon].image, '../assets/items/' + config.weapon[weapon].image + '.png');
-        }
-    }
-
-    // load images for all available armors
-    for(let armor in config.armor) {
-        if(config.armor[armor].image != null) {
-            console.log(config.armor[armor].image);
-            this.load.image(config.armor[armor].image, '../assets/items/' + config.armor[armor].image + '.png');
-        }
-    }
-
-    // load images for all available offhands
-    for(let offhand in config.offhand) {
-        if(config.offhand[offhand].image != null) {
-            this.load.image(config.offhand[offhand].image, '../assets/items/' + config.offhand[offhand].image + '.png');
-        }
-    }
-
-    // load images for all available trinkets
-    for(let trinket in config.trinket) {
-        if(config.trinket[trinket].image != null) {
-            this.load.image(config.trinket[trinket].image, '../assets/items/' + config.trinket[trinket].image + '.png');
+    // load images for configured items
+    let imageCategories = ['weapon', 'armor', 'offhand', 'trinket', 'valuable'];
+    for(let category in imageCategories) {
+        for(let item in config[imageCategories[category]]) {
+            if(config[imageCategories[category]][item].image != null) {
+                this.load.image(config[imageCategories[category]][item].image, '../assets/items/' + config[imageCategories[category]][item].image + '.png');
+            }
         }
     }
     this.load.start();
