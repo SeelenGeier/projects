@@ -56,7 +56,7 @@ function preload() {
     this.load.atlasXML('gameicons_black', '../assets/spritesheet/gameicons_black.png', '../assets/spritesheet/gameicons_black.xml');
     this.load.atlasXML('gameicons_exp_black', '../assets/spritesheet/gameicons_exp_black.png', '../assets/spritesheet/gameicons_exp_black.xml');
 
-    // add character spritesheet
+    // load character spritesheet
     this.load.spritesheet('character', '../assets/unit/character.png', {frameWidth: 200, frameHeight: 148});
 }
 

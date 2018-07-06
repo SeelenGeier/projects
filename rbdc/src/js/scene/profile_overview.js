@@ -204,7 +204,7 @@ class profileOverviewScene extends Phaser.Scene {
 
     addCharacter(x, y) {
         this.character = this.add.sprite(x, y, 'character');
-        addCharacterAnimations();
+        addCharacterAnimations('character');
         this.character.anims.play('characterIdle');
     }
 }
