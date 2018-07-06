@@ -46,13 +46,14 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     goToShop() {
+        this.character.off('animationcomplete');
         this.characterEnterTween.stop();
-        if(this.characterMovingTween != undefined) {
+        if (this.characterMovingTween != undefined) {
             this.characterMovingTween.stop();
         }
         // flip character to face the correct direction
-        if(this.character.scaleX == 1) {
-            this.character.setScale(-1,1);
+        if (this.character.scaleX == 1) {
+            this.character.setScale(-1, 1);
         }
         this.character.anims.play('characterRun');
 
@@ -71,13 +72,14 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     goToDungeon() {
+        this.character.off('animationcomplete');
         this.characterEnterTween.stop();
-        if(this.characterMovingTween != undefined) {
+        if (this.characterMovingTween != undefined) {
             this.characterMovingTween.stop();
         }
         // flip character to face the correct direction
-        if(this.character.scaleX == -1) {
-            this.character.setScale(1,1);
+        if (this.character.scaleX == -1) {
+            this.character.setScale(1, 1);
         }
         this.character.anims.play('characterRun');
 
@@ -244,6 +246,7 @@ class profileOverviewScene extends Phaser.Scene {
         this.character = this.add.sprite(-100, y, 'character');
         addCharacterAnimations('character');
         this.character.anims.play('characterRun');
+        this.character.swordDrawn = false;
 
         this.characterEnterTween = this.tweens.add({
             targets: [this.character],
@@ -254,6 +257,24 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     characterIdle() {
-        this.parent.scene.character.anims.play('characterIdle');
+        this.parent.scene.character.off('animationcomplete');
+        if (this.parent.scene.character.swordDrawn) {
+            this.parent.scene.character.anims.play('characterIdleWithSword');
+        } else {
+            this.parent.scene.character.anims.play('characterIdleNoSword');
+        }
+
+        this.parent.scene.time.delayedCall(5000 + (5000 * Math.random()), this.parent.scene.switchIdle, [], this);
+    }
+
+    switchIdle() {
+        if (this.parent.scene.character.swordDrawn) {
+            this.parent.scene.character.anims.play('characterSheatheSword');
+            this.parent.scene.character.swordDrawn = false;
+        } else {
+            this.parent.scene.character.anims.play('characterDrawSword');
+            this.parent.scene.character.swordDrawn = true;
+        }
+        this.parent.scene.character.on('animationcomplete', this.parent.scene.characterIdle, this);
     }
 }
