@@ -45,23 +45,31 @@ class profileOverviewScene extends Phaser.Scene {
         this.scene.start('config');
     }
 
-    goToShop() {
-        this.character.off('animationcomplete');
-        this.characterEnterTween.stop();
-        if (this.characterMovingTween != undefined) {
-            this.characterMovingTween.stop();
+    goTo() {
+        let destination = this[0];
+        // stop animation complete listener
+        this[1].character.off('animationcomplete');
+        // stop character from idling
+        this[1].characterEnterTween.stop();
+        // stop scene from switching the room if another tween was running
+        if (this[1].characterMovingTween != undefined) {
+            this[1].characterMovingTween.stop();
         }
         // flip character to face the correct direction
-        if (this.character.scaleX == 1) {
-            this.character.setScale(-1, 1);
+        if (destination == 'shop') {
+            this[1].character.setScale(-1, 1);
+        } else {
+            this[1].character.setScale(1, 1);
         }
-        this.character.anims.play('characterRun');
-
-        this.characterMovingTween = this.tweens.add({
-            targets: [this.character],
-            x: -100,
-            duration: (100 + this.character.x) * 5,
-            onComplete: this.loadShopScene
+        // play running animation
+        this[1].character.anims.play('characterRun');
+        let destinationX = destination == 'shop' ? -100 : this[1].sys.game.config.width + 100;
+        // move character to destination
+        this[1].characterMovingTween = this[1].tweens.add({
+            targets: [this[1].character],
+            x: destinationX,
+            duration: (destinationX - this[1].character.x) * 5 * this[1].character.scaleX,
+            onComplete: destination == 'shop' ? this[1].loadShopScene : this[1].loadDungeonScene
         });
     }
 
@@ -69,26 +77,6 @@ class profileOverviewScene extends Phaser.Scene {
         // hide current scene and start config scene
         this.parent.scene.scene.sleep();
         this.parent.scene.scene.start('shop');
-    }
-
-    goToDungeon() {
-        this.character.off('animationcomplete');
-        this.characterEnterTween.stop();
-        if (this.characterMovingTween != undefined) {
-            this.characterMovingTween.stop();
-        }
-        // flip character to face the correct direction
-        if (this.character.scaleX == -1) {
-            this.character.setScale(1, 1);
-        }
-        this.character.anims.play('characterRun');
-
-        this.characterMovingTween = this.tweens.add({
-            targets: [this.character],
-            x: this.sys.game.config.width + 100,
-            duration: (this.sys.game.config.width + 100 - this.character.x) * 5,
-            onComplete: this.loadDungeonScene
-        });
     }
 
     loadDungeonScene() {
@@ -114,12 +102,12 @@ class profileOverviewScene extends Phaser.Scene {
 
     addNavigationShop(x, y) {
         new Button('buttonShop', ['gameicons_white', 'cart.png'], x, y, this);
-        this.buttonShop.on('pointerup', this.goToShop, this);
+        this.buttonShop.on('pointerup', this.goTo, ['shop', this]);
     }
 
     addNavigationDungeon(x, y) {
         new Button('buttonDungeon', ['gameicons_exp_white', 'fightFist.png'], x, y, this);
-        this.buttonDungeon.on('pointerup', this.goToDungeon, this);
+        this.buttonDungeon.on('pointerup', this.goTo, ['dungeon', this]);
     }
 
     addBackground() {
@@ -264,7 +252,7 @@ class profileOverviewScene extends Phaser.Scene {
             this.parent.scene.character.anims.play('characterIdleNoSword');
         }
 
-        this.parent.scene.time.delayedCall(5000 + (5000 * Math.random()), this.parent.scene.switchIdle, [], this);
+        this.parent.scene.switchIdleCall = this.parent.scene.time.delayedCall(5000 + (5000 * Math.random()), this.parent.scene.switchIdle, [], this);
     }
 
     switchIdle() {
@@ -275,23 +263,23 @@ class profileOverviewScene extends Phaser.Scene {
         } else {
             this.parent.scene.character.anims.play('characterDrawSword');
             this.parent.scene.character.swordDrawn = true;
-            this.parent.scene.character.on('animationcomplete', this.parent.scene.attack1, this);
+            this.parent.scene.character.on('animationcomplete', this.parent.scene.idleAttack1, this);
         }
     }
 
-    attack1() {
+    idleAttack1() {
         this.parent.scene.character.off('animationcomplete');
         this.parent.scene.character.anims.play('characterAttack1');
-        this.parent.scene.character.on('animationcomplete', this.parent.scene.attack2, this);
+        this.parent.scene.character.on('animationcomplete', this.parent.scene.idleAttack2, this);
     }
 
-    attack2() {
+    idleAttack2() {
         this.parent.scene.character.off('animationcomplete');
         this.parent.scene.character.anims.play('characterAttack2');
-        this.parent.scene.character.on('animationcomplete', this.parent.scene.attack3, this);
+        this.parent.scene.character.on('animationcomplete', this.parent.scene.idleAttack3, this);
     }
 
-    attack3() {
+    idleAttack3() {
         this.parent.scene.character.off('animationcomplete');
         this.parent.scene.character.anims.play('characterAttack3');
         this.parent.scene.character.on('animationcomplete', this.parent.scene.characterIdle, this);
