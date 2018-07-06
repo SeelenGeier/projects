@@ -37,13 +37,13 @@ class configScene extends Phaser.Scene {
         saveData();
 
         // hide current scene and start profile management scene
-        this.scene.setVisible(false);
+        this.scene.sleep();
         this.scene.start('profileManagement');
     }
 
     goToProfileOverview() {
         // hide current scene and start profile overview scene
-        this.scene.setVisible(false);
+        this.scene.sleep();
         this.scene.start('profileOverview');
     }
 

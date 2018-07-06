@@ -46,7 +46,7 @@ class splashScene extends Phaser.Scene {
     }
 
     static loadNextScene() {
-        this.parent.scene.scene.setVisible(false);
+        this.parent.scene.scene.sleep();
         if (saveObject.currentProfile != undefined) {
             this.parent.scene.scene.start(saveObject.profiles[saveObject.currentProfile].scene);
         } else {

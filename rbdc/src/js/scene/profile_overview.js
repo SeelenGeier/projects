@@ -41,7 +41,7 @@ class profileOverviewScene extends Phaser.Scene {
 
     goToConfig() {
         // hide current scene and start config scene
-        this.scene.setVisible(false);
+        this.scene.sleep();
         this.scene.start('config');
     }
 
@@ -66,7 +66,7 @@ class profileOverviewScene extends Phaser.Scene {
 
     loadShopScene() {
         // hide current scene and start config scene
-        this.parent.scene.scene.setVisible(false);
+        this.parent.scene.scene.sleep();
         this.parent.scene.scene.start('shop');
     }
 
@@ -91,7 +91,7 @@ class profileOverviewScene extends Phaser.Scene {
 
     loadDungeonScene() {
         // hide current scene and start config scene
-        this.parent.scene.scene.setVisible(false);
+        this.parent.scene.scene.sleep();
         this.parent.scene.scene.start('dungeon');
     }
 

@@ -17,12 +17,12 @@ function addCharacterAnimations(unit) {
             frameRate: 8,
             repeat: -1
         });
-        game.anims.create({
-            key: 'characterAttack',
-            frames: game.anims.generateFrameNumbers('character', { start: 55, end: 58 }),
-            frameRate: 8,
-            repeat: -1
-        });
+        // game.anims.create({
+        //     key: 'characterAttack',
+        //     frames: game.anims.generateFrameNumbers('character', { start: 55, end: 58 }),
+        //     frameRate: 8,
+        //     repeat: -1
+        // });
         loadedAnimations.push('character');
         return true;
     }
