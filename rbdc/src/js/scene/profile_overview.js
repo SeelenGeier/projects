@@ -115,10 +115,10 @@ class profileOverviewScene extends Phaser.Scene {
         });
         // add up button to equip next item
         new Button('buttonItemNext' + type[0].toUpperCase() + type.substring(1), ['gameicons_white', 'up.png'], x, y - 50, this);
-        this['buttonItemNext' + type[0].toUpperCase() + type.substring(1)].on('pointerup', this.changeItem, [type, true, this]);
+        this['buttonItemNext' + type[0].toUpperCase() + type.substring(1)].on('pointerup', this.changeItemNext, [type, this]);
         // add down button to equip previous item
         new Button('buttonItemPrev' + type[0].toUpperCase() + type.substring(1), ['gameicons_white', 'down.png'], x, y + 80, this);
-        this['buttonItemPrev' + type[0].toUpperCase() + type.substring(1)].on('pointerup', this.changeItem, [type, false, this]);
+        this['buttonItemPrev' + type[0].toUpperCase() + type.substring(1)].on('pointerup', this.changeItemPrev, [type, this]);
     }
 
     updateEquipped(type) {
@@ -129,70 +129,73 @@ class profileOverviewScene extends Phaser.Scene {
         this.equippedItems[type].durability.x = this.equippedItems[type].x - (durabilityText.length * 4);
     }
 
-    changeItem() {
+    changeItemNext() {
         let type = this[0];
-        let next = this[1];
         let firstItem = null;
         let previousItem = null;
         // get id of current item
         let currentItemId = saveObject.profiles[saveObject.currentProfile].character[type];
-        // check if next or previous item should be selected
-        if (next) {
-            // loop through all items of this type in inventory
-            for(let item in saveObject.profiles[saveObject.currentProfile].inventory.items) {
-                if(getItem(item).itemType == type) {
-                    // set first item of array for future checks
-                    if(firstItem == null) {
-                        firstItem = item;
-                    }
-                    // check if the item before this item was the current item
-                    if(previousItem == currentItemId){
-                        // equip new item
-                        equipItem(item);
-                        this[2].updateEquipped(type);
-                        return true;
-                    }else {
-                        // set previous item to current item and continue loop
-                        previousItem = item;
-                    }
+        // loop through all items of this type in inventory
+        for(let item in saveObject.profiles[saveObject.currentProfile].inventory.items) {
+            if(getItem(item).itemType == type) {
+                // set first item of array for future checks
+                if(firstItem == null) {
+                    firstItem = item;
+                }
+                // check if the item before this item was the current item
+                if(previousItem == currentItemId){
+                    // equip new item
+                    equipItem(item);
+                    this[2].updateEquipped(type);
+                    return true;
+                }else {
+                    // set previous item to current item and continue loop
+                    previousItem = item;
                 }
             }
-            // if no previous item has been found check if the last item is not the current item
-            if(firstItem != currentItemId) {
-                // otherwise equip the first item
-                equipItem(firstItem);
-                this[2].updateEquipped(type);
-                return true;
-            }
-        } else {
-            // loop through all items of this type in inventory
-            for(let item in saveObject.profiles[saveObject.currentProfile].inventory.items) {
-                if(getItem(item).itemType == type) {
-                    // set first item of array for future checks
-                    if(firstItem == null) {
-                        firstItem = item;
-                        previousItem = item;
-                        continue;
-                    }
-                    // check if the item before this item was the current item
-                    if(item == currentItemId){
-                        // equip new item
-                        equipItem(previousItem);
-                        this[2].updateEquipped(type);
-                        return true;
-                    }else {
-                        // set previous item to current item and continue loop
-                        previousItem = item;
-                    }
+        }
+        // if no previous item has been found check if the last item is not the current item
+        if(firstItem != currentItemId) {
+            // otherwise equip the first item
+            equipItem(firstItem);
+            this[2].updateEquipped(type);
+            return true;
+        }
+    }
+
+    changeItemPrev() {
+        let type = this[0];
+        let firstItem = null;
+        let previousItem = null;
+        // get id of current item
+        let currentItemId = saveObject.profiles[saveObject.currentProfile].character[type];
+        // loop through all items of this type in inventory
+        for(let item in saveObject.profiles[saveObject.currentProfile].inventory.items) {
+            if(getItem(item).itemType == type) {
+                // set first item of array for future checks
+                if(firstItem == null) {
+                    firstItem = item;
+                    previousItem = item;
+                    continue;
+                }
+                // check if the item before this item was the current item
+                if(item == currentItemId){
+                    // equip new item
+                    equipItem(previousItem);
+                    this[2].updateEquipped(type);
+                    return true;
+                }else {
+                    // set previous item to current item and continue loop
+                    previousItem = item;
                 }
             }
-            // if no previous item has been check if the first item is not the current item
-            if(previousItem != currentItemId) {
-                // otherwise equip the first item
-                equipItem(previousItem);
-                this[2].updateEquipped(type);
-                return true;
-            }
+        }
+        // if no previous item has been check if the first item is not the current item
+        if(previousItem != currentItemId) {
+            // otherwise equip the first item
+            equipItem(previousItem);
+            this[2].updateEquipped(type);
+            return true;
         }
     }
 }
