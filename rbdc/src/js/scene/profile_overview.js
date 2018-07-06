@@ -146,7 +146,7 @@ class profileOverviewScene extends Phaser.Scene {
                 if(previousItem == currentItemId){
                     // equip new item
                     equipItem(item);
-                    this[2].updateEquipped(type);
+                    this[1].updateEquipped(type);
                     return true;
                 }else {
                     // set previous item to current item and continue loop
@@ -158,7 +158,7 @@ class profileOverviewScene extends Phaser.Scene {
         if(firstItem != currentItemId) {
             // otherwise equip the first item
             equipItem(firstItem);
-            this[2].updateEquipped(type);
+            this[1].updateEquipped(type);
             return true;
         }
     }
@@ -182,7 +182,7 @@ class profileOverviewScene extends Phaser.Scene {
                 if(item == currentItemId){
                     // equip new item
                     equipItem(previousItem);
-                    this[2].updateEquipped(type);
+                    this[1].updateEquipped(type);
                     return true;
                 }else {
                     // set previous item to current item and continue loop
@@ -194,7 +194,7 @@ class profileOverviewScene extends Phaser.Scene {
         if(previousItem != currentItemId) {
             // otherwise equip the first item
             equipItem(previousItem);
-            this[2].updateEquipped(type);
+            this[1].updateEquipped(type);
             return true;
         }
     }
