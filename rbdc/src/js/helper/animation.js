@@ -26,19 +26,28 @@ function addCharacterAnimations(unit) {
         game.anims.create({
             key: 'characterDrawSword',
             frames: game.anims.generateFrameNumbers('character', { start: 69, end: 72 }),
-            frameRate: 6
+            frameRate: 12
         });
         game.anims.create({
             key: 'characterSheatheSword',
             frames: game.anims.generateFrameNumbers('character', { start: 73, end: 76 }),
             frameRate: 6
         });
-        // game.anims.create({
-        //     key: 'characterAttack',
-        //     frames: game.anims.generateFrameNumbers('character', { start: 55, end: 58 }),
-        //     frameRate: 8,
-        //     repeat: -1
-        // });
+        game.anims.create({
+            key: 'characterAttack1',
+            frames: game.anims.generateFrameNumbers('character', { start: 41, end: 45 }),
+            frameRate: 12
+        });
+        game.anims.create({
+            key: 'characterAttack2',
+            frames: game.anims.generateFrameNumbers('character', { start: 46, end: 51 }),
+            frameRate: 12
+        });
+        game.anims.create({
+            key: 'characterAttack3',
+            frames: game.anims.generateFrameNumbers('character', { start: 52, end: 58 }),
+            frameRate: 12
+        });
         loadedAnimations.push('character');
         return true;
     }

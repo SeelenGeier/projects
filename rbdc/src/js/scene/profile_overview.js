@@ -271,10 +271,29 @@ class profileOverviewScene extends Phaser.Scene {
         if (this.parent.scene.character.swordDrawn) {
             this.parent.scene.character.anims.play('characterSheatheSword');
             this.parent.scene.character.swordDrawn = false;
+            this.parent.scene.character.on('animationcomplete', this.parent.scene.characterIdle, this);
         } else {
             this.parent.scene.character.anims.play('characterDrawSword');
             this.parent.scene.character.swordDrawn = true;
+            this.parent.scene.character.on('animationcomplete', this.parent.scene.attack1, this);
         }
+    }
+
+    attack1() {
+        this.parent.scene.character.off('animationcomplete');
+        this.parent.scene.character.anims.play('characterAttack1');
+        this.parent.scene.character.on('animationcomplete', this.parent.scene.attack2, this);
+    }
+
+    attack2() {
+        this.parent.scene.character.off('animationcomplete');
+        this.parent.scene.character.anims.play('characterAttack2');
+        this.parent.scene.character.on('animationcomplete', this.parent.scene.attack3, this);
+    }
+
+    attack3() {
+        this.parent.scene.character.off('animationcomplete');
+        this.parent.scene.character.anims.play('characterAttack3');
         this.parent.scene.character.on('animationcomplete', this.parent.scene.characterIdle, this);
     }
 }
