@@ -46,12 +46,48 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     goToShop() {
+        this.characterEnterTween.stop();
+        if(this.characterMovingTween != undefined) {
+            this.characterMovingTween.stop();
+        }
+        // flip character to face the correct direction
+        if(this.character.scaleX == 1) {
+            this.character.setScale(-1,1);
+        }
+
+        this.characterMovingTween = this.tweens.add({
+            targets: [this.character],
+            x: -100,
+            duration: 2000,
+            onComplete: this.loadShopScene
+        });
+    }
+
+    loadShopScene() {
         // hide current scene and start config scene
         this.scene.setVisible(false);
         this.scene.start('shop');
     }
 
     goToDungeon() {
+        this.characterEnterTween.stop();
+        if(this.characterMovingTween != undefined) {
+            this.characterMovingTween.stop();
+        }
+        // flip character to face the correct direction
+        if(this.character.scaleX == -1) {
+            this.character.setScale(1,1);
+        }
+
+        this.characterMovingTween = this.tweens.add({
+            targets: [this.character],
+            x: this.sys.game.config.width + 100,
+            duration: 2000,
+            onComplete: this.loadDungeonScene
+        });
+    }
+
+    loadDungeonScene() {
         // hide current scene and start config scene
         this.scene.setVisible(false);
         this.scene.start('dungeon');
@@ -203,8 +239,20 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     addCharacter(x, y) {
-        this.character = this.add.sprite(x, y, 'character');
+        this.character = this.add.sprite(-100, y, 'character');
         addCharacterAnimations('character');
-        this.character.anims.play('characterIdle');
+        this.character.anims.play('characterRun');
+
+        this.characterEnterTween = this.tweens.add({
+            targets: [this.character],
+            x: x,
+            duration: 2000,
+            onComplete: this.characterIdle,
+            onCompleteParams: this.character,
+        });
+    }
+
+    characterIdle() {
+        this.parent.scene.character.anims.play('characterIdle');
     }
 }
