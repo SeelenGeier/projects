@@ -1,7 +1,10 @@
 let loadedAnimations = [];
 
 function addCharacterAnimations(unit) {
-    if(unit == 'character' && !loadedAnimations.includes('character')) {
+    if(loadedAnimations.includes('character')) {
+        return true;
+    }
+    if(unit == 'character') {
         game.anims.create({
             key: 'characterIdle',
             frames: game.anims.generateFrameNumbers('character', { start: 38, end: 41 }),
@@ -21,5 +24,6 @@ function addCharacterAnimations(unit) {
             repeat: -1
         });
         loadedAnimations.push('character');
+        return true;
     }
 }
