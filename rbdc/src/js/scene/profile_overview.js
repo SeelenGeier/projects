@@ -47,11 +47,13 @@ class profileOverviewScene extends Phaser.Scene {
 
     goTo() {
         let destination = this[0];
+        // stop timer for drawing/sheathing sword
+        this[1].switchIdleCall.destroy();
         // stop animation complete listener
         this[1].character.off('animationcomplete');
-        // stop character from idling
+        // stop character from moving when entering the scene
         this[1].characterEnterTween.stop();
-        // stop scene from switching the room if another tween was running
+        // stop character from moving when already moving to a side
         if (this[1].characterMovingTween != undefined) {
             this[1].characterMovingTween.stop();
         }
