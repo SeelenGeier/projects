@@ -155,42 +155,43 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     updateEquipped(type) {
-        // change image of this item type to current item image
-        this.equippedItems[type].setTexture(config[type][getItem(saveObject.profiles[saveObject.currentProfile].character[type]).itemName].image);
-        let durabilityText = getItem(saveObject.profiles[saveObject.currentProfile].character[type]).durability != null ? getItem(saveObject.profiles[saveObject.currentProfile].character[type]).durability + '' : 'X';
-        this.equippedItems[type].durability.setText(durabilityText);
-        this.equippedItems[type].durability.x = this.equippedItems[type].x - (durabilityText.length * 4);
+        if(saveObject.profiles[saveObject.currentProfile].character[type] != null) {
+            // change image of this item type to current item image
+            this.equippedItems[type].setTexture(config[type][getItem(saveObject.profiles[saveObject.currentProfile].character[type]).itemName].image);
+            let durabilityText = getItem(saveObject.profiles[saveObject.currentProfile].character[type]).durability != null ? getItem(saveObject.profiles[saveObject.currentProfile].character[type]).durability + '' : 'X';
+            this.equippedItems[type].durability.setText(durabilityText);
+            this.equippedItems[type].durability.x = this.equippedItems[type].x - (durabilityText.length * 4);
+        } else {
+            this.equippedItems[type].setTexture('X');
+            let durabilityText = '-';
+            this.equippedItems[type].durability.setText(durabilityText);
+            this.equippedItems[type].durability.x = this.equippedItems[type].x - (durabilityText.length * 4);
+        }
     }
 
     changeItemNext() {
         let type = this[0];
-        let firstItem = null;
         let previousItem = null;
         // get id of current item
-        let currentItemId = saveObject.profiles[saveObject.currentProfile].character[type];
+        let equippedItemId = saveObject.profiles[saveObject.currentProfile].character[type];
         // loop through all items of this type in inventory
         for (let item in saveObject.profiles[saveObject.currentProfile].inventory.items) {
             if (getItem(item).itemType == type) {
-                // set first item of array for future checks
-                if (firstItem == null) {
-                    firstItem = item;
-                }
-                // check if the item before this item was the current item
-                if (previousItem == currentItemId) {
+                // check if the item before this item was the current item (or set first item found if equippedItemId is null
+                if (previousItem == equippedItemId) {
                     // equip new item
                     equipItem(item);
                     this[1].updateEquipped(type);
                     return true;
-                } else {
-                    // set previous item to current item and continue loop
-                    previousItem = item;
                 }
+                // set previous item to current item and continue loop
+                previousItem = item;
             }
         }
-        // if no previous item has been found check if the last item is not the current item
-        if (firstItem != currentItemId) {
-            // otherwise equip the first item
-            equipItem(firstItem);
+        // check if last found item is the current item
+        if (previousItem == equippedItemId) {
+            // unequip current item
+            unequipItemtype(type);
             this[1].updateEquipped(type);
             return true;
         }
@@ -201,31 +202,36 @@ class profileOverviewScene extends Phaser.Scene {
         let firstItem = null;
         let previousItem = null;
         // get id of current item
-        let currentItemId = saveObject.profiles[saveObject.currentProfile].character[type];
+        let equippedItemId = saveObject.profiles[saveObject.currentProfile].character[type];
         // loop through all items of this type in inventory
         for (let item in saveObject.profiles[saveObject.currentProfile].inventory.items) {
             if (getItem(item).itemType == type) {
                 // set first item of array for future checks
                 if (firstItem == null) {
+                    // check if first item is the current item
+                    if(item == equippedItemId) {
+                        // unequip current item
+                        unequipItemtype(type);
+                        this[1].updateEquipped(type);
+                        return true;
+                    }
+                    // set first item to skip this step in future loops
                     firstItem = item;
-                    previousItem = item;
-                    continue;
                 }
-                // check if the item before this item was the current item
-                if (item == currentItemId) {
-                    // equip new item
+                // check if the current item is the equipped item
+                if(item == equippedItemId) {
+                    // equip the previously found item
                     equipItem(previousItem);
                     this[1].updateEquipped(type);
                     return true;
-                } else {
-                    // set previous item to current item and continue loop
-                    previousItem = item;
                 }
+                // set previous item to current item and continue loop
+                previousItem = item;
             }
         }
-        // if no previous item has been check if the first item is not the current item
-        if (previousItem != currentItemId) {
-            // otherwise equip the first item
+        // check if the last item is not the equipped item
+        if (previousItem != equippedItemId) {
+            // otherwise equip the last item
             equipItem(previousItem);
             this[1].updateEquipped(type);
             return true;

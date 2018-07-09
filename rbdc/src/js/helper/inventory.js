@@ -63,6 +63,12 @@ function equipItem(id, profile = saveObject.currentProfile) {
     }
 }
 
+function unequipItemtype(type, profile = saveObject.currentProfile) {
+    if (type != 'valuable') {
+        saveObject.profiles[profile].character[type] = null;
+    }
+}
+
 function getItem(id, profile = saveObject.currentProfile) {
     return saveObject.profiles[profile].inventory.items[id];
 }

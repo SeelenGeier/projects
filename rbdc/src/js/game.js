@@ -85,6 +85,7 @@ function create() {
             }
         }
     }
+    this.load.image('X', '../assets/item/X.png');
     this.load.start();
 
     // load possible save data
