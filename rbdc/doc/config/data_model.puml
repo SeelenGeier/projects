@@ -29,10 +29,6 @@ package Configurations{
             attribute(actionMessage) -> type(string)
             attribute(valueDescription) -> type(string)
         }
-
-        object damageType {
-            attribute(description) -> type(string)
-        }
     }
 
     package Lists{

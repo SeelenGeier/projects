@@ -145,7 +145,7 @@ class profileOverviewScene extends Phaser.Scene {
         this.equippedItems[type].durability = this.add.text(x - (durabilityText.length * 4), y + 40, durabilityText, {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 16,
-            color: '#ffdddd'
+            color: '#ffffff'
         });
         // add up button to equip next item
         new Button('buttonItemNext' + type[0].toUpperCase() + type.substring(1), ['gameicons_white', 'up.png'], x, y - 50, this);
