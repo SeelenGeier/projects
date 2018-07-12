@@ -31,6 +31,7 @@ class shopScene extends Phaser.Scene {
         // add navigation button to return to profile overview and register corresponding function
         new Button('buttonExit', ['gameicons', 'door.png'], x, y, this);
         this.buttonExit.on('pointerup', this.exitShop, this);
+        this.buttonExit.setTint(0x996666);
     }
 
     exitShop() {
@@ -40,13 +41,37 @@ class shopScene extends Phaser.Scene {
     }
 
     addTabNavigation(x, y) {
+        // add button to switch to sell tab
+        this.addSellButton(x - 50, y);
+
+        // add text for sell button
+        this.addSellText(x - 50, y + 40);
+
+        // add button to switch to buy tab
+        this.addBuyButton(x + 50, y);
+
+        // add text for buy button
+        this.addBuyText(x + 50, y + 40);
+    }
+
+    openSellTab() {
+
+    }
+
+    openBuyTab() {
+
+    }
+
+    addSellButton(x, y) {
         // add sell button
-        new Button('buttonSellTab', ['gameicons', 'export.png'], x - 50, y, this);
+        new Button('buttonSellTab', ['gameicons', 'export.png'], x, y, this);
         this.buttonSellTab.on('pointerup', this.openSellTab, this);
         this.buttonSellTab.setTint(0xcc0000);
+    }
 
+    addSellText(x, y) {
         // add text 'sell' below sell button
-        this.textSellTab = this.add.text(x - 50, y + 40, 'SELL', {
+        this.textSellTab = this.add.text(x, y, 'SELL', {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 24,
             color: '#cc0000'
@@ -56,14 +81,18 @@ class shopScene extends Phaser.Scene {
         // enable text to be clickable as well
         this.textSellTab.setInteractive();
         this.textSellTab.on('pointerup', this.openSellTab, this);
+    }
 
+    addBuyButton(x, y) {
         // add buy button
-        new Button('buttonBuyTab', ['gameicons', 'import.png'], x + 50, y, this);
+        new Button('buttonBuyTab', ['gameicons', 'import.png'], x, y, this);
         this.buttonBuyTab.on('pointerup', this.openBuyTab, this);
         this.buttonBuyTab.setTint(0x00cc00);
+    }
 
+    addBuyText(x, y) {
         // add text 'buy' below buy button
-        this.textBuyTab = this.add.text(x + 50, y + 40, 'BUY', {
+        this.textBuyTab = this.add.text(x, y, 'BUY', {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 24,
             color: '#00cc00'
@@ -73,13 +102,5 @@ class shopScene extends Phaser.Scene {
         // enable text to be clickable as well
         this.textBuyTab.setInteractive();
         this.textBuyTab.on('pointerup', this.openBuyTab, this);
-    }
-
-    openSellTab() {
-
-    }
-
-    openBuyTab() {
-
     }
 }
