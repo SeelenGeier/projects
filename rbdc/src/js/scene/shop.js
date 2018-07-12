@@ -9,10 +9,6 @@ class shopScene extends Phaser.Scene {
     }
 
     create() {
-        // save new current scene in saveObject
-        saveObject.profiles[saveObject.currentProfile].scene = 'shop';
-        saveData();
-
         // add background image
         this.addBackground();
 
