@@ -10,38 +10,18 @@ class splashScene extends Phaser.Scene {
     }
 
     create() {
-        // add title text to splash screen
-        this.splashTitle = this.add.text(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.30, config.default.setting.title, {
-            fontFamily: config.default.setting.fontFamily,
-            fontSize: 24,
-            color: '#ffffff'
-        });
 
-        // change position of title text to be centered
-        this.splashTitle.setOrigin(0.5, 0.5);
+        // add title of the game
+        this.addTextTitle(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.25);
 
-        // add splash image to the center of the splash screen
-        this.splashImage = this.add.sprite(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.5, 'splash');
+        // add splash image in the center of the splash screen
+        this.addSplashImage(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.45);
 
-        // add text 'by' as separate line under splash image
-        this.splashBy = this.add.text(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.7, 'by', {
-            fontFamily: config.default.setting.fontFamily,
-            fontSize: 24,
-            color: '#ffffff'
-        });
+        // add 'by' in separate line
+        this.addTextBy(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.65);
 
-        // change position of 'by' text to be centered
-        this.splashBy.setOrigin(0.5, 0.5);
-
-        // add author text as separate line under 'by' text
-        this.splashAuthor = this.add.text(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.78, config.default.setting.author, {
-            fontFamily: config.default.setting.fontFamily,
-            fontSize: 24,
-            color: '#ffffff'
-        });
-
-        // change position of author text to be centered
-        this.splashAuthor.setOrigin(0.5, 0.5);
+        // add author info below 'by'
+        this.addTextAuthor(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.73);
 
         // add timer to activate pointer (to have the splash screen stay for a while)
         this.time.delayedCall(1000, this.activatePointer, [], this);
@@ -75,5 +55,46 @@ class splashScene extends Phaser.Scene {
     activatePointer() {
         // activate the possibility to click the scene which leads to the splash screen fading
         this.input.on('pointerdown', this.fadeSplash, this);
+    }
+
+    addTextTitle(x, y) {
+        // add title text to splash screen
+        this.splashTitle = this.add.text(x, y, config.default.setting.title, {
+            fontFamily: config.default.setting.fontFamily,
+            fontSize: 24,
+            color: '#ffffff'
+        });
+
+        // change position of title text to be centered
+        this.splashTitle.setOrigin(0.5, 0.5);
+    }
+
+    addSplashImage(x, y) {
+        // add splash image
+        this.splashImage = this.add.sprite(x, y, 'splash');
+    }
+
+    addTextBy(x, y) {
+        // add text 'by' as separate line under splash image
+        this.splashBy = this.add.text(x, y, 'by', {
+            fontFamily: config.default.setting.fontFamily,
+            fontSize: 24,
+            color: '#ffffff'
+        });
+
+        // change position of 'by' text to be centered
+        this.splashBy.setOrigin(0.5, 0.5);
+    }
+
+    addTextAuthor(x, y) {
+        // add author text as separate line under 'by' text
+        this.splashAuthor = this.add.text(x, y, config.default.setting.author, {
+            fontFamily: config.default.setting.fontFamily,
+            fontSize: 24,
+            color: '#ffffff'
+        });
+
+        // change position of author text to be centered
+        this.splashAuthor.setOrigin(0.5, 0.5);
     }
 }
