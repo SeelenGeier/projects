@@ -37,10 +37,6 @@ class profileOverviewScene extends Phaser.Scene {
         this.addCharacter(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.62);
     }
 
-    update() {
-
-    }
-
     goToConfig() {
         // hide current scene and start config scene
         this.scene.sleep();

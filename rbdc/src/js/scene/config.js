@@ -27,10 +27,6 @@ class configScene extends Phaser.Scene {
         this.addLogout(this.sys.game.config.width * 0.25, this.sys.game.config.height * 0.6);
     }
 
-    update() {
-
-    }
-
     goToProfileManagement() {
         // unset current profile
         saveObject.currentProfile = undefined;

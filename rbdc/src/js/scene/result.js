@@ -13,8 +13,4 @@ class resultScene extends Phaser.Scene {
         saveObject.profiles[saveObject.currentProfile].scene = 'result';
         saveData();
     }
-
-    update() {
-
-    }
 }

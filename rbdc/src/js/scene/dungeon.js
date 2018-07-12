@@ -18,10 +18,6 @@ class dungeonScene extends Phaser.Scene {
         this.addNavigationExit(this.sys.game.config.width * 0.1, this.sys.game.config.height * 0.5);
     }
 
-    update() {
-
-    }
-
     addNavigationExit(x, y) {
         // add navigation button to return to profile overview and register corresponding function
         new Button('buttonExit', ['gameicons_white', 'door.png'], x, y, this);

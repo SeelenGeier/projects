@@ -21,10 +21,6 @@ class profileManagementScene extends Phaser.Scene {
         this.showAllProfiles(this.sys.game.config.width * 0.2, this.sys.game.config.height * 0.25);
     }
 
-    update() {
-
-    }
-
     addProfileHeadline(x, y) {
         // add headline text
         this.profileHeadline = this.add.text(x, y, 'Select a Profile', {
