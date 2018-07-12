@@ -107,20 +107,23 @@ class profileOverviewScene extends Phaser.Scene {
 
     addNavigationConfig(x, y) {
         // add navigation button to open config and register corresponding function
-        new Button('buttonConfig', ['gameicons_white', 'gear.png'], x, y, this);
+        new Button('buttonConfig', ['gameicons', 'gear.png'], x, y, this);
         this.buttonConfig.on('pointerup', this.goToConfig, this);
+        this.buttonConfig.setTint(0xaaaaaa);
     }
 
     addNavigationShop(x, y) {
         // add navigation button to go to the shop
-        new Button('buttonShop', ['gameicons_white', 'cart.png'], x, y, this);
+        new Button('buttonShop', ['gameicons', 'cart.png'], x, y, this);
         this.buttonShop.on('pointerup', this.goTo, ['shop', this]);
+        this.buttonShop.setTint(0xccaa00);
     }
 
     addNavigationDungeon(x, y) {
         // add navigation button to go to the dungeon
-        new Button('buttonDungeon', ['gameicons_exp_white', 'fightFist.png'], x, y, this);
+        new Button('buttonDungeon', ['gameicons_exp', 'fightFist.png'], x, y, this);
         this.buttonDungeon.on('pointerup', this.goTo, ['dungeon', this]);
+        this.buttonDungeon.setTint(0xcc0000);
     }
 
     addBackground() {
@@ -157,11 +160,13 @@ class profileOverviewScene extends Phaser.Scene {
             color: '#ffffff'
         });
         // add up button to equip next item
-        new Button('buttonItemNext' + type[0].toUpperCase() + type.substring(1), ['gameicons_white', 'up.png'], x, y - 50, this);
+        new Button('buttonItemNext' + type[0].toUpperCase() + type.substring(1), ['gameicons', 'up.png'], x, y - 50, this);
         this['buttonItemNext' + type[0].toUpperCase() + type.substring(1)].on('pointerup', this.changeItemNext, [type, this]);
+        this['buttonItemNext' + type[0].toUpperCase() + type.substring(1)].setTint(0xcccccc);
         // add down button to equip previous item
-        new Button('buttonItemPrev' + type[0].toUpperCase() + type.substring(1), ['gameicons_white', 'down.png'], x, y + 80, this);
+        new Button('buttonItemPrev' + type[0].toUpperCase() + type.substring(1), ['gameicons', 'down.png'], x, y + 80, this);
         this['buttonItemPrev' + type[0].toUpperCase() + type.substring(1)].on('pointerup', this.changeItemPrev, [type, this]);
+        this['buttonItemPrev' + type[0].toUpperCase() + type.substring(1)].setTint(0xcccccc);
     }
 
     updateEquipped(type) {

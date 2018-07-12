@@ -49,10 +49,8 @@ function preload() {
     this.load.atlasXML('uipack_red', '../assets/spritesheet/uipack_red.png', '../assets/spritesheet/uipack_red.xml');
     this.load.atlasXML('uipack_rpg', '../assets/spritesheet/uipack_rpg.png', '../assets/spritesheet/uipack_rpg.xml');
     this.load.atlasXML('uipack_yellow', '../assets/spritesheet/uipack_yellow.png', '../assets/spritesheet/uipack_yellow.xml');
-    this.load.atlasXML('gameicons_white', '../assets/spritesheet/gameicons_white.png', '../assets/spritesheet/gameicons_white.xml');
-    this.load.atlasXML('gameicons_exp_white', '../assets/spritesheet/gameicons_exp_white.png', '../assets/spritesheet/gameicons_exp_white.xml');
-    this.load.atlasXML('gameicons_black', '../assets/spritesheet/gameicons_black.png', '../assets/spritesheet/gameicons_black.xml');
-    this.load.atlasXML('gameicons_exp_black', '../assets/spritesheet/gameicons_exp_black.png', '../assets/spritesheet/gameicons_exp_black.xml');
+    this.load.atlasXML('gameicons', '../assets/spritesheet/gameicons.png', '../assets/spritesheet/gameicons.xml');
+    this.load.atlasXML('gameicons_exp', '../assets/spritesheet/gameicons_exp.png', '../assets/spritesheet/gameicons_exp.xml');
 
     // load character spritesheet
     this.load.spritesheet('character', '../assets/unit/character.png', {frameWidth: 200, frameHeight: 148});

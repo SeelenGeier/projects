@@ -50,23 +50,17 @@ class configScene extends Phaser.Scene {
             saveObject.profiles[saveObject.currentProfile].sound = false;
             saveData();
 
-            // switch image for button to black
-            this.buttonToggleSound.setTexture('gameicons_black');
+            // switch image for button to grey
+            this.buttonToggleSound.setTint(0x444444);
             this.buttonToggleSound.setFrame('audioOff.png');
-
-            // switch color for text to black
-            this.buttonToggleSoundLabel.setColor('#000000');
         } else {
             // set sound to activated in profile
             saveObject.profiles[saveObject.currentProfile].sound = true;
             saveData();
 
             // switch image for button to white
-            this.buttonToggleSound.setTexture('gameicons_white');
+            this.buttonToggleSound.setTint(0xffffff);
             this.buttonToggleSound.setFrame('audioOn.png');
-
-            // switch color for text to white
-            this.buttonToggleSoundLabel.setColor('#ffffff');
         }
     }
 
@@ -77,23 +71,17 @@ class configScene extends Phaser.Scene {
             saveObject.profiles[saveObject.currentProfile].music = false;
             saveData();
 
-            // switch image for button to black
-            this.buttonToggleMusic.setTexture('gameicons_black');
+            // switch image for button to grey
+            this.buttonToggleMusic.setTint(0x444444);
             this.buttonToggleMusic.setFrame('musicOff.png');
-
-            // switch color for text to black
-            this.buttonToggleMusicLabel.setColor('#000000');
         } else {
             // set music to activated in profile
             saveObject.profiles[saveObject.currentProfile].music = true;
             saveData();
 
-            // switch image for button to black
-            this.buttonToggleMusic.setTexture('gameicons_white');
+            // switch image for button to white
+            this.buttonToggleMusic.setTint(0xffffff);
             this.buttonToggleMusic.setFrame('musicOn.png');
-
-            // switch color for text to black
-            this.buttonToggleMusicLabel.setColor('#ffffff');
         }
     }
 
@@ -110,7 +98,7 @@ class configScene extends Phaser.Scene {
         this.buttonProfileManagementLabel.on('pointerup', this.goToProfileManagement, this);
 
         // add button next to logout text with the same functionality
-        new Button('buttonProfileManagement', ['gameicons_white', 'menuList.png'], this.buttonProfileManagementLabel.x - 35, this.buttonProfileManagementLabel.y + this.buttonProfileManagementLabel.height/2, this);
+        new Button('buttonProfileManagement', ['gameicons', 'menuList.png'], this.buttonProfileManagementLabel.x - 35, this.buttonProfileManagementLabel.y + this.buttonProfileManagementLabel.height/2, this);
         this.buttonProfileManagement.on('pointerup', this.goToProfileManagement, this);
     }
 
@@ -129,13 +117,14 @@ class configScene extends Phaser.Scene {
         // check if sound is active initially
         if (saveObject.profiles[saveObject.currentProfile].sound == true) {
             // add white button next to sound toggle text if sound is activated
-            new Button('buttonToggleSound', ['gameicons_white', 'audioOn.png'], this.buttonToggleSoundLabel.x - 35, this.buttonToggleSoundLabel.y + this.buttonToggleSoundLabel.height/2, this);
+            new Button('buttonToggleSound', ['gameicons', 'audioOn.png'], this.buttonToggleSoundLabel.x - 35, this.buttonToggleSoundLabel.y + this.buttonToggleSoundLabel.height/2, this);
         } else {
             // add black button next to sound toggle text if sound is deactivated
-            new Button('buttonToggleSound', ['gameicons_black', 'audioOff.png'], this.buttonToggleSoundLabel.x -35, this.buttonToggleSoundLabel.y + this.buttonToggleSoundLabel.height/2, this);
+            new Button('buttonToggleSound', ['gameicons', 'audioOff.png'], this.buttonToggleSoundLabel.x -35, this.buttonToggleSoundLabel.y + this.buttonToggleSoundLabel.height/2, this);
 
-            // change text color to black (since white was default)
-            this.buttonToggleSoundLabel.setColor('#000000');
+            // change button color to grey
+            this.buttonToggleSound.setTint(0x444444);
+            this.buttonToggleSound.setFrame('audioOff.png');
         }
 
         // add same toggle functionality to button just like the text
@@ -157,13 +146,13 @@ class configScene extends Phaser.Scene {
         // check if music is active initially
         if (saveObject.profiles[saveObject.currentProfile].music == true) {
             // add white button next to music toggle text if music is activated
-            new Button('buttonToggleMusic', ['gameicons_white', 'musicOn.png'], this.buttonToggleMusicLabel.x - 35, this.buttonToggleMusicLabel.y + this.buttonToggleMusicLabel.height/2, this);
+            new Button('buttonToggleMusic', ['gameicons', 'musicOn.png'], this.buttonToggleMusicLabel.x - 35, this.buttonToggleMusicLabel.y + this.buttonToggleMusicLabel.height/2, this);
         } else {
             // add black button next to music toggle text if music is deactivated
-            new Button('buttonToggleMusic', ['gameicons_black', 'musicOff.png'], this.buttonToggleMusicLabel.x - 35, this.buttonToggleMusicLabel.y + this.buttonToggleMusicLabel.height/2, this);
+            new Button('buttonToggleMusic', ['gameicons', 'musicOff.png'], this.buttonToggleMusicLabel.x - 35, this.buttonToggleMusicLabel.y + this.buttonToggleMusicLabel.height/2, this);
 
-            // change text color to black (since white was default)
-            this.buttonToggleMusicLabel.setColor('#000000');
+            // change button color to grey
+            this.buttonToggleMusic.setTint(0x444444);
         }
 
         // add same toggle functionality to button just like the text
@@ -172,7 +161,7 @@ class configScene extends Phaser.Scene {
 
     addReturnButton(x, y) {
         // add button to return to overview
-        new Button('buttonProfileOverview', ['gameicons_white', 'return.png'], x, y, this);
+        new Button('buttonProfileOverview', ['gameicons', 'return.png'], x, y, this);
         this.buttonProfileOverview.on('pointerup', this.goToProfileOverview, this);
     }
 
@@ -195,7 +184,7 @@ class configScene extends Phaser.Scene {
         this.buttonCreditsLabel.on('pointerup', this.showCredits, this);
 
         // add button next to logout text with the same functionality
-        new Button('buttonCredits', ['gameicons_white', 'massiveMultiplayer.png'], this.buttonCreditsLabel.x - 35, this.buttonCreditsLabel.y + this.buttonCreditsLabel.height/2, this);
+        new Button('buttonCredits', ['gameicons', 'massiveMultiplayer.png'], this.buttonCreditsLabel.x - 35, this.buttonCreditsLabel.y + this.buttonCreditsLabel.height/2, this);
         this.buttonCredits.on('pointerup', this.showCredits, this);
     }
 
