@@ -11,7 +11,7 @@ class profileManagementScene extends Phaser.Scene {
         // add background image
         this.addBackground();
 
-        // add headline
+        // add headline for profile management
         this.addProfileHeadline(40, 30);
 
         // add new profile button, label and input field
@@ -29,6 +29,7 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     addProfileHeadline(x, y) {
+        // add headline text
         this.add.text(x, y, 'Select a Profile', {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 32,
@@ -37,6 +38,7 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     addNewProfileNameLabel(x, y) {
+        // add label for new profile text field
         this.add.text(x, y, 'New Profile:', {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 16,
@@ -50,44 +52,51 @@ class profileManagementScene extends Phaser.Scene {
             this.showProfileNameField();
         } else {
             // create input field
-            var input = document.createElement('input');
+            let input = document.createElement('input');
             input.type = 'text';
             input.id = 'newProfileName';
             input.style = 'position: relative; left: ' + x + 'px; bottom: ' + y + 'px; width: 155px;';
+
+            // stick input field to game canvas
             document.getElementById(gameConfig.parent).appendChild(input);
         }
     }
 
     hideProfileNameField() {
+        // hide new profile text field via css since it is a DOM element
         document.getElementById('newProfileName').style.visibility = "hidden";
     }
 
     showProfileNameField() {
+        // show new profile text field via css since it is a DOM element
         document.getElementById('newProfileName').style.visibility = "";
     }
 
     showAllProfiles() {
+        // remove all profiles currently present
         this.clearProfileList();
 
+        // generate a new list for profile names and backgrounds
         this.profileText = {};
         this.profileNameBackground = {};
 
-        // add each profile individually to list
-        var counter = 0;
-        for (var profile in saveObject.profiles) {
+        // add each profile individually to the lists
+        let counter = 0;
+        for (let profile in saveObject.profiles) {
             // add profile name
             this.addProfileNameList(this.profileListPosition.x, this.profileListPosition.y, counter, profile);
 
             // add delete profile button
             this.addProfileDeleteButtonList(this.profileListPosition.x, this.profileListPosition.y, counter, profile);
 
+            // increment counter for next row
             counter++;
         }
     }
 
     createNewProfile() {
         // get profile name from DOM input
-        var newProfileName = document.getElementById('newProfileName').value;
+        let newProfileName = document.getElementById('newProfileName').value;
         document.getElementById('newProfileName').value = '';
 
         // check for input
@@ -110,26 +119,38 @@ class profileManagementScene extends Phaser.Scene {
                         trinket: null
                     }
                 };
+
+                // hand out initial equipment to profile
                 this.setInitialEquipment(newProfileName);
 
                 saveData();
 
-                // update profile list
+                // update list of profiles
                 this.showAllProfiles();
             } else {
+                // if profile with the same name already exists, show info dialog
                 new Dialog('Name Invalid', 'Profile \'' + newProfileName + '\' already exists.', this.scene);
             }
         }
     }
 
     confirmDeleteProfile() {
+        // show confirmation dialog for deleting a profile
         new Dialog('Delete Profile', 'Do you want to delete \'' + this.profile + '\'?', this, true);
-        this.scene.buttonYES.on('pointerup', this.scene.deleteProfile, this);
+
+        // only delete profile if the YES button has been pressed
+        this.scene.dialogButtonYES.on('pointerup', this.scene.deleteProfile, this);
     }
 
     deleteProfile() {
         // delete profile from saveObject
         delete saveObject.profiles[this.profile];
+
+        // unset the current profile if it got deleted
+        if(saveObject.currentProfile == this.profile) {
+            saveObject.currentProfile = null;
+        }
+
         saveData();
 
         // update profile list
@@ -148,34 +169,39 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     addProfileNameList(x, y, counter, profile) {
-        // add background for profile
+        // add background for profile to given position based on counter
         this.profileNameBackground[counter] = this.add.sprite(x, y, 'uipack_rpg', 'buttonLong_grey_pressed.png');
         this.profileNameBackground[counter].setOrigin(0,0);
 
+        // add profile name to given position based on counter
         this.profileText[counter] = this.add.text(x, y + 52 * counter + 6, profile, {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 24,
             color: '#000000'
         });
+
+        // make profile name able to select profile (like a button
         this.profileText[counter].setInteractive();
         this.profileText[counter].profile = profile;
         this.profileText[counter].on('pointerup', this.selectProfile, this.profileText[counter]);
 
+        // adjust position and scale of profile background depending on profile name
         this.profileNameBackground[counter].setX(this.profileText[counter].x-10);
         this.profileNameBackground[counter].setY(this.profileText[counter].y-10);
         this.profileNameBackground[counter].setScale((this.profileText[counter].width+20)/this.profileNameBackground[counter].width, (this.profileText[counter].height+20)/this.profileNameBackground[counter].height);
     }
 
     addProfileDeleteButtonList(x, y, counter, profile) {
+        // add delete button for given profile
         new Button('profile' + counter + '_delete', ['uipack_red', 'red_boxCross.png'], x - 40, y + 52 * counter + 18, this);
         this['profile' + counter + '_delete'].profile = profile;
         this['profile' + counter + '_delete'].on('pointerup', this.confirmDeleteProfile, this['profile' + counter + '_delete']);
     }
 
     clearProfileList() {
-        // clear previous profiles
-        var counter = 0;
-        for (var profile in this.profileText) {
+        // remove all currently shown profiles
+        let counter = 0;
+        for (let profile in this.profileText) {
             this.profileText[counter].destroy();
             this.profileNameBackground[counter].destroy();
             this['profile' + counter + '_delete'].destroy();
@@ -184,6 +210,7 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     addBackground() {
+        // add background image in the center of the screen
         this.backgroundImage = this.add.sprite(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'backgroundBeige');
 
         // scale background to screen size and add a few more pixels to prevent flickering
@@ -191,28 +218,31 @@ class profileManagementScene extends Phaser.Scene {
     }
 
     addNewProfileButton(x, y) {
+        // add button to confirm new profile name given in input field
         new Button('buttonNewProfile', ['uipack_green', 'green_boxCheckmark.png'], x, y, this);
         this.buttonNewProfile.on('pointerup', this.createNewProfile, this);
+
+        // enable ENTER key to be used as well
         this.input.keyboard.on('keydown_ENTER', this.createNewProfile, this);
     }
 
     setInitialEquipment(profile) {
-        let initialEquipment = {};
-
-        // go through all default equipment
-        for (var item in config.default.equipment) {
+        // go through default equipment in configuration
+        for (let item in config.default.equipment) {
             // check if any equipment is set
             if(config.default.equipment[item] != null) {
                 // give item to profile
                 let id = giveItem(item, config.default.equipment[item], null, profile);
+
                 // equip initial items immediately
                 equipItem(id, profile);
             }
         }
+
+        // TODO: remove temporary items
+        // give some additional items to player (TEMPORARY)
         giveItem('weapon', 'sword', 100, profile);
         giveItem('weapon', 'axe', 30, profile);
         giveItem('armor', 'helmet', 50, profile);
-
-        return initialEquipment;
     }
 }

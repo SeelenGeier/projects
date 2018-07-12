@@ -9,6 +9,7 @@ class dungeonScene extends Phaser.Scene {
     }
 
     create() {
+        // save new current scene in saveObject
         saveObject.profiles[saveObject.currentProfile].scene = 'dungeon';
         saveData();
 
@@ -22,6 +23,7 @@ class dungeonScene extends Phaser.Scene {
     }
 
     addNavigationExit(x, y) {
+        // add navigation button to return to profile overview and register corresponding function
         new Button('buttonExit', ['gameicons_white', 'door.png'], x, y, this);
         this.buttonExit.on('pointerup', this.exitDungeon, this);
     }

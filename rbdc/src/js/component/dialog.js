@@ -1,70 +1,86 @@
 class Dialog {
-    constructor(title, message, parent, confirm = false) {
+    constructor(title, text, parent, confirm = false) {
         this.parent = parent;
         this.confirm = confirm;
 
-        // add grey background to block input outside of dialog box
+        // add grey transparent background to block input outside of dialog box
         this.greyBackground = parent.scene.add.sprite(parent.scene.sys.game.config.width / 2, parent.scene.sys.game.config.height / 2, 'backgroundBlack');
         this.greyBackground.setScale(parent.scene.sys.game.config.width / this.greyBackground.width, parent.scene.sys.game.config.height / this.greyBackground.height);
         this.greyBackground.alpha = 0.7;
+
+        // make grey transparent background interactive to block all input from going through
         this.greyBackground.setInteractive();
 
         // add dialog box in center of screen
         this.dialogBackground = parent.scene.add.sprite(parent.scene.sys.game.config.width / 2, parent.scene.sys.game.config.height / 2 + 15, 'backgroundParchment');
 
-        // add title to message box
-        this.title = parent.scene.add.text(parent.scene.sys.game.config.width / 2, parent.scene.sys.game.config.height / 2 - 30, title, {
+        // add title to the top of the message box
+        this.dialogTitle = parent.scene.add.text(parent.scene.sys.game.config.width / 2, parent.scene.sys.game.config.height / 2 - 30, title, {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 16,
             color: '#ffffff'
         });
-        this.title.setOrigin(0.5, 0.5);
+
+        // center title dialog
+        this.dialogTitle.setOrigin(0.5, 0.5);
 
         // add text to dialog box
-        this.message = parent.scene.add.text(parent.scene.sys.game.config.width / 2, parent.scene.sys.game.config.height / 2, message, {
+        this.dialogText = parent.scene.add.text(parent.scene.sys.game.config.width / 2, parent.scene.sys.game.config.height / 2, text, {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 16,
             color: '#ffffff'
         });
 
         // fix positions of title and message
-        this.message.x = parent.scene.sys.game.config.width / 2 - this.message.width / 2;
-        this.message.y = parent.scene.sys.game.config.height / 2 - this.message.height / 2;
-        this.title.y = parent.scene.sys.game.config.height / 2 - this.message.height / 2 - 10;
+        this.dialogText.x = parent.scene.sys.game.config.width / 2 - this.dialogText.width / 2;
+        this.dialogText.y = parent.scene.sys.game.config.height / 2 - this.dialogText.height / 2;
+        this.dialogTitle.y = parent.scene.sys.game.config.height / 2 - this.dialogText.height / 2 - 10;
 
         // scale dialog box to fit title and message
-        var backgroundScaleWidth = (this.message.width + 50) / this.dialogBackground.width;
-        if (((this.title.width + 40) / this.dialogBackground.width) > backgroundScaleWidth) {
-            backgroundScaleWidth = (this.title.width + 50) / this.dialogBackground.width;
+        let backgroundScaleWidth = (this.dialogText.width + 50) / this.dialogBackground.width;
+        if (((this.dialogTitle.width + 40) / this.dialogBackground.width) > backgroundScaleWidth) {
+            backgroundScaleWidth = (this.dialogTitle.width + 50) / this.dialogBackground.width;
         }
-        var backgroundScaleHeight = (this.message.height + this.title.height + 100) / this.dialogBackground.height;
+        let backgroundScaleHeight = (this.dialogText.height + this.dialogTitle.height + 100) / this.dialogBackground.height;
         this.dialogBackground.setScale(backgroundScaleWidth, backgroundScaleHeight);
 
+        // check if the dialog is a confirmation dialog
         if (confirm) {
             // add YES Button
-            new Button('buttonYES', ['uipack_green', 'green_boxCheckmark.png'], parent.scene.sys.game.config.width / 2 + 30, parent.scene.sys.game.config.height / 2 + this.message.height / 2 + 35, parent.scene);
-            parent.scene.buttonYES.on('pointerup', this.stopDialog, this);
+            new Button('dialogButtonYES', ['uipack_green', 'green_boxCheckmark.png'], parent.scene.sys.game.config.width / 2 + 30, parent.scene.sys.game.config.height / 2 + this.dialogText.height / 2 + 35, parent.scene);
+            parent.scene.dialogButtonYES.on('pointerup', this.stopDialog, this);
 
             // add NO Button
-            new Button('buttonNO', ['uipack_red', 'red_boxCross.png'], parent.scene.sys.game.config.width / 2 - 30, parent.scene.sys.game.config.height / 2 + this.message.height / 2 + 35, parent.scene);
-            parent.scene.buttonNO.on('pointerup', this.stopDialog, this);
+            new Button('dialogButtonNO', ['uipack_red', 'red_boxCross.png'], parent.scene.sys.game.config.width / 2 - 30, parent.scene.sys.game.config.height / 2 + this.dialogText.height / 2 + 35, parent.scene);
+            parent.scene.dialogButtonNO.on('pointerup', this.stopDialog, this);
         } else {
             // add OK Button
-            new Button('buttonOK', ['uipack_blue', 'blue_boxTick.png'], parent.scene.sys.game.config.width / 2, parent.scene.sys.game.config.height / 2 + this.message.height / 2 + 35, parent.scene);
-            parent.scene.buttonOK.on('pointerup', this.stopDialog, this);
+            new Button('dialogButtonOK', ['uipack_blue', 'blue_boxTick.png'], parent.scene.sys.game.config.width / 2, parent.scene.sys.game.config.height / 2 + this.dialogText.height / 2 + 35, parent.scene);
+            parent.scene.dialogButtonOK.on('pointerup', this.stopDialog, this);
         }
     }
 
     stopDialog() {
+        // check if the dialog is a confirmation dialog
         if (this.confirm) {
-            this.parent.scene.buttonYES.destroy();
-            this.parent.scene.buttonNO.destroy();
+            // remove buttons YES and NO
+            this.parent.scene.dialogButtonYES.destroy();
+            this.parent.scene.dialogButtonNO.destroy();
         } else {
-            this.parent.scene.buttonOK.destroy();
+            // remove button OK
+            this.parent.scene.dialogButtonOK.destroy();
         }
-        this.message.destroy();
-        this.title.destroy();
+
+        // remove message from the dialog
+        this.dialogText.destroy();
+
+        // remove title from the dialog
+        this.dialogTitle.destroy();
+
+        // remove dialog background
         this.dialogBackground.destroy();
+
+        // remove grey transparent background
         this.greyBackground.destroy();
     }
 }

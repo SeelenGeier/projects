@@ -20,15 +20,17 @@ function loadData() {
 }
 
 function initializeSaveObject() {
+    // create saveObject with initial values
     saveObject = {
         profiles: {},
         currentProfile: undefined
     };
 
-    // backup found data before overwriting
+    // check if save data is already present
     if (localStorage.getItem(config.default.setting.saveName) != undefined) {
-        console.log('Invalid data saved as _BACKUP.');
+        // backup found data before overwriting
         localStorage.setItem(config.default.setting.saveName + '_BACKUP', localStorage.getItem(config.default.setting.saveName));
+        console.log('Invalid data saved as _BACKUP.');
     }
 
     saveData();
@@ -71,7 +73,7 @@ function validateSaveData() {
     // check if at least one profile exists
     if (Object.keys(saveObject.profiles).length > 0) {
         // check all profiles
-        for (profile in saveObject.profiles) {
+        for (let profile in saveObject.profiles) {
             // check if the profile is an object
             if (typeof saveObject.profiles[profile] != 'object') {
                 return this.exitValidation('Profile is not saved as an object.');
@@ -230,13 +232,18 @@ function validateSaveData() {
             }
         }
     }
+
+    // if no invalid entries have been found, exit validation without error message (success)
     return this.exitValidation();
 }
 
 function exitValidation(error_message = undefined) {
+    // check if an error message was provided
     if (error_message == undefined) {
+        // if no error message has been provided, assume the validation was a success
         return true;
     } else {
+        // if an error message has been provided, log the error and fail validation
         console.log(error_message);
         return false;
     }

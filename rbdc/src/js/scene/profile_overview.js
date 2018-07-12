@@ -6,10 +6,12 @@ class profileOverviewScene extends Phaser.Scene {
 
     preload() {
         // TODO: replace background
+        // load background image for profile overview
         this.load.image('backgroundProfileOverview', '../assets/background/profile_overview_mockup.png');
     }
 
     create() {
+        // save new current scene in saveObject
         saveObject.profiles[saveObject.currentProfile].scene = 'profileOverview';
         saveData();
 
@@ -100,16 +102,19 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     addNavigationConfig(x, y) {
+        // add navigation button to open config and register corresponding function
         new Button('buttonConfig', ['gameicons_white', 'gear.png'], x, y, this);
         this.buttonConfig.on('pointerup', this.goToConfig, this);
     }
 
     addNavigationShop(x, y) {
+        // add navigation button to go to the shop
         new Button('buttonShop', ['gameicons_white', 'cart.png'], x, y, this);
         this.buttonShop.on('pointerup', this.goTo, ['shop', this]);
     }
 
     addNavigationDungeon(x, y) {
+        // add navigation button to go to the dungeon
         new Button('buttonDungeon', ['gameicons_exp_white', 'fightFist.png'], x, y, this);
         this.buttonDungeon.on('pointerup', this.goTo, ['dungeon', this]);
     }
@@ -121,7 +126,7 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     addEquipment(x, y) {
-        this.equippedItems = {};
+        // add one item and up/down arrow for each equipable category
         this.addEquipped(x - 90, y, 'weapon');
         this.addEquipped(x - 30, y, 'armor');
         this.addEquipped(x + 30, y, 'offhand');
@@ -140,9 +145,9 @@ class profileOverviewScene extends Phaser.Scene {
             durabilityText = '-';
         }
         // add image for item
-        this.equippedItems[type] = this.add.sprite(x, y, image);
+        this['equipped'+ type[0].toUpperCase() + type.substring(1)] = this.add.sprite(x, y, image);
         // add durability info below item
-        this.equippedItems[type].durability = this.add.text(x - (durabilityText.length * 4), y + 40, durabilityText, {
+        this['equipped'+ type[0].toUpperCase() + type.substring(1)].durability = this.add.text(x - (durabilityText.length * 4), y + 40, durabilityText, {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 16,
             color: '#ffffff'
@@ -157,16 +162,19 @@ class profileOverviewScene extends Phaser.Scene {
 
     updateEquipped(type) {
         let durabilityText = '';
+        // check if item slot has an item equipped
         if(saveObject.profiles[saveObject.currentProfile].character[type] != null) {
             // change image of this item type to current item image
-            this.equippedItems[type].setTexture(config[type][getItem(saveObject.profiles[saveObject.currentProfile].character[type]).itemName].image);
+            this['equipped'+ type[0].toUpperCase() + type.substring(1)].setTexture(config[type][getItem(saveObject.profiles[saveObject.currentProfile].character[type]).itemName].image);
             durabilityText = getItem(saveObject.profiles[saveObject.currentProfile].character[type]).durability != null ? getItem(saveObject.profiles[saveObject.currentProfile].character[type]).durability + '' : 'X';
         } else {
-            this.equippedItems[type].setTexture('X');
+            // use "nothing" image and no durability if nothing is equipped
+            this['equipped'+ type[0].toUpperCase() + type.substring(1)].setTexture('X');
             durabilityText = '-';
         }
-        this.equippedItems[type].durability.setText(durabilityText);
-        this.equippedItems[type].durability.x = this.equippedItems[type].x - (durabilityText.length * 4);
+        // update durability text and position to be centered with image
+        this['equipped'+ type[0].toUpperCase() + type.substring(1)].durability.setText(durabilityText);
+        this['equipped'+ type[0].toUpperCase() + type.substring(1)].durability.x = this['equipped'+ type[0].toUpperCase() + type.substring(1)].x - (durabilityText.length * 4);
     }
 
     changeItemNext() {
@@ -239,11 +247,19 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     addCharacter(x, y) {
+        // add character outside of view
         this.character = this.add.sprite(-100, y, 'character');
+
+        // load animations if not done already
         addCharacterAnimations('character');
+
+        // set character animation as running
         this.character.anims.play('characterRun');
+
+        // leave sword sheathed initially
         this.character.swordDrawn = false;
 
+        // add moving motion to the center of the screen and switch to idle animation after arrival
         this.characterEnterTween = this.tweens.add({
             targets: [this.character],
             x: x,
@@ -253,43 +269,75 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     characterIdle() {
+        // deactivate any event trigger when completing an animation as precaution
         this.parent.scene.character.off('animationcomplete');
+
+        // check if sword is drawn or not
         if (this.parent.scene.character.swordDrawn) {
+            // start idle animation with sword
             this.parent.scene.character.anims.play('characterIdleWithSword');
         } else {
+            // start idle animation without sword
             this.parent.scene.character.anims.play('characterIdleNoSword');
         }
 
+        // add timer for switching idle status
         this.parent.scene.switchIdleCall = this.parent.scene.time.delayedCall(5000 + (5000 * Math.random()), this.parent.scene.switchIdle, [], this);
     }
 
     switchIdle() {
+        // check if the sword has been drawn or not
         if (this.parent.scene.character.swordDrawn) {
+            // play sword sheathing animation
             this.parent.scene.character.anims.play('characterSheatheSword');
+
+            // set sword drawn status to false
             this.parent.scene.character.swordDrawn = false;
+
+            // add event trigger when sheathing animation is complete to switch to idle animation
             this.parent.scene.character.on('animationcomplete', this.parent.scene.characterIdle, this);
         } else {
+            // play sword drawing animation
             this.parent.scene.character.anims.play('characterDrawSword');
+
+            // set sword drawn status to true
             this.parent.scene.character.swordDrawn = true;
+
+            // add event trigger when sheathing animation is complete to switch to first attack animation
             this.parent.scene.character.on('animationcomplete', this.parent.scene.idleAttack1, this);
         }
     }
 
     idleAttack1() {
+        // deactivate any event trigger when completing an animation
         this.parent.scene.character.off('animationcomplete');
+
+        // play first attack animation
         this.parent.scene.character.anims.play('characterAttack1');
+
+        // add event trigger when attack animation is complete to switch to second attack animation
         this.parent.scene.character.on('animationcomplete', this.parent.scene.idleAttack2, this);
     }
 
     idleAttack2() {
+        // deactivate any event trigger when completing an animation
         this.parent.scene.character.off('animationcomplete');
+
+        // play second attack animation
         this.parent.scene.character.anims.play('characterAttack2');
+
+        // add event trigger when attack animation is complete to switch to third attack animation
         this.parent.scene.character.on('animationcomplete', this.parent.scene.idleAttack3, this);
     }
 
     idleAttack3() {
+        // deactivate any event trigger when completing an animation
         this.parent.scene.character.off('animationcomplete');
+
+        // play third attack animation
         this.parent.scene.character.anims.play('characterAttack3');
+
+        // add event trigger when attack animation is complete to switch to idle animation
         this.parent.scene.character.on('animationcomplete', this.parent.scene.characterIdle, this);
     }
 }

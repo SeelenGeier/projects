@@ -1,3 +1,4 @@
+// configure Phaser
 let gameConfig = {
     type: Phaser.AUTO,
     width: 750 / 2,
@@ -17,8 +18,6 @@ canvas.style.margin = '50px auto';
 
 let game = new Phaser.Game(gameConfig);
 
-game
-
 // global config (e.g. config.weapon[config.default.equipment.weapon])
 let config;
 
@@ -29,7 +28,6 @@ function preload() {
 
     // load configuration files
     this.load.json('default', 'config/default.json');
-    this.load.json('damage_type', 'config/damage_type.json');
     this.load.json('trap_type', 'config/trap_type.json');
     this.load.json('monster', 'config/monster.json');
     this.load.json('trap', 'config/trap.json');
@@ -64,7 +62,6 @@ function create() {
     // register configuration for easier access
     config = {
         default: this.cache.json.get('default'),
-        damage_type: this.cache.json.get('damage_type'),
         trap_type: this.cache.json.get('trap_type'),
         monster: this.cache.json.get('monster'),
         trap: this.cache.json.get('trap'),
@@ -85,7 +82,11 @@ function create() {
             }
         }
     }
+
+    // load image for "nothing"
     this.load.image('X', '../assets/item/X.png');
+
+    // run loader to load all prepared images in create function
     this.load.start();
 
     // load possible save data
