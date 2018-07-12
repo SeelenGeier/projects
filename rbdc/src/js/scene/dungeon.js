@@ -15,7 +15,7 @@ class dungeonScene extends Phaser.Scene {
 
         // TODO: remove exit since it is not wanted in dungeon
         // add button to exit the shop
-        this.addNavigationExit(this.sys.game.config.width * 0.05, this.sys.game.config.height * 0.5);
+        this.addNavigationExit(this.sys.game.config.width * 0.1, this.sys.game.config.height * 0.5);
     }
 
     update() {

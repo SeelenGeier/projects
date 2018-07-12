@@ -182,6 +182,11 @@ class profileManagementScene extends Phaser.Scene {
         this.profileNameBackground[counter] = this.add.sprite(x, y, 'uipack_rpg', 'buttonLong_grey_pressed.png');
         this.profileNameBackground[counter].setOrigin(0,0);
 
+        // make profile background also clickable
+        this.profileNameBackground[counter].setInteractive();
+        this.profileNameBackground[counter].profile = profile;
+        this.profileNameBackground[counter].on('pointerup', this.selectProfile, this.profileText[counter]);
+
         // add profile name to given position based on counter
         this.profileText[counter] = this.add.text(x, y + 52 * counter + 6, profile, {
             fontFamily: config.default.setting.fontFamily,
