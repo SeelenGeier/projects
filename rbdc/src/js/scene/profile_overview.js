@@ -34,7 +34,7 @@ class profileOverviewScene extends Phaser.Scene {
         this.addEquipment(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.8);
 
         // add character to the center of the screen
-        this.addCharacter(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.5);
+        this.addCharacter(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.62);
     }
 
     update() {
@@ -49,27 +49,35 @@ class profileOverviewScene extends Phaser.Scene {
 
     goTo() {
         let destination = this[0];
+
         // stop timer for drawing/sheathing sword if character stopped once
-        if(this[1].switchIdleCall != undefined) {
+        if (this[1].switchIdleCall != undefined) {
             this[1].switchIdleCall.destroy();
         }
         // stop animation complete listener
         this[1].character.off('animationcomplete');
+
         // stop character from moving when entering the scene
         this[1].characterEnterTween.stop();
+
         // stop character from moving when already moving to a side
         if (this[1].characterMovingTween != undefined) {
             this[1].characterMovingTween.stop();
         }
+
         // flip character to face the correct direction
         if (destination == 'shop') {
             this[1].character.setScale(-1, 1);
         } else {
             this[1].character.setScale(1, 1);
         }
+
         // play running animation if not already playing
         this[1].character.anims.play('characterRun', true);
+
+        // set destination to be 100px outside of the screen (to make the character run off the screen)
         let destinationX = destination == 'shop' ? -100 : this[1].sys.game.config.width + 100;
+
         // move character to destination
         this[1].characterMovingTween = this[1].tweens.add({
             targets: [this[1].character],
@@ -136,7 +144,7 @@ class profileOverviewScene extends Phaser.Scene {
     addEquipped(x, y, type) {
         let image = '';
         let durabilityText = '';
-        if(saveObject.profiles[saveObject.currentProfile].character[type] != null) {
+        if (saveObject.profiles[saveObject.currentProfile].character[type] != null) {
             // get image from item config
             image = config[type][getItem(saveObject.profiles[saveObject.currentProfile].character[type]).itemName].image;
             durabilityText = getItem(saveObject.profiles[saveObject.currentProfile].character[type]).durability != null ? getItem(saveObject.profiles[saveObject.currentProfile].character[type]).durability + '' : 'X';
@@ -145,9 +153,9 @@ class profileOverviewScene extends Phaser.Scene {
             durabilityText = '-';
         }
         // add image for item
-        this['equipped'+ type[0].toUpperCase() + type.substring(1)] = this.add.sprite(x, y, image);
+        this['equipped' + type[0].toUpperCase() + type.substring(1)] = this.add.sprite(x, y, image);
         // add durability info below item
-        this['equipped'+ type[0].toUpperCase() + type.substring(1)].durability = this.add.text(x - (durabilityText.length * 4), y + 40, durabilityText, {
+        this['equipped' + type[0].toUpperCase() + type.substring(1)].durability = this.add.text(x - (durabilityText.length * 4), y + 40, durabilityText, {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 16,
             color: '#ffffff'
@@ -163,18 +171,18 @@ class profileOverviewScene extends Phaser.Scene {
     updateEquipped(type) {
         let durabilityText = '';
         // check if item slot has an item equipped
-        if(saveObject.profiles[saveObject.currentProfile].character[type] != null) {
+        if (saveObject.profiles[saveObject.currentProfile].character[type] != null) {
             // change image of this item type to current item image
-            this['equipped'+ type[0].toUpperCase() + type.substring(1)].setTexture(config[type][getItem(saveObject.profiles[saveObject.currentProfile].character[type]).itemName].image);
+            this['equipped' + type[0].toUpperCase() + type.substring(1)].setTexture(config[type][getItem(saveObject.profiles[saveObject.currentProfile].character[type]).itemName].image);
             durabilityText = getItem(saveObject.profiles[saveObject.currentProfile].character[type]).durability != null ? getItem(saveObject.profiles[saveObject.currentProfile].character[type]).durability + '' : 'X';
         } else {
             // use "nothing" image and no durability if nothing is equipped
-            this['equipped'+ type[0].toUpperCase() + type.substring(1)].setTexture('X');
+            this['equipped' + type[0].toUpperCase() + type.substring(1)].setTexture('X');
             durabilityText = '-';
         }
         // update durability text and position to be centered with image
-        this['equipped'+ type[0].toUpperCase() + type.substring(1)].durability.setText(durabilityText);
-        this['equipped'+ type[0].toUpperCase() + type.substring(1)].durability.x = this['equipped'+ type[0].toUpperCase() + type.substring(1)].x - (durabilityText.length * 4);
+        this['equipped' + type[0].toUpperCase() + type.substring(1)].durability.setText(durabilityText);
+        this['equipped' + type[0].toUpperCase() + type.substring(1)].durability.x = this['equipped' + type[0].toUpperCase() + type.substring(1)].x - (durabilityText.length * 4);
     }
 
     changeItemNext() {
@@ -217,7 +225,7 @@ class profileOverviewScene extends Phaser.Scene {
                 // set first item of array for future checks
                 if (firstItem == null) {
                     // check if first item is the currently equipped item
-                    if(item == equippedItemId) {
+                    if (item == equippedItemId) {
                         // unequip currently equipped item
                         unequipItemtype(type);
                         this[1].updateEquipped(type);
@@ -227,7 +235,7 @@ class profileOverviewScene extends Phaser.Scene {
                     firstItem = item;
                 }
                 // check if the current item is the currently equipped item
-                if(item == equippedItemId) {
+                if (item == equippedItemId) {
                     // equip the previously found item
                     equipItem(previousItem);
                     this[1].updateEquipped(type);
@@ -249,6 +257,7 @@ class profileOverviewScene extends Phaser.Scene {
     addCharacter(x, y) {
         // add character outside of view
         this.character = this.add.sprite(-100, y, 'character');
+        this.character.setOrigin(0.5, 1);
 
         // load animations if not done already
         addCharacterAnimations('character');
