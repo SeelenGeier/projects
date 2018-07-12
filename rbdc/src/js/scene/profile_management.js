@@ -12,16 +12,13 @@ class profileManagementScene extends Phaser.Scene {
         this.addBackground();
 
         // add headline for profile management
-        this.addProfileHeadline(40, 30);
+        this.addProfileHeadline(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.05);
 
         // add new profile button, label and input field
-        this.addNewProfileButton(245, 120);
-        this.addNewProfileNameLabel(this.buttonNewProfile.x - 190, this.buttonNewProfile.y - 30);
-        this.addNewProfileNameField(this.buttonNewProfile.x - 190, this.sys.game.config.height - this.buttonNewProfile.y + 13);
+        this.addNewProfileForm(this.sys.game.config.width * 0.65, this.sys.game.config.height * 0.17);
 
         // show all profiles in a list
-        this.profileListPosition = {x: 80, y: 150};
-        this.showAllProfiles();
+        this.showAllProfiles(this.sys.game.config.width * 0.2, this.sys.game.config.height * 0.25);
     }
 
     update() {
@@ -30,11 +27,12 @@ class profileManagementScene extends Phaser.Scene {
 
     addProfileHeadline(x, y) {
         // add headline text
-        this.add.text(x, y, 'Select a Profile', {
+        this.profileHeadline = this.add.text(x, y, 'Select a Profile', {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 32,
             color: '#000000'
         });
+        this.profileHeadline.setOrigin(0.5, 0.5);
     }
 
     addNewProfileNameLabel(x, y) {
@@ -72,7 +70,12 @@ class profileManagementScene extends Phaser.Scene {
         document.getElementById('newProfileName').style.visibility = "";
     }
 
-    showAllProfiles() {
+    showAllProfiles(x = 0, y = 0) {
+        if(this.profileListPosition == undefined) {
+            this.profileListPosition = {};
+            this.profileListPosition.x = x;
+            this.profileListPosition.y = y;
+        }
         // remove all profiles currently present
         this.clearProfileList();
 
@@ -92,6 +95,12 @@ class profileManagementScene extends Phaser.Scene {
             // increment counter for next row
             counter++;
         }
+    }
+
+    addNewProfileForm(x, y) {
+        this.addNewProfileButton(x, y);
+        this.addNewProfileNameLabel(this.buttonNewProfile.x - 190, this.buttonNewProfile.y - 30);
+        this.addNewProfileNameField(this.buttonNewProfile.x - 190, this.sys.game.config.height - this.buttonNewProfile.y + 13);
     }
 
     createNewProfile() {
@@ -211,7 +220,7 @@ class profileManagementScene extends Phaser.Scene {
 
     addBackground() {
         // add background image in the center of the screen
-        this.backgroundImage = this.add.sprite(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'backgroundBeige');
+        this.backgroundImage = this.add.sprite(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.5, 'backgroundBeige');
 
         // scale background to screen size and add a few more pixels to prevent flickering
         this.backgroundImage.setScale((this.sys.game.config.width + 10) / this.backgroundImage.width, (this.sys.game.config.height + 10) / this.backgroundImage.height);

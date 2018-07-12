@@ -11,20 +11,20 @@ class configScene extends Phaser.Scene {
         // add background image
         this.addBackground();
 
-        // add button to return to profile management
-        this.addLogout(80, 350);
-
         // add option to return to profile overview in top right corner
-        this.addReturnButton(this.sys.game.config.width - 40, 30);
+        this.addReturnButton(this.sys.game.config.width * 0.90, this.sys.game.config.height * 0.05);
 
         // add button to toggle music setting
-        this.addCredits(80, 150);
+        this.addCredits(this.sys.game.config.width * 0.25, this.sys.game.config.height * 0.2);
 
         // add button to toggle sound setting
-        this.addToggleSound(80, 200);
+        this.addToggleSound(this.sys.game.config.width * 0.25, this.sys.game.config.height * 0.3);
 
         // add button to toggle music setting
-        this.addToggleMusic(80, 250);
+        this.addToggleMusic(this.sys.game.config.width * 0.25, this.sys.game.config.height * 0.4);
+
+        // add button to return to profile management
+        this.addLogout(this.sys.game.config.width * 0.25, this.sys.game.config.height * 0.6);
     }
 
     update() {
@@ -182,7 +182,7 @@ class configScene extends Phaser.Scene {
 
     addBackground() {
         // add background image and scale to fit the screen (a few pixel more to prevent flickering)
-        this.backgroundImage = this.add.sprite(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'backgroundBeige');
+        this.backgroundImage = this.add.sprite(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.5, 'backgroundBeige');
         this.backgroundImage.setScale((this.sys.game.config.width + 10) / this.backgroundImage.width, (this.sys.game.config.height + 10) / this.backgroundImage.height);
     }
 

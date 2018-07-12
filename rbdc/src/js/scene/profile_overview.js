@@ -19,22 +19,22 @@ class profileOverviewScene extends Phaser.Scene {
         this.addBackground();
 
         // add button to navigate to config
-        this.addNavigationConfig(this.sys.game.config.width / 2, 30);
+        this.addNavigationConfig(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.1);
 
         // add button to navigate to the shop
-        this.addNavigationShop(30, this.sys.game.config.height / 2);
+        this.addNavigationShop(this.sys.game.config.width * 0.1, this.sys.game.config.height * 0.5);
 
         // add button to navigate to the dungeon
-        this.addNavigationDungeon(this.sys.game.config.width - 30, this.sys.game.config.height / 2);
+        this.addNavigationDungeon(this.sys.game.config.width * 0.90, this.sys.game.config.height * 0.5);
 
         // add profile name in the top center
-        this.addProfileName(this.sys.game.config.width / 2, 150);
+        this.addProfileName(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.2);
 
         // add equipment at the bottom of the screen
-        this.addEquipment(this.sys.game.config.width / 2, (this.sys.game.config.height / 2) + 200);
+        this.addEquipment(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.8);
 
         // add character to the center of the screen
-        this.addCharacter(this.sys.game.config.width / 2, (this.sys.game.config.height / 2));
+        this.addCharacter(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.5);
     }
 
     update() {
@@ -120,7 +120,7 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     addBackground() {
-        this.backgroundImage = this.add.sprite(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'backgroundProfileOverview');
+        this.backgroundImage = this.add.sprite(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.5, 'backgroundProfileOverview');
         // scale background to screen size and add a few more pixels to prevent flickering
         this.backgroundImage.setScale((this.sys.game.config.width + 10) / this.backgroundImage.width, (this.sys.game.config.height + 10) / this.backgroundImage.height);
     }

@@ -11,7 +11,7 @@ class splashScene extends Phaser.Scene {
 
     create() {
         // add title text to splash screen
-        this.splashTitle = this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height / 2 - 128, config.default.setting.title, {
+        this.splashTitle = this.add.text(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.30, config.default.setting.title, {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 24,
             color: '#ffffff'
@@ -21,10 +21,10 @@ class splashScene extends Phaser.Scene {
         this.splashTitle.setOrigin(0.5, 0.5);
 
         // add splash image to the center of the splash screen
-        this.splashImage = this.add.sprite(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'splash');
+        this.splashImage = this.add.sprite(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.5, 'splash');
 
         // add text 'by' as separate line under splash image
-        this.splashBy = this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height / 2 + 100, 'by', {
+        this.splashBy = this.add.text(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.7, 'by', {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 24,
             color: '#ffffff'
@@ -34,7 +34,7 @@ class splashScene extends Phaser.Scene {
         this.splashBy.setOrigin(0.5, 0.5);
 
         // add author text as separate line under 'by' text
-        this.splashAuthor = this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height / 2 + 132, config.default.setting.author, {
+        this.splashAuthor = this.add.text(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.78, config.default.setting.author, {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 24,
             color: '#ffffff'

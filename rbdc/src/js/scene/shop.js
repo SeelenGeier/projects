@@ -14,7 +14,10 @@ class shopScene extends Phaser.Scene {
         saveData();
 
         // add button to exit the shop
-        this.addNavigationExit(this.sys.game.config.width - 30, this.sys.game.config.height / 2);
+        this.addNavigationExit(this.sys.game.config.width * 0.95, this.sys.game.config.height * 0.5);
+
+        // show buy/sell button at the top
+        this.addTabNavigation(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.1);
     }
 
     update() {
@@ -31,5 +34,9 @@ class shopScene extends Phaser.Scene {
         // hide current scene and start config scene
         this.scene.sleep();
         this.scene.start('profileOverview');
+    }
+
+    addTabNavigation(x, y) {
+
     }
 }
