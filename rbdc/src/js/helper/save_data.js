@@ -100,8 +100,8 @@ function validateSaveData() {
                     if(saveObject.profiles[profile].character.weapon != null) {
                         // check if the provided weapon is in inventory
                         let itemFound = false;
-                        for (let item in saveObject.profiles[profile].inventory.items) {
-                            if (getItem(item, profile).itemType == 'weapon' && getItem(item, profile).itemName == getItem(saveObject.profiles[profile].character.weapon, profile).itemName) {
+                        for (let itemId in saveObject.profiles[profile].inventory.items) {
+                            if (getItem(itemId, profile).itemType == 'weapon' && getItem(itemId, profile).itemName == getItem(saveObject.profiles[profile].character.weapon, profile).itemName) {
                                 itemFound = true;
                             }
                         }
@@ -118,8 +118,8 @@ function validateSaveData() {
                     if(saveObject.profiles[profile].character.armor != null) {
                         // check if the provided armor is in inventory
                         let itemFound = false;
-                        for (let item in saveObject.profiles[profile].inventory.items) {
-                            if (getItem(item, profile).itemType == 'armor' && getItem(item, profile).itemName == getItem(saveObject.profiles[profile].character.armor, profile).itemName) {
+                        for (let itemId in saveObject.profiles[profile].inventory.items) {
+                            if (getItem(itemId, profile).itemType == 'armor' && getItem(itemId, profile).itemName == getItem(saveObject.profiles[profile].character.armor, profile).itemName) {
                                 itemFound = true;
                             }
                         }
@@ -136,8 +136,8 @@ function validateSaveData() {
                     if(saveObject.profiles[profile].character.offhand != null) {
                         // check if the provided offhand is in inventory
                         let itemFound = false;
-                        for (let item in saveObject.profiles[profile].inventory.items) {
-                            if (getItem(item, profile).itemType == 'offhand' && getItem(item, profile).itemName == getItem(saveObject.profiles[profile].character.offhand, profile).itemName) {
+                        for (let itemId in saveObject.profiles[profile].inventory.items) {
+                            if (getItem(itemId, profile).itemType == 'offhand' && getItem(itemId, profile).itemName == getItem(saveObject.profiles[profile].character.offhand, profile).itemName) {
                                 itemFound = true;
                             }
                         }
@@ -154,8 +154,8 @@ function validateSaveData() {
                     if(saveObject.profiles[profile].character.trinket != null) {
                         // check if the provided trinket is in inventory
                         let itemFound = false;
-                        for (let item in saveObject.profiles[profile].inventory.items) {
-                            if (getItem(item, profile).itemType == 'trinket' && getItem(item, profile).itemName == getItem(saveObject.profiles[profile].character.trinket, profile).itemName) {
+                        for (let itemId in saveObject.profiles[profile].inventory.items) {
+                            if (getItem(itemId, profile).itemType == 'trinket' && getItem(itemId, profile).itemName == getItem(saveObject.profiles[profile].character.trinket, profile).itemName) {
                                 itemFound = true;
                             }
                         }
@@ -208,25 +208,25 @@ function validateSaveData() {
                 return this.exitValidation('Inventory does not have items property.');
             }
             // check all inventory items
-            for (let item in saveObject.profiles[profile].inventory.items) {
+            for (let itemId in saveObject.profiles[profile].inventory.items) {
                 // check if item has durability property
-                if (!getItem(item, profile).hasOwnProperty('durability')) {
+                if (!getItem(itemId, profile).hasOwnProperty('durability')) {
                     return this.exitValidation('Item does not have durability property.');
                 }
                 // check if durability is a number
-                if (getItem(item, profile).durability != null && typeof getItem(item, profile).durability != 'number') {
+                if (getItem(itemId, profile).durability != null && typeof getItem(itemId, profile).durability != 'number') {
                     return this.exitValidation('Item durability is not a number or null');
                 }
                 // check if item has itemType property
-                if (!getItem(item, profile).hasOwnProperty('itemType')) {
+                if (!getItem(itemId, profile).hasOwnProperty('itemType')) {
                     return this.exitValidation('Item does not have item type property.');
                 }
                 // check if item type exists
-                if (!config.hasOwnProperty(getItem(item, profile).itemType)) {
+                if (!config.hasOwnProperty(getItem(itemId, profile).itemType)) {
                     return this.exitValidation('Item type does not exist');
                 }
                 // check if item exists in item type
-                if (!config[getItem(item, profile).itemType].hasOwnProperty(getItem(item, profile).itemName)) {
+                if (!config[getItem(itemId, profile).itemType].hasOwnProperty(getItem(itemId, profile).itemName)) {
                     return this.exitValidation('Item does not exist in item type');
                 }
             }

@@ -41,6 +41,7 @@ function preload() {
     this.load.image('backgroundBlack', '../assets/background/black.png');
     this.load.image('backgroundBeige', '../assets/background/beige.png');
     this.load.image('backgroundParchment', '../assets/background/parchment.png');
+    this.load.image('backgroundTab', '../assets/background/tab.png');
 
     // load texture atlases
     this.load.atlasXML('uipack_blue', '../assets/spritesheet/uipack_blue.png', '../assets/spritesheet/uipack_blue.xml');

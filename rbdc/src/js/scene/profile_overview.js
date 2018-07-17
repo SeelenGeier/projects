@@ -192,17 +192,17 @@ class profileOverviewScene extends Phaser.Scene {
         // get id of current item
         let equippedItemId = saveObject.profiles[saveObject.currentProfile].character[type];
         // loop through all items of this type in inventory
-        for (let item in saveObject.profiles[saveObject.currentProfile].inventory.items) {
-            if (getItem(item).itemType == type) {
+        for (let itemId in saveObject.profiles[saveObject.currentProfile].inventory.items) {
+            if (getItem(itemId).itemType == type) {
                 // check if the item before the current item is the currently equipped item
                 if (previousItem == equippedItemId) {
                     // equip current item
-                    equipItem(item);
+                    equipItem(itemId);
                     this[1].updateEquipped(type);
                     return true;
                 }
                 // set previous item to current item and continue loop
-                previousItem = item;
+                previousItem = itemId;
             }
         }
         // check if last found item is the current item
@@ -221,29 +221,29 @@ class profileOverviewScene extends Phaser.Scene {
         // get id of current item
         let equippedItemId = saveObject.profiles[saveObject.currentProfile].character[type];
         // loop through all items of this type in inventory
-        for (let item in saveObject.profiles[saveObject.currentProfile].inventory.items) {
-            if (getItem(item).itemType == type) {
+        for (let itemId in saveObject.profiles[saveObject.currentProfile].inventory.items) {
+            if (getItem(itemId).itemType == type) {
                 // set first item of array for future checks
                 if (firstItem == null) {
                     // check if first item is the currently equipped item
-                    if (item == equippedItemId) {
+                    if (itemId == equippedItemId) {
                         // unequip currently equipped item
                         unequipItemtype(type);
                         this[1].updateEquipped(type);
                         return true;
                     }
                     // set first item to skip this step in future loops
-                    firstItem = item;
+                    firstItem = itemId;
                 }
                 // check if the current item is the currently equipped item
-                if (item == equippedItemId) {
+                if (itemId == equippedItemId) {
                     // equip the previously found item
                     equipItem(previousItem);
                     this[1].updateEquipped(type);
                     return true;
                 }
                 // set previous item to current item and continue loop
-                previousItem = item;
+                previousItem = itemId;
             }
         }
         // check if the last item found is not the equipped item
