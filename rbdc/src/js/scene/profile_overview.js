@@ -116,7 +116,7 @@ class profileOverviewScene extends Phaser.Scene {
         // add navigation button to go to the shop
         new Button('buttonShop', ['gameicons', 'cart.png'], x, y, this);
         this.buttonShop.on('pointerup', this.goTo, ['shop', this]);
-        this.buttonShop.setTint(0xccaa00);
+        this.buttonShop.setTint(0xeecc00);
     }
 
     addNavigationDungeon(x, y) {

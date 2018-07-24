@@ -155,7 +155,7 @@ class shopScene extends Phaser.Scene {
             this.itemsDisplayed[itemId].image.y - this.itemsDisplayed[itemId].image.height * 0.5 + 5, config[item.itemType][item.itemName].name, {
                 fontFamily: config.default.setting.fontFamily,
                 fontSize: 20,
-                color: '#ffffff'
+                color: '#99ffff'
             });
 
         // display item durability
