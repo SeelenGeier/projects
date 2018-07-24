@@ -9,9 +9,10 @@ class shopScene extends Phaser.Scene {
     }
 
     create() {
-        this.maxItemsDisplayed = 5;
+        this.maxItemsDisplayed = 7;
         this.itemsOffset = 0;
         this.itemsDisplayed = {};
+        this.currentMode;
 
         // add background image
         this.addBackground();
@@ -24,6 +25,12 @@ class shopScene extends Phaser.Scene {
 
         // add background image for tabs to use as orientation for tab content
         this.addTabBackground(this.sys.game.config.width * 0.07, this.sys.game.config.height * 0.2);
+
+        // add up button to navigate list
+        this.addUpButton(this.sys.game.config.width * 0.45, this.sys.game.config.height * 0.2);
+
+        // add up button to navigate list
+        this.addDownButton(this.sys.game.config.width * 0.45, this.sys.game.config.height * 0.95);
     }
 
     addBackground() {
@@ -72,31 +79,58 @@ class shopScene extends Phaser.Scene {
 
     displayTab() {
         let processedItemsCounter = 0;
+        let that;
+        let items;
+        let mode;
+
+        // check if context is within a button or function has been called individually
+        if(this[0] == undefined) {
+            that = this;
+            if(this.currentMode == 'sell') {
+                items = saveObject.profiles[saveObject.currentProfile].inventory.items;
+            }else if(this.currentMode == 'buy') {
+                items = this.getBuyableItems();
+            }
+            mode = this.currentMode;
+        }else{
+            that = this[0];
+            items = this[1];
+            mode = this[2];
+
+            // reset item offset to always start on the top
+            that.itemsOffset = 0;
+
+            // reset button tint on up and down buttons
+            that.buttonUp.setTint(0xffffff);
+            that.buttonDown.setTint(0xffffff);
+        }
 
         // check if tab is for selling or buying and change background accordingly
-        if(this[2] == 'sell') {
+        if(mode == 'sell') {
             // color tab background slightly red to indicate sell mode
-            this[0].backgroundTabImage.setTint(0xff6666);
-        }else if(this[2] == 'buy') {
+            that.backgroundTabImage.setTint(0xff6666);
+            that.currentMode = 'sell';
+        }else if(mode == 'buy') {
             // color tab background slightly green to indicate buy mode
-            this[0].backgroundTabImage.setTint(0x99ff99);
+            that.backgroundTabImage.setTint(0x99ff99);
+            that.currentMode = 'buy';
         }
 
         // clear all items that are currently displayed on the tab
-        this[0].clearDisplayedItems();
+        that.clearDisplayedItems();
 
         // go through all items in inventory
-        for (let itemId in this[1]) {
+        for (let itemId in items) {
             // check if max amount of items are already displayed
-            if (Object.keys(this[0].itemsDisplayed).length >= this[0].maxItemsDisplayed) {
+            if (Object.keys(that.itemsDisplayed).length >= that.maxItemsDisplayed) {
                 // abort the loop
                 break;
             }
 
             // check if the offset has been reached (position to start when scrolled down or up)
-            if (processedItemsCounter >= this[0].itemsOffset) {
+            if (processedItemsCounter >= that.itemsOffset) {
                 // display the item in a new row depending on the item position
-                this[0].displayItemRow(this[1][itemId]);
+                that.displayItemRow(items[itemId]);
             }
 
             // increment the counter of processed Items and continue loop
@@ -112,7 +146,7 @@ class shopScene extends Phaser.Scene {
         this.itemsDisplayed[itemId] = {};
 
         // display image of item on the left side
-        this.itemsDisplayed[itemId].image = this.add.sprite(this.backgroundTabImage.x + 50, this.backgroundTabImage.y + (64 * Object.keys(this.itemsDisplayed).length), config[item.itemType][item.itemName].image);
+        this.itemsDisplayed[itemId].image = this.add.sprite(this.backgroundTabImage.x + 50, this.backgroundTabImage.y - 10 + (64 * Object.keys(this.itemsDisplayed).length), config[item.itemType][item.itemName].image);
 
         // display item name
         // display item durability
@@ -189,8 +223,14 @@ class shopScene extends Phaser.Scene {
         // TODO: use config to get common items
         items.common1 = {itemName:'sword', itemType:'weapon', durability:'1000'};
         items.common2 = {itemName:'axe', itemType:'weapon', durability:'2000'};
-        items.common3 = {itemName:'helmet', itemType:'armor', durability:'3000'};
-        items.common4 = {itemName:'light_leather', itemType:'armor', durability:'4000'};
+        items.common3 = {itemName:'light_leather', itemType:'armor', durability:'4000'};
+        items.common4 = {itemName:'sword', itemType:'weapon', durability:'23412'};
+        items.common5 = {itemName:'light_leather', itemType:'armor', durability:'4000'};
+        items.common6 = {itemName:'axe', itemType:'weapon', durability:'352'};
+        items.common7 = {itemName:'sword', itemType:'weapon', durability:'2'};
+        items.common8 = {itemName:'axe', itemType:'weapon', durability:'5'};
+        items.common9 = {itemName:'helmet', itemType:'armor', durability:'3000'};
+        items.common10 = {itemName:'light_leather', itemType:'armor', durability:'4000'};
 
         return items;
     }
@@ -201,5 +241,41 @@ class shopScene extends Phaser.Scene {
         items.rare2 = {itemName:'torch', itemType:'offhand', durability:'2'};
 
         return items;
+    }
+
+    addUpButton(x, y) {
+        // add button to scroll up on the item list
+        new Button('buttonUp', ['gameicons', 'up.png'], x, y, this);
+        this.buttonUp.on('pointerup', this.scrollUp, this);
+    }
+
+    addDownButton(x, y) {
+        // add button to scroll down on the item list
+        new Button('buttonDown', ['gameicons', 'down.png'], x, y, this);
+        this.buttonDown.on('pointerup', this.scrollDown, this);
+    }
+
+    scrollDown() {
+        this.itemsOffset++;
+        if(this.currentMode == 'sell' && this.itemsOffset > Object.keys(saveObject.profiles[saveObject.currentProfile].inventory.items).length - this.maxItemsDisplayed) {
+            this.itemsOffset = Object.keys(saveObject.profiles[saveObject.currentProfile].inventory.items).length - this.maxItemsDisplayed;
+            this.buttonDown.setTint(0xff9999);
+        }
+        if(this.currentMode == 'buy' && this.itemsOffset > Object.keys(this.getBuyableItems()).length - this.maxItemsDisplayed) {
+            this.itemsOffset = Object.keys(this.getBuyableItems()).length - this.maxItemsDisplayed;
+            this.buttonDown.setTint(0xff9999);
+        }
+        this.buttonUp.setTint(0xffffff);
+        this.displayTab();
+    }
+
+    scrollUp() {
+        this.itemsOffset--;
+        if(this.itemsOffset < 0) {
+            this.itemsOffset = 0;
+            this.buttonUp.setTint(0xff9999);
+        }
+        this.buttonDown.setTint(0xffffff);
+        this.displayTab();
     }
 }
