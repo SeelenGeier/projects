@@ -175,6 +175,12 @@ class shopScene extends Phaser.Scene {
             });
 
         // TODO: display damage/mitigation values
+
+        // add overlay to select list entry
+        this.itemsDisplayed[itemId].overlay = this.add.sprite(this.backgroundTabImage.getTopLeft().x + 15, this.backgroundTabImage.getTopLeft().y - 10 + (64 * Object.keys(this.itemsDisplayed).length), 'backgroundBlack');
+        this.itemsDisplayed[itemId].overlay.setScale((this.backgroundTabImage.width - 10) * this.backgroundTabImage.scaleX / this.itemsDisplayed[itemId].overlay.width, 58 / this.itemsDisplayed[itemId].overlay.height);
+        this.itemsDisplayed[itemId].overlay.alpha = 0;
+        this.itemsDisplayed[itemId].overlay.setOrigin(0, 0.5);
     }
 
     clearDisplayedItems() {
