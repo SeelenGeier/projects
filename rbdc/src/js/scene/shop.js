@@ -83,8 +83,9 @@ class shopScene extends Phaser.Scene {
         let items;
         let mode;
 
-        // check if context is within a button or function has been called individually
+        // check if context is within a button press or function has been called individually
         if(this[0] == undefined) {
+            // if function has been called individually, take items and mode from 'this' context and write context for later use in 'that'
             that = this;
             if(this.currentMode == 'sell') {
                 items = saveObject.profiles[saveObject.currentProfile].inventory.items;
@@ -93,6 +94,7 @@ class shopScene extends Phaser.Scene {
             }
             mode = this.currentMode;
         }else{
+            // if button has been pressed, take items and mode from button input (this = array) and write context for later use in 'that'
             that = this[0];
             items = this[1];
             mode = this[2];
@@ -256,26 +258,51 @@ class shopScene extends Phaser.Scene {
     }
 
     scrollDown() {
+        // increase offset which makes the list go up when generated next time
         this.itemsOffset++;
+
+        // check if tab is currently in sell mode and the offset would be higher than the amount of items in the inventory (minus the displayed item count)
         if(this.currentMode == 'sell' && this.itemsOffset > Object.keys(saveObject.profiles[saveObject.currentProfile].inventory.items).length - this.maxItemsDisplayed) {
+            // make offset stop at highest value to show only up the last entry and not further (which would be empty entries afterwards)
             this.itemsOffset = Object.keys(saveObject.profiles[saveObject.currentProfile].inventory.items).length - this.maxItemsDisplayed;
+
+            // color button slightly red to indicate no further scrolling possible
             this.buttonDown.setTint(0xff9999);
         }
+
+        // check if tab is currently in buy mode and the offset would be higher than the amount of buyable items in the shop (minus the displayed item count)
         if(this.currentMode == 'buy' && this.itemsOffset > Object.keys(this.getBuyableItems()).length - this.maxItemsDisplayed) {
+            // make offset stop at highest value to show only up the last entry and not further (which would be empty entries afterwards)
             this.itemsOffset = Object.keys(this.getBuyableItems()).length - this.maxItemsDisplayed;
+
+            // color button slightly red to indicate no further scrolling possible
             this.buttonDown.setTint(0xff9999);
         }
+
+        // reset up button to show that scrolling up could be possible again
         this.buttonUp.setTint(0xffffff);
+
+        // redraw tab items with new offset
         this.displayTab();
     }
 
     scrollUp() {
+        // decrease offset which makes the list go down when generated next time
         this.itemsOffset--;
+
+        // check if offset is already at the highest point in the list
         if(this.itemsOffset < 0) {
+            // make sure to not go higher in the list to prevent showing empty entries
             this.itemsOffset = 0;
+
+            // color button slightly red to indicate no further scrolling possible
             this.buttonUp.setTint(0xff9999);
         }
+
+        // reset down button to show that scrolling down could be possible again
         this.buttonDown.setTint(0xffffff);
+
+        // redraw tab items with new offset
         this.displayTab();
     }
 }
