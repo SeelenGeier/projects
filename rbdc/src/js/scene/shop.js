@@ -84,16 +84,16 @@ class shopScene extends Phaser.Scene {
         let mode;
 
         // check if context is within a button press or function has been called individually
-        if(this[0] == undefined) {
+        if (this[0] == undefined) {
             // if function has been called individually, take items and mode from 'this' context and write context for later use in 'that'
             that = this;
-            if(this.currentMode == 'sell') {
+            if (this.currentMode == 'sell') {
                 items = saveObject.profiles[saveObject.currentProfile].inventory.items;
-            }else if(this.currentMode == 'buy') {
+            } else if (this.currentMode == 'buy') {
                 items = this.getBuyableItems();
             }
             mode = this.currentMode;
-        }else{
+        } else {
             // if button has been pressed, take items and mode from button input (this = array) and write context for later use in 'that'
             that = this[0];
             items = this[1];
@@ -108,11 +108,11 @@ class shopScene extends Phaser.Scene {
         }
 
         // check if tab is for selling or buying and change background accordingly
-        if(mode == 'sell') {
+        if (mode == 'sell') {
             // color tab background slightly red to indicate sell mode
             that.backgroundTabImage.setTint(0xff6666);
             that.currentMode = 'sell';
-        }else if(mode == 'buy') {
+        } else if (mode == 'buy') {
             // color tab background slightly green to indicate buy mode
             that.backgroundTabImage.setTint(0x99ff99);
             that.currentMode = 'buy';
@@ -151,9 +151,30 @@ class shopScene extends Phaser.Scene {
         this.itemsDisplayed[itemId].image = this.add.sprite(this.backgroundTabImage.x + 50, this.backgroundTabImage.y - 10 + (64 * Object.keys(this.itemsDisplayed).length), config[item.itemType][item.itemName].image);
 
         // display item name
+        this.itemsDisplayed[itemId].headlineText = this.add.text(this.itemsDisplayed[itemId].image.x + this.itemsDisplayed[itemId].image.width * 0.5,
+            this.itemsDisplayed[itemId].image.y - this.itemsDisplayed[itemId].image.height * 0.5 + 5, config[item.itemType][item.itemName].name, {
+                fontFamily: config.default.setting.fontFamily,
+                fontSize: 20,
+                color: '#ffffff'
+            });
+
         // display item durability
-        // display damage/mitigation values
+        this.itemsDisplayed[itemId].durabilityText = this.add.text(this.itemsDisplayed[itemId].image.x + this.itemsDisplayed[itemId].image.width * 0.5,
+            this.itemsDisplayed[itemId].image.y - this.itemsDisplayed[itemId].image.height * 0.5 + 25, 'Durability: ' + item.durability, {
+                fontFamily: config.default.setting.fontFamily,
+                fontSize: 16,
+                color: '#ffffff'
+            });
+
         // display value
+        this.itemsDisplayed[itemId].valueText = this.add.text(this.itemsDisplayed[itemId].image.x + this.itemsDisplayed[itemId].image.width * 0.5,
+            this.itemsDisplayed[itemId].image.y - this.itemsDisplayed[itemId].image.height * 0.5 + 41, 'Value: ' + config[item.itemType][item.itemName].value, {
+                fontFamily: config.default.setting.fontFamily,
+                fontSize: 16,
+                color: '#ffffff'
+            });
+
+        // TODO: display damage/mitigation values
     }
 
     clearDisplayedItems() {
@@ -223,24 +244,24 @@ class shopScene extends Phaser.Scene {
 
     addCommonShopItems(items) {
         // TODO: use config to get common items
-        items.common1 = {itemName:'sword', itemType:'weapon', durability:'1000'};
-        items.common2 = {itemName:'axe', itemType:'weapon', durability:'2000'};
-        items.common3 = {itemName:'light_leather', itemType:'armor', durability:'4000'};
-        items.common4 = {itemName:'sword', itemType:'weapon', durability:'23412'};
-        items.common5 = {itemName:'light_leather', itemType:'armor', durability:'4000'};
-        items.common6 = {itemName:'axe', itemType:'weapon', durability:'352'};
-        items.common7 = {itemName:'sword', itemType:'weapon', durability:'2'};
-        items.common8 = {itemName:'axe', itemType:'weapon', durability:'5'};
-        items.common9 = {itemName:'helmet', itemType:'armor', durability:'3000'};
-        items.common10 = {itemName:'light_leather', itemType:'armor', durability:'4000'};
+        items.common1 = {itemName: 'sword', itemType: 'weapon', durability: '1000'};
+        items.common2 = {itemName: 'axe', itemType: 'weapon', durability: '2000'};
+        items.common3 = {itemName: 'light_leather', itemType: 'armor', durability: '4000'};
+        items.common4 = {itemName: 'sword', itemType: 'weapon', durability: '23412'};
+        items.common5 = {itemName: 'light_leather', itemType: 'armor', durability: '4000'};
+        items.common6 = {itemName: 'axe', itemType: 'weapon', durability: '352'};
+        items.common7 = {itemName: 'sword', itemType: 'weapon', durability: '2'};
+        items.common8 = {itemName: 'axe', itemType: 'weapon', durability: '5'};
+        items.common9 = {itemName: 'helmet', itemType: 'armor', durability: '3000'};
+        items.common10 = {itemName: 'light_leather', itemType: 'armor', durability: '4000'};
 
         return items;
     }
 
     addRareShopItems(items) {
         // TODO: use saved rare items that have been generated after a run
-        items.rare1 = {itemName:'lamp', itemType:'trinket', durability:'1'};
-        items.rare2 = {itemName:'torch', itemType:'offhand', durability:'2'};
+        items.rare1 = {itemName: 'lamp', itemType: 'trinket', durability: '1'};
+        items.rare2 = {itemName: 'torch', itemType: 'offhand', durability: '2'};
 
         return items;
     }
@@ -262,7 +283,7 @@ class shopScene extends Phaser.Scene {
         this.itemsOffset++;
 
         // check if tab is currently in sell mode and the offset would be higher than the amount of items in the inventory (minus the displayed item count)
-        if(this.currentMode == 'sell' && this.itemsOffset > Object.keys(saveObject.profiles[saveObject.currentProfile].inventory.items).length - this.maxItemsDisplayed) {
+        if (this.currentMode == 'sell' && this.itemsOffset > Object.keys(saveObject.profiles[saveObject.currentProfile].inventory.items).length - this.maxItemsDisplayed) {
             // make offset stop at highest value to show only up the last entry and not further (which would be empty entries afterwards)
             this.itemsOffset = Object.keys(saveObject.profiles[saveObject.currentProfile].inventory.items).length - this.maxItemsDisplayed;
 
@@ -271,7 +292,7 @@ class shopScene extends Phaser.Scene {
         }
 
         // check if tab is currently in buy mode and the offset would be higher than the amount of buyable items in the shop (minus the displayed item count)
-        if(this.currentMode == 'buy' && this.itemsOffset > Object.keys(this.getBuyableItems()).length - this.maxItemsDisplayed) {
+        if (this.currentMode == 'buy' && this.itemsOffset > Object.keys(this.getBuyableItems()).length - this.maxItemsDisplayed) {
             // make offset stop at highest value to show only up the last entry and not further (which would be empty entries afterwards)
             this.itemsOffset = Object.keys(this.getBuyableItems()).length - this.maxItemsDisplayed;
 
@@ -291,7 +312,7 @@ class shopScene extends Phaser.Scene {
         this.itemsOffset--;
 
         // check if offset is already at the highest point in the list
-        if(this.itemsOffset < 0) {
+        if (this.itemsOffset < 0) {
             // make sure to not go higher in the list to prevent showing empty entries
             this.itemsOffset = 0;
 
