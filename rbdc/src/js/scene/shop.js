@@ -73,13 +73,22 @@ class shopScene extends Phaser.Scene {
     displayTab() {
         let processedItemsCounter = 0;
 
+        // check if tab is for selling or buying and change background accordingly
+        if(this[2] == 'sell') {
+            // color tab background slightly red to indicate sell mode
+            this[0].backgroundTabImage.setTint(0xff6666);
+        }else if(this[2] == 'buy') {
+            // color tab background slightly green to indicate buy mode
+            this[0].backgroundTabImage.setTint(0x99ff99);
+        }
+
         // clear all items that are currently displayed on the tab
-        this.clearDisplayedItems();
+        this[0].clearDisplayedItems();
 
         // go through all items in inventory
         for (let itemId in this[1]) {
             // check if max amount of items are already displayed
-            if (this[0].itemsDisplayed.length >= this[0].maxItemsDisplayed) {
+            if (Object.keys(this[0].itemsDisplayed).length >= this[0].maxItemsDisplayed) {
                 // abort the loop
                 break;
             }
@@ -87,7 +96,7 @@ class shopScene extends Phaser.Scene {
             // check if the offset has been reached (position to start when scrolled down or up)
             if (processedItemsCounter >= this[0].itemsOffset) {
                 // display the item in a new row depending on the item position
-                this[0].displayItemRow(this[1][itemId], this[0].itemsDisplayed);
+                this[0].displayItemRow(this[1][itemId]);
             }
 
             // increment the counter of processed Items and continue loop
@@ -96,9 +105,15 @@ class shopScene extends Phaser.Scene {
     }
 
     displayItemRow(item) {
-        console.log(item.itemType + '/' + item.itemName + ' (' + item.durability + ')');
+        // define item id based on current amount of items displayed
+        let itemId = 'item_' + Object.keys(this.itemsDisplayed).length;
 
-        // display image of item on the right side (about 20% of the row)
+        // add new item to displayed items
+        this.itemsDisplayed[itemId] = {};
+
+        // display image of item on the left side
+        this.itemsDisplayed[itemId].image = this.add.sprite(this.backgroundTabImage.x + 50, this.backgroundTabImage.y + (64 * Object.keys(this.itemsDisplayed).length), config[item.itemType][item.itemName].image);
+
         // display item name
         // display item durability
         // display damage/mitigation values
@@ -106,13 +121,20 @@ class shopScene extends Phaser.Scene {
     }
 
     clearDisplayedItems() {
-
+        for (let itemId in this.itemsDisplayed) {
+            // remove all text or sprites currently displayed
+            for (let spriteOrTextId in this.itemsDisplayed[itemId]) {
+                this.itemsDisplayed[itemId][spriteOrTextId].destroy();
+            }
+            // remove item from displayed items list
+            delete this.itemsDisplayed[itemId];
+        }
     }
 
     addSellTabButton(x, y) {
         // add sell button
         new Button('buttonSellTab', ['gameicons', 'export.png'], x, y, this);
-        this.buttonSellTab.on('pointerup', this.displayTab, [this, saveObject.profiles[saveObject.currentProfile].inventory.items]);
+        this.buttonSellTab.on('pointerup', this.displayTab, [this, saveObject.profiles[saveObject.currentProfile].inventory.items, 'sell']);
         this.buttonSellTab.setTint(0xcc0000);
     }
 
@@ -127,13 +149,13 @@ class shopScene extends Phaser.Scene {
 
         // enable text to be clickable as well
         this.textSellTab.setInteractive();
-        this.textSellTab.on('pointerup', this.displayTab, [this, saveObject.profiles[saveObject.currentProfile].inventory.items]);
+        this.textSellTab.on('pointerup', this.displayTab, [this, saveObject.profiles[saveObject.currentProfile].inventory.items, 'sell']);
     }
 
     addBuyTabButton(x, y) {
         // add buy button
         new Button('buttonBuyTab', ['gameicons', 'import.png'], x, y, this);
-        this.buttonBuyTab.on('pointerup', this.displayTab, [this, this.getBuyableItems()]);
+        this.buttonBuyTab.on('pointerup', this.displayTab, [this, this.getBuyableItems(), 'buy']);
         this.buttonBuyTab.setTint(0x00cc00);
     }
 
@@ -148,38 +170,35 @@ class shopScene extends Phaser.Scene {
 
         // enable text to be clickable as well
         this.textBuyTab.setInteractive();
-        this.textBuyTab.on('pointerup', this.displayTab, [this, this.getBuyableItems()]);
+        this.textBuyTab.on('pointerup', this.displayTab, [this, this.getBuyableItems(), 'buy']);
     }
 
     getBuyableItems() {
-        let items = {};
+        let buyableItems = {};
 
-        // get the list of always available items
-        items = this.addCommonShopItems(items);
+        // add always available items
+        buyableItems = this.addCommonShopItems(buyableItems);
 
-        // get the list of rare items that change after each run
-        items = this.addRareShopItems(items);
+        // add rare items that change after each run
+        buyableItems = this.addRareShopItems(buyableItems);
 
-        // return all items found
-        return items;
+        return buyableItems;
     }
 
     addCommonShopItems(items) {
         // TODO: use config to get common items
-        items.common1 = {itemName:'item1', itemType:'type1', durability:'1000'};
-        items.common2 = {itemName:'item2', itemType:'type2', durability:'2000'};
-        items.common3 = {itemName:'item3', itemType:'type3', durability:'3000'};
-        items.common4 = {itemName:'item4', itemType:'type4', durability:'4000'};
+        items.common1 = {itemName:'sword', itemType:'weapon', durability:'1000'};
+        items.common2 = {itemName:'axe', itemType:'weapon', durability:'2000'};
+        items.common3 = {itemName:'helmet', itemType:'armor', durability:'3000'};
+        items.common4 = {itemName:'light_leather', itemType:'armor', durability:'4000'};
 
         return items;
     }
 
     addRareShopItems(items) {
         // TODO: use saved rare items that have been generated after a run
-        items.rare1 = {itemName:'item1X', itemType:'type1X', durability:'1'};
-        items.rare2 = {itemName:'item2X', itemType:'type2X', durability:'2'};
-        items.rare3 = {itemName:'item3X', itemType:'type3X', durability:'3'};
-        items.rare4 = {itemName:'item4X', itemType:'type4X', durability:'4'};
+        items.rare1 = {itemName:'lamp', itemType:'trinket', durability:'1'};
+        items.rare2 = {itemName:'torch', itemType:'offhand', durability:'2'};
 
         return items;
     }
