@@ -49,6 +49,9 @@ class shopScene extends Phaser.Scene {
 
         // scale tab background to fit tab content
         this.backgroundTabImage.setScale(this.sys.game.config.width * 0.75 / this.backgroundTabImage.width, this.sys.game.config.height * 0.75 / this.backgroundTabImage.height);
+
+        // hide tab background at first while no mode has been selected
+        this.backgroundTabImage.alpha = 0;
     }
 
     addNavigationExit(x, y) {
@@ -107,6 +110,11 @@ class shopScene extends Phaser.Scene {
             that.buttonUp.setTint(0xffffff);
             that.buttonDown.setTint(0xffffff);
         }
+
+        // show background image and up/down buttons for tab if not already visible
+        that.backgroundTabImage.alpha = 1;
+        that.buttonUp.alpha = 1;
+        that.buttonDown.alpha = 1;
 
         // check if tab is for selling or buying and change background accordingly
         if (mode == 'sell') {
@@ -178,7 +186,7 @@ class shopScene extends Phaser.Scene {
         // TODO: display damage/mitigation values
 
         // add overlay to select list entry
-        this.itemsDisplayed[itemId].overlay = this.add.sprite(this.backgroundTabImage.getTopLeft().x + 15, this.backgroundTabImage.getTopLeft().y - 10 + (64 * Object.keys(this.itemsDisplayed).length), 'backgroundBlack');
+        this.itemsDisplayed[itemId].overlay = this.add.sprite(this.backgroundTabImage.getTopLeft().x + 15, this.backgroundTabImage.getTopLeft().y - 10 + (64 * Object.keys(this.itemsDisplayed).length), 'backgroundTab');
         this.itemsDisplayed[itemId].overlay.setScale((this.backgroundTabImage.width - 10) * this.backgroundTabImage.scaleX / this.itemsDisplayed[itemId].overlay.width, 58 / this.itemsDisplayed[itemId].overlay.height);
         this.itemsDisplayed[itemId].overlay.alpha = 0.001;
         this.itemsDisplayed[itemId].overlay.setOrigin(0, 0.5);
@@ -186,7 +194,7 @@ class shopScene extends Phaser.Scene {
         // check if clicked item has already been selected
         if(this.selectedItems.hasOwnProperty(itemId + this.itemsOffset)) {
             // color item slightly yellow to indicate selection
-            this.itemsDisplayed[itemId].overlay.alpha = 0.1;
+            this.itemsDisplayed[itemId].overlay.alpha = 0.5;
         }
 
         // make overlay clickable to select the entry
@@ -210,7 +218,7 @@ class shopScene extends Phaser.Scene {
             that.selectedItems[clickedItem + that.itemsOffset] = 'selected';
 
             // remove selection color from item overlay
-            that.itemsDisplayed[clickedItem].overlay.alpha = 0.1;
+            that.itemsDisplayed[clickedItem].overlay.alpha = 0.5;
         }
     }
 
@@ -223,6 +231,7 @@ class shopScene extends Phaser.Scene {
             // remove item from displayed items list
             delete this.itemsDisplayed[itemId];
         }
+        this.selectedItems = {};
     }
 
     addSellTabButton(x, y) {
@@ -307,12 +316,18 @@ class shopScene extends Phaser.Scene {
         // add button to scroll up on the item list
         new Button('buttonUp', ['gameicons', 'up.png'], x, y, this);
         this.buttonUp.on('pointerup', this.scrollUp, this);
+
+        // hide up button at first while no mode has been selected
+        this.buttonUp.alpha = 0;
     }
 
     addDownButton(x, y) {
         // add button to scroll down on the item list
         new Button('buttonDown', ['gameicons', 'down.png'], x, y, this);
         this.buttonDown.on('pointerup', this.scrollDown, this);
+
+        // hide down button at first while no mode has been selected
+        this.buttonDown.alpha = 0;
     }
 
     scrollDown() {
@@ -342,7 +357,6 @@ class shopScene extends Phaser.Scene {
 
         // redraw tab items with new offset
         this.displayTab();
-        console.log(this.selectedItems);
     }
 
     scrollUp() {
@@ -363,6 +377,5 @@ class shopScene extends Phaser.Scene {
 
         // redraw tab items with new offset
         this.displayTab();
-        console.log(this.selectedItems);
     }
 }
