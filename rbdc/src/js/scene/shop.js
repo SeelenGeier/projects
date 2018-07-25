@@ -13,6 +13,7 @@ class shopScene extends Phaser.Scene {
         this.itemsOffset = 0;
         this.itemsDisplayed = {};
         this.currentMode;
+        this.selectedItems = {};
 
         // add background image
         this.addBackground();
@@ -142,7 +143,7 @@ class shopScene extends Phaser.Scene {
 
     displayItemRow(item) {
         // define item id based on current amount of items displayed
-        let itemId = 'item_' + Object.keys(this.itemsDisplayed).length;
+        let itemId = Object.keys(this.itemsDisplayed).length;
 
         // add new item to displayed items
         this.itemsDisplayed[itemId] = {};
@@ -179,8 +180,38 @@ class shopScene extends Phaser.Scene {
         // add overlay to select list entry
         this.itemsDisplayed[itemId].overlay = this.add.sprite(this.backgroundTabImage.getTopLeft().x + 15, this.backgroundTabImage.getTopLeft().y - 10 + (64 * Object.keys(this.itemsDisplayed).length), 'backgroundBlack');
         this.itemsDisplayed[itemId].overlay.setScale((this.backgroundTabImage.width - 10) * this.backgroundTabImage.scaleX / this.itemsDisplayed[itemId].overlay.width, 58 / this.itemsDisplayed[itemId].overlay.height);
-        this.itemsDisplayed[itemId].overlay.alpha = 0;
+        this.itemsDisplayed[itemId].overlay.alpha = 0.001;
         this.itemsDisplayed[itemId].overlay.setOrigin(0, 0.5);
+
+        // check if clicked item has already been selected
+        if(this.selectedItems.hasOwnProperty(itemId + this.itemsOffset)) {
+            // color item slightly yellow to indicate selection
+            this.itemsDisplayed[itemId].overlay.alpha = 0.1;
+        }
+
+        // make overlay clickable to select the entry
+        this.itemsDisplayed[itemId].overlay.setInteractive();
+        this.itemsDisplayed[itemId].overlay.on('pointerup', this.selectItem, [this, itemId]);
+    }
+
+    selectItem() {
+        let that = this[0];
+        let clickedItem = this[1];
+
+        // check if clicked item has already been selected
+        if(that.selectedItems.hasOwnProperty(clickedItem + that.itemsOffset)) {
+            // remove item from selected items
+            delete that.selectedItems[clickedItem + that.itemsOffset];
+
+            // color item slightly yellow to indicate selection
+            that.itemsDisplayed[clickedItem].overlay.alpha = 0.001;
+        }else {
+            // add item to selected items
+            that.selectedItems[clickedItem + that.itemsOffset] = 'selected';
+
+            // remove selection color from item overlay
+            that.itemsDisplayed[clickedItem].overlay.alpha = 0.1;
+        }
     }
 
     clearDisplayedItems() {
@@ -311,6 +342,7 @@ class shopScene extends Phaser.Scene {
 
         // redraw tab items with new offset
         this.displayTab();
+        console.log(this.selectedItems);
     }
 
     scrollUp() {
@@ -331,5 +363,6 @@ class shopScene extends Phaser.Scene {
 
         // redraw tab items with new offset
         this.displayTab();
+        console.log(this.selectedItems);
     }
 }
