@@ -242,7 +242,7 @@ class profileManagementScene extends Phaser.Scene {
             // check if any equipment is set
             if(config.default.equipment[itemType] != null) {
                 // give item to profile
-                let id = giveItem(item, config.default.equipment[itemType], null, profile);
+                let id = giveItem(itemType, config.default.equipment[itemType], null, profile);
 
                 // equip initial items immediately
                 equipItem(id, profile);

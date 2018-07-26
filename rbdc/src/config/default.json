@@ -16,7 +16,7 @@
   },
   "status": {
     "inventorySize": 30,
-    "currency": 0,
+    "currency": 100,
     "health": 100
   }
 }

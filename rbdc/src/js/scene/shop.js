@@ -32,6 +32,9 @@ class shopScene extends Phaser.Scene {
 
         // add up button to navigate list
         this.addDownButton(this.sys.game.config.width * 0.45, this.sys.game.config.height * 0.95);
+
+        // add buy/sell button to buy/sell selected items
+        this.addBuySellSelectedButton(this.sys.game.config.width * 0.75, this.sys.game.config.height * 0.07);
     }
 
     addBackground() {
@@ -105,6 +108,12 @@ class shopScene extends Phaser.Scene {
 
             // reset item offset to always start on the top
             that.itemsOffset = 0;
+
+            // clear list of selected items
+            that.selectedItems = {};
+
+            // hide buy/sell button since no items are selected
+            that.buttonBuySellSelected.alpha = 0;
 
             // reset button tint on up and down buttons
             that.buttonUp.setTint(0xffffff);
@@ -192,7 +201,7 @@ class shopScene extends Phaser.Scene {
         this.itemsDisplayed[itemId].overlay.setOrigin(0, 0.5);
 
         // check if clicked item has already been selected
-        if(this.selectedItems.hasOwnProperty(itemId + this.itemsOffset)) {
+        if (this.selectedItems.hasOwnProperty(itemId + this.itemsOffset)) {
             // color item slightly yellow to indicate selection
             this.itemsDisplayed[itemId].overlay.alpha = 0.5;
         }
@@ -207,18 +216,28 @@ class shopScene extends Phaser.Scene {
         let clickedItem = this[1];
 
         // check if clicked item has already been selected
-        if(that.selectedItems.hasOwnProperty(clickedItem + that.itemsOffset)) {
+        if (that.selectedItems.hasOwnProperty(clickedItem + that.itemsOffset)) {
             // remove item from selected items
             delete that.selectedItems[clickedItem + that.itemsOffset];
 
             // color item slightly yellow to indicate selection
             that.itemsDisplayed[clickedItem].overlay.alpha = 0.001;
-        }else {
+        } else {
             // add item to selected items
             that.selectedItems[clickedItem + that.itemsOffset] = 'selected';
 
             // remove selection color from item overlay
             that.itemsDisplayed[clickedItem].overlay.alpha = 0.5;
+        }
+
+        // TODO: update total amount and value on buy/sell button
+
+        if (Object.keys(that.selectedItems).length > 0) {
+            // show buy/sell button if at least one item is selected
+            that.buttonBuySellSelected.alpha = 1;
+        } else {
+            // hide buy/sell button if no items are selected
+            that.buttonBuySellSelected.alpha = 0;
         }
     }
 
@@ -231,7 +250,6 @@ class shopScene extends Phaser.Scene {
             // remove item from displayed items list
             delete this.itemsDisplayed[itemId];
         }
-        this.selectedItems = {};
     }
 
     addSellTabButton(x, y) {
@@ -376,6 +394,127 @@ class shopScene extends Phaser.Scene {
         this.buttonDown.setTint(0xffffff);
 
         // redraw tab items with new offset
+        this.displayTab();
+    }
+
+    addBuySellSelectedButton(x, y) {
+        // add dollar sign as button for buying/selling selected items
+        this.buttonBuySellSelected = this.add.text(x, y, '$', {
+            fontFamily: 'Arial',
+            fontSize: 42,
+            fontStyle: 'bold',
+            color: '#dddd00'
+        });
+        this.buttonBuySellSelected.setStroke('#ffff00', 4);
+        this.buttonBuySellSelected.setInteractive();
+        this.buttonBuySellSelected.on('pointerup', this.confirmBuySell, this);
+
+        // hide up button at first while no mode has been selected
+        this.buttonBuySellSelected.alpha = 0;
+
+        // TODO: add selected items total amount and value to button
+    }
+
+    confirmBuySell() {
+        // get all items depending on the current selected mode
+        if (this.currentMode == 'buy') {
+            // show confirmation dialog for buying selected items
+            new Dialog('Buy selected Items', 'Do you want to buy all ' + this.profile + ' selected items?', this.scene, true);
+
+            // only delete profile if the YES button has been pressed
+            this.dialogButtonYES.on('pointerup', this.buySelected, this);
+        } else if (this.currentMode == 'sell') {
+            new Dialog('Sell selected Items', 'Do you want to sell all ' + this.profile + ' selected items?', this.scene, true);
+
+            // only delete profile if the YES button has been pressed
+            this.dialogButtonYES.on('pointerup', this.sellSelected, this);
+        }
+    }
+
+    sellSelected() {
+        // get inventory items
+        let soldItems = 0;
+
+        // loop through all selected items
+        for (let selectedItem in this.selectedItems) {
+            // subtract amount of sold items to compensate for key offset after selling an item
+            let currentItem = selectedItem - soldItems;
+
+            // get infos on current item including the value
+            let currentItemInfo = config[saveObject.profiles[saveObject.currentProfile].inventory.items[currentItem].itemType][saveObject.profiles[saveObject.currentProfile].inventory.items[currentItem].itemName];
+
+            // add value to currency
+            saveObject.profiles[saveObject.currentProfile].inventory.currency += currentItemInfo.value;
+
+            // remove item from inventory
+            removeItem(currentItem);
+
+            // increment the amount of sold items to compensate for key offset later
+            soldItems++;
+
+            for (let itemId in saveObject.profiles[saveObject.currentProfile].inventory.items) {
+                if (itemId > currentItem) {
+                    // move item id one up
+                    saveObject.profiles[saveObject.currentProfile].inventory.items[itemId - 1] = saveObject.profiles[saveObject.currentProfile].inventory.items[itemId];
+
+                    // check if moved item is currently equipped
+                    if (saveObject.profiles[saveObject.currentProfile].character[getItem(itemId).itemType] == itemId) {
+                        // equip same item with new id
+                        equipItem(itemId - 1);
+                    }
+
+                    // remove item with old id
+                    removeItem(itemId);
+                }
+            }
+        }
+
+        // clear list of selected items
+        this.selectedItems = {};
+
+        // hide buy/sell button since no items are selected
+        this.buttonBuySellSelected.alpha = 0;
+
+        // redraw tab items with items
+        this.displayTab();
+    }
+
+    buySelected() {
+        // get all buyable shop items
+        let allItems = this.getBuyableItems();
+
+        // check if player has enough currency to buy all selected items
+        let totalValue = 0;
+        for (let selectedItem in this.selectedItems) {
+            totalValue += allItems[selectedItem].value;
+        }
+        if (totalValue > saveObject.profiles[saveObject.currentProfile].inventory.currency) {
+            // show error message
+            new Dialog('Not enough currency', 'You do not have enough currency to buy all selected items!', this.scene);
+
+            // only delete profile if the YES button has been pressed
+            this.dialogButtonOK.on('pointerup', this.sellSelected, this);
+
+            // cancel buy process
+            return false;
+        }
+
+        // loop through all selected items
+        for (let selectedItem in this.selectedItems) {
+            // add item to inventory
+            giveItem(allItems[selectedItem].itemType, allItems[selectedItem].itemName, allItems[selectedItem].durability);
+
+            // remove value from currency
+            saveObject.profiles[saveObject.currentProfile].inventory.currency -= allItems[selectedItem].value;
+        }
+
+        // clear list of selected items
+        this.selectedItems = {};
+
+        // hide buy/sell button since no items are selected
+        this.buttonBuySellSelected.alpha = 0;
+
+        // redraw tab items with items
         this.displayTab();
     }
 }
