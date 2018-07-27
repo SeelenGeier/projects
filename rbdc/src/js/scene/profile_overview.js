@@ -35,6 +35,9 @@ class profileOverviewScene extends Phaser.Scene {
 
         // add character to the center of the screen
         this.addCharacter(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.62);
+
+        // add character to the center of the screen
+        this.addCurrency(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.66);
     }
 
     goToConfig() {
@@ -355,5 +358,19 @@ class profileOverviewScene extends Phaser.Scene {
 
         // add event trigger when attack animation is complete to switch to idle animation
         this.parent.scene.character.on('animationcomplete', this.parent.scene.characterIdle, this);
+    }
+
+    addCurrency(x, y) {
+        // display current amount of currency
+        this.textBuySellSelected = this.add.text(x, y, saveObject.profiles[saveObject.currentProfile].inventory.currency, {
+            fontFamily: config.default.setting.fontFamily,
+            fontSize: 20,
+            color: '#dddd00'
+        });
+        this.textBuySellSelected.setStroke('#222222', 4);
+
+        // add icon next to currency
+        this.imageBuySellSelected = this.add.sprite(x - 20, y + 15, 'currency');
+        this.imageBuySellSelected.setScale(0.75);
     }
 }

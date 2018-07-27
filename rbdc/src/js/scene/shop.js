@@ -435,22 +435,23 @@ class shopScene extends Phaser.Scene {
             fontStyle: 'bold',
             color: '#dddd00'
         });
-        this.buttonBuySellSelected.setStroke('#555555', 4);
+        this.buttonBuySellSelected.setStroke('#444444', 4);
         this.buttonBuySellSelected.setInteractive();
         this.buttonBuySellSelected.on('pointerup', this.confirmBuySell, this);
 
         // hide up button at first while no mode has been selected
         this.buttonBuySellSelected.alpha = 0;
 
+        // display current amount of currency
         this.textBuySellSelected = this.add.text(x, y + 50, saveObject.profiles[saveObject.currentProfile].inventory.currency, {
             fontFamily: config.default.setting.fontFamily,
             fontSize: 20,
             color: '#dddd00'
         });
-        this.textBuySellSelected.setStroke('#555555', 4);
+        this.textBuySellSelected.setStroke('#444444', 4);
 
         // add icon next to currency
-        this.imageBuySellSelected = this.add.sprite(x - 20, y + 60, 'currency');
+        this.imageBuySellSelected = this.add.sprite(x - 20, y + 65, 'currency');
         this.imageBuySellSelected.setScale(0.75);
     }
 
