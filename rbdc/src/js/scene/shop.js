@@ -308,24 +308,24 @@ class shopScene extends Phaser.Scene {
 
     addCommonShopItems(items) {
         // TODO: use config to get common items
-        items.common1 = {itemName: 'sword', itemType: 'weapon', durability: '1000'};
-        items.common2 = {itemName: 'axe', itemType: 'weapon', durability: '2000'};
-        items.common3 = {itemName: 'light_leather', itemType: 'armor', durability: '4000'};
-        items.common4 = {itemName: 'sword', itemType: 'weapon', durability: '23412'};
-        items.common5 = {itemName: 'light_leather', itemType: 'armor', durability: '4000'};
-        items.common6 = {itemName: 'axe', itemType: 'weapon', durability: '352'};
-        items.common7 = {itemName: 'sword', itemType: 'weapon', durability: '2'};
-        items.common8 = {itemName: 'axe', itemType: 'weapon', durability: '5'};
-        items.common9 = {itemName: 'helmet', itemType: 'armor', durability: '3000'};
-        items.common10 = {itemName: 'light_leather', itemType: 'armor', durability: '4000'};
+        items[0] = {itemName: 'sword', itemType: 'weapon', durability: 1000};
+        items[1] = {itemName: 'axe', itemType: 'weapon', durability: 2000};
+        items[2] = {itemName: 'light_leather', itemType: 'armor', durability: 4000};
+        items[3] = {itemName: 'sword', itemType: 'weapon', durability: 23412};
+        items[4] = {itemName: 'light_leather', itemType: 'armor', durability: 4000};
+        items[5] = {itemName: 'axe', itemType: 'weapon', durability: 352};
+        items[6] = {itemName: 'sword', itemType: 'weapon', durability: 2};
+        items[7] = {itemName: 'axe', itemType: 'weapon', durability: 5};
+        items[8] = {itemName: 'helmet', itemType: 'armor', durability: 3000};
+        items[9] = {itemName: 'light_leather', itemType: 'armor', durability: 4000};
 
         return items;
     }
 
     addRareShopItems(items) {
         // TODO: use saved rare items that have been generated after a run
-        items.rare1 = {itemName: 'lamp', itemType: 'trinket', durability: '1'};
-        items.rare2 = {itemName: 'torch', itemType: 'offhand', durability: '2'};
+        items[10] = {itemName: 'lamp', itemType: 'trinket', durability: 1};
+        items[11] = {itemName: 'torch', itemType: 'offhand', durability: 2};
 
         return items;
     }
@@ -419,12 +419,12 @@ class shopScene extends Phaser.Scene {
         // get all items depending on the current selected mode
         if (this.currentMode == 'buy') {
             // show confirmation dialog for buying selected items
-            new Dialog('Buy selected Items', 'Do you want to buy all ' + this.profile + ' selected items?', this.scene, true);
+            new Dialog('Buy selected Items', 'Do you want to buy all ' + Object.keys(this.selectedItems).length + ' selected items?', this.scene, true);
 
             // only delete profile if the YES button has been pressed
             this.dialogButtonYES.on('pointerup', this.buySelected, this);
         } else if (this.currentMode == 'sell') {
-            new Dialog('Sell selected Items', 'Do you want to sell all ' + this.profile + ' selected items?', this.scene, true);
+            new Dialog('Sell selected Items', 'Do you want to sell all ' + Object.keys(this.selectedItems).length + ' selected items?', this.scene, true);
 
             // only delete profile if the YES button has been pressed
             this.dialogButtonYES.on('pointerup', this.sellSelected, this);
@@ -483,17 +483,16 @@ class shopScene extends Phaser.Scene {
         // get all buyable shop items
         let allItems = this.getBuyableItems();
 
-        // check if player has enough currency to buy all selected items
+        // get total value of all selected items
         let totalValue = 0;
         for (let selectedItem in this.selectedItems) {
-            totalValue += allItems[selectedItem].value;
+            totalValue += config[allItems[selectedItem].itemType][allItems[selectedItem].itemName].value;
         }
+
+        // check if player has enough currency to buy all selected items
         if (totalValue > saveObject.profiles[saveObject.currentProfile].inventory.currency) {
             // show error message
-            new Dialog('Not enough currency', 'You do not have enough currency to buy all selected items!', this.scene);
-
-            // only delete profile if the YES button has been pressed
-            this.dialogButtonOK.on('pointerup', this.sellSelected, this);
+            new Dialog('Not enough currency', 'You do not have enough currency\nto buy all selected items!', this.scene);
 
             // cancel buy process
             return false;
@@ -505,7 +504,7 @@ class shopScene extends Phaser.Scene {
             giveItem(allItems[selectedItem].itemType, allItems[selectedItem].itemName, allItems[selectedItem].durability);
 
             // remove value from currency
-            saveObject.profiles[saveObject.currentProfile].inventory.currency -= allItems[selectedItem].value;
+            saveObject.profiles[saveObject.currentProfile].inventory.currency -= config[allItems[selectedItem].itemType][allItems[selectedItem].itemName].value;
         }
 
         // clear list of selected items

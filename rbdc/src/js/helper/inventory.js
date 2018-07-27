@@ -48,8 +48,10 @@ function removeItem(id, profile = saveObject.currentProfile) {
         return false;
     }
 
-    // unequip item if equipped
-    unequipItemtype(getItem(id, profile).itemType);
+    if(saveObject.profiles[profile].character[getItem(id, profile).itemType] == id) {
+        // unequip item if equipped
+        unequipItemtype(getItem(id, profile).itemType);
+    }
 
     // remove item from inventory
     delete saveObject.profiles[profile].inventory.items[id];
