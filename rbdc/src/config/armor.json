@@ -24,7 +24,7 @@
   "helmet": {
     "name": "Iron Helmet",
     "description": "A heavy helmet used to protect the head primarily against ranged attacks.",
-    "image": "armor",
+    "image": "helmet",
     "value": 30,
     "resistance": {
       "puncture": 20,

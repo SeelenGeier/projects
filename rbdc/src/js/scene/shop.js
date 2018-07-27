@@ -230,7 +230,7 @@ class shopScene extends Phaser.Scene {
             that.itemsDisplayed[clickedItem].overlay.alpha = 0.5;
         }
 
-        // TODO: update total amount and value on buy/sell button
+        that.updateCurrency();
 
         if (Object.keys(that.selectedItems).length > 0) {
             // show buy/sell button if at least one item is selected
@@ -239,6 +239,28 @@ class shopScene extends Phaser.Scene {
             // hide buy/sell button if no items are selected
             that.buttonBuySellSelected.alpha = 0;
         }
+    }
+
+    updateCurrency() {
+        let allItems;
+
+        // get item list depending on current mode
+        if(this.currentMode = 'buy') {
+            // get all buyable shop items
+            allItems = this.getBuyableItems();
+        }else if(this.currentMode = 'sell') {
+            // use inventory items
+            allItems = saveObject.profiles[saveObject.currentProfile].inventory.items;
+        }
+
+        // get total value of all selected items
+        let totalValue = 0;
+        for (let selectedItem in this.selectedItems) {
+            totalValue += config[allItems[selectedItem].itemType][allItems[selectedItem].itemName].value;
+        }
+
+        // update text under buy/sell button to display current currency and value of selected items
+        this.textBuySellSelected.text = saveObject.profiles[saveObject.currentProfile].inventory.currency + ' (' + totalValue + ')';
     }
 
     clearDisplayedItems() {
@@ -308,16 +330,16 @@ class shopScene extends Phaser.Scene {
 
     addCommonShopItems(items) {
         // TODO: use config to get common items
-        items[0] = {itemName: 'sword', itemType: 'weapon', durability: 1000};
-        items[1] = {itemName: 'axe', itemType: 'weapon', durability: 2000};
-        items[2] = {itemName: 'light_leather', itemType: 'armor', durability: 4000};
-        items[3] = {itemName: 'sword', itemType: 'weapon', durability: 23412};
-        items[4] = {itemName: 'light_leather', itemType: 'armor', durability: 4000};
+        items[0] = {itemName: 'sword', itemType: 'weapon', durability: 100};
+        items[1] = {itemName: 'axe', itemType: 'weapon', durability: 70};
+        items[2] = {itemName: 'light_leather', itemType: 'armor', durability: 150};
+        items[3] = {itemName: 'sword', itemType: 'weapon', durability: 234};
+        items[4] = {itemName: 'iron', itemType: 'armor', durability: 400};
         items[5] = {itemName: 'axe', itemType: 'weapon', durability: 352};
         items[6] = {itemName: 'sword', itemType: 'weapon', durability: 2};
         items[7] = {itemName: 'axe', itemType: 'weapon', durability: 5};
-        items[8] = {itemName: 'helmet', itemType: 'armor', durability: 3000};
-        items[9] = {itemName: 'light_leather', itemType: 'armor', durability: 4000};
+        items[8] = {itemName: 'helmet', itemType: 'armor', durability: 300};
+        items[9] = {itemName: 'light_leather', itemType: 'armor', durability: 160};
 
         return items;
     }
@@ -412,7 +434,11 @@ class shopScene extends Phaser.Scene {
         // hide up button at first while no mode has been selected
         this.buttonBuySellSelected.alpha = 0;
 
-        // TODO: add selected items total amount and value to button
+        this.textBuySellSelected = this.add.text(x, y + 50, saveObject.profiles[saveObject.currentProfile].inventory.currency, {
+            fontFamily: config.default.setting.fontFamily,
+            fontSize: 20,
+            color: '#dddd00'
+        });
     }
 
     confirmBuySell() {
@@ -469,6 +495,9 @@ class shopScene extends Phaser.Scene {
             }
         }
 
+        // save changes to profile
+        saveData();
+
         // clear list of selected items
         this.selectedItems = {};
 
@@ -509,6 +538,9 @@ class shopScene extends Phaser.Scene {
             // remove value from currency
             saveObject.profiles[saveObject.currentProfile].inventory.currency -= config[allItems[selectedItem].itemType][allItems[selectedItem].itemName].value;
         }
+
+        // save changes to profile
+        saveData();
 
         // clear list of selected items
         this.selectedItems = {};

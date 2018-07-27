@@ -212,6 +212,9 @@ class profileOverviewScene extends Phaser.Scene {
             this[1].updateEquipped(type);
             return true;
         }
+
+        // save equipment choice
+        saveData();
     }
 
     changeItemPrev() {
@@ -253,6 +256,9 @@ class profileOverviewScene extends Phaser.Scene {
             this[1].updateEquipped(type);
             return true;
         }
+
+        // save equipment choice
+        saveData();
     }
 
     addCharacter(x, y) {
