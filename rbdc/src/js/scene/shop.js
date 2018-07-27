@@ -118,6 +118,9 @@ class shopScene extends Phaser.Scene {
             // reset button tint on up and down buttons
             that.buttonUp.setTint(0xffffff);
             that.buttonDown.setTint(0xffffff);
+
+            // update display of currency and total value of selected items
+            that.updateCurrency();
         }
 
         // show background image and up/down buttons for tab if not already visible
@@ -230,6 +233,7 @@ class shopScene extends Phaser.Scene {
             that.itemsDisplayed[clickedItem].overlay.alpha = 0.5;
         }
 
+        // update display of currency and total value of selected items
         that.updateCurrency();
 
         if (Object.keys(that.selectedItems).length > 0) {
@@ -243,12 +247,13 @@ class shopScene extends Phaser.Scene {
 
     updateCurrency() {
         let allItems;
+        let totalText = '';
 
         // get item list depending on current mode
-        if(this.currentMode = 'buy') {
+        if(this.currentMode == 'buy') {
             // get all buyable shop items
             allItems = this.getBuyableItems();
-        }else if(this.currentMode = 'sell') {
+        }else if(this.currentMode == 'sell') {
             // use inventory items
             allItems = saveObject.profiles[saveObject.currentProfile].inventory.items;
         }
@@ -260,7 +265,10 @@ class shopScene extends Phaser.Scene {
         }
 
         // update text under buy/sell button to display current currency and value of selected items
-        this.textBuySellSelected.text = saveObject.profiles[saveObject.currentProfile].inventory.currency + ' (' + totalValue + ')';
+        if(totalValue > 0) {
+            totalText = ' (' + totalValue + ')';
+        }
+        this.textBuySellSelected.setText(saveObject.profiles[saveObject.currentProfile].inventory.currency + totalText);
     }
 
     clearDisplayedItems() {
@@ -427,7 +435,7 @@ class shopScene extends Phaser.Scene {
             fontStyle: 'bold',
             color: '#dddd00'
         });
-        this.buttonBuySellSelected.setStroke('#ffff00', 4);
+        this.buttonBuySellSelected.setStroke('#555555', 4);
         this.buttonBuySellSelected.setInteractive();
         this.buttonBuySellSelected.on('pointerup', this.confirmBuySell, this);
 
@@ -439,18 +447,23 @@ class shopScene extends Phaser.Scene {
             fontSize: 20,
             color: '#dddd00'
         });
+        this.textBuySellSelected.setStroke('#555555', 4);
+
+        // add icon next to currency
+        this.imageBuySellSelected = this.add.sprite(x - 20, y + 60, 'currency');
+        this.imageBuySellSelected.setScale(0.75);
     }
 
     confirmBuySell() {
         // get all items depending on the current selected mode
         if (this.currentMode == 'buy') {
             // show confirmation dialog for buying selected items
-            new Dialog('Buy selected Items', 'Do you want to buy all ' + Object.keys(this.selectedItems).length + ' selected items?', this.scene, true);
+            new Dialog('Buy selected Items', 'Do you want to buy these ' + Object.keys(this.selectedItems).length + ' selected items?', this.scene, true);
 
             // only delete profile if the YES button has been pressed
             this.dialogButtonYES.on('pointerup', this.buySelected, this);
         } else if (this.currentMode == 'sell') {
-            new Dialog('Sell selected Items', 'Do you want to sell all ' + Object.keys(this.selectedItems).length + ' selected items?', this.scene, true);
+            new Dialog('Sell selected Items', 'Do you want to sell these ' + Object.keys(this.selectedItems).length + ' selected items?', this.scene, true);
 
             // only delete profile if the YES button has been pressed
             this.dialogButtonYES.on('pointerup', this.sellSelected, this);
@@ -509,6 +522,9 @@ class shopScene extends Phaser.Scene {
 
         // redraw tab items with items
         this.displayTab();
+
+        // update display of currency and total value of selected items
+        this.updateCurrency();
     }
 
     buySelected() {
@@ -553,5 +569,8 @@ class shopScene extends Phaser.Scene {
 
         // redraw tab items with items
         this.displayTab();
+
+        // update display of currency and total value of selected items
+        this.updateCurrency();
     }
 }

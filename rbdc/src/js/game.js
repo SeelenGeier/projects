@@ -85,6 +85,9 @@ function create() {
     // load image for "nothing"
     this.load.image('X', '../assets/item/X.png');
 
+    // load image for currency
+    this.load.image('currency', '../assets/item/coin.png');
+
     // run loader to load all prepared images in create function
     this.load.start();
 
