@@ -475,6 +475,9 @@ class shopScene extends Phaser.Scene {
         // hide buy/sell button since no items are selected
         this.buttonBuySellSelected.alpha = 0;
 
+        // reset item offset
+        this.itemsOffset = 0;
+
         // redraw tab items with items
         this.displayTab();
     }
@@ -512,6 +515,9 @@ class shopScene extends Phaser.Scene {
 
         // hide buy/sell button since no items are selected
         this.buttonBuySellSelected.alpha = 0;
+
+        // reset item offset
+        this.itemsOffset = 0;
 
         // redraw tab items with items
         this.displayTab();
