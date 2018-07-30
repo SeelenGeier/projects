@@ -12,8 +12,10 @@ class shopScene extends Phaser.Scene {
         this.maxItemsDisplayed = 7;
         this.itemsOffset = 0;
         this.itemsDisplayed = {};
-        this.currentMode;
         this.selectedItems = {};
+
+        // always start in buy mode
+        this.currentMode = 'buy';
 
         // add background image
         this.addBackground();
@@ -35,6 +37,12 @@ class shopScene extends Phaser.Scene {
 
         // add buy/sell button to buy/sell selected items
         this.addBuySellSelectedButton(this.sys.game.config.width * 0.75, this.sys.game.config.height * 0.07);
+
+        // add buy/sell button to buy/sell selected items
+        this.addUnselectButton(this.sys.game.config.width * 0.85, this.sys.game.config.height * 0.08);
+
+        // display buy tab
+        this.displayTab();
     }
 
     addBackground() {
@@ -52,9 +60,6 @@ class shopScene extends Phaser.Scene {
 
         // scale tab background to fit tab content
         this.backgroundTabImage.setScale(this.sys.game.config.width * 0.75 / this.backgroundTabImage.width, this.sys.game.config.height * 0.75 / this.backgroundTabImage.height);
-
-        // hide tab background at first while no mode has been selected
-        this.backgroundTabImage.alpha = 0;
     }
 
     addNavigationExit(x, y) {
@@ -112,7 +117,8 @@ class shopScene extends Phaser.Scene {
             // clear list of selected items
             that.selectedItems = {};
 
-            // hide buy/sell button since no items are selected
+            // hide buy/sell and unselect button since no items are selected
+            that.buttonUnselectAll.alpha = 0;
             that.buttonBuySellSelected.alpha = 0;
 
             // reset button tint on up and down buttons
@@ -122,11 +128,6 @@ class shopScene extends Phaser.Scene {
             // update display of currency and total value of selected items
             that.updateCurrency();
         }
-
-        // show background image and up/down buttons for tab if not already visible
-        that.backgroundTabImage.alpha = 1;
-        that.buttonUp.alpha = 1;
-        that.buttonDown.alpha = 1;
 
         // check if tab is for selling or buying and change background accordingly
         if (mode == 'sell') {
@@ -237,10 +238,12 @@ class shopScene extends Phaser.Scene {
         that.updateCurrency();
 
         if (Object.keys(that.selectedItems).length > 0) {
-            // show buy/sell button if at least one item is selected
+            // hide buy/sell and unselect button since no items are selected
+            that.buttonUnselectAll.alpha = 1;
             that.buttonBuySellSelected.alpha = 1;
         } else {
-            // hide buy/sell button if no items are selected
+            // hide buy/sell and unselect button since no items are selected
+            that.buttonUnselectAll.alpha = 0;
             that.buttonBuySellSelected.alpha = 0;
         }
     }
@@ -250,10 +253,10 @@ class shopScene extends Phaser.Scene {
         let totalText = '';
 
         // get item list depending on current mode
-        if(this.currentMode == 'buy') {
+        if (this.currentMode == 'buy') {
             // get all buyable shop items
             allItems = this.getBuyableItems();
-        }else if(this.currentMode == 'sell') {
+        } else if (this.currentMode == 'sell') {
             // use inventory items
             allItems = saveObject.profiles[saveObject.currentProfile].inventory.items;
         }
@@ -265,7 +268,7 @@ class shopScene extends Phaser.Scene {
         }
 
         // update text under buy/sell button to display current currency and value of selected items
-        if(totalValue > 0) {
+        if (totalValue > 0) {
             totalText = ' (' + totalValue + ')';
         }
         this.textBuySellSelected.setText(saveObject.profiles[saveObject.currentProfile].inventory.currency + totalText);
@@ -364,18 +367,12 @@ class shopScene extends Phaser.Scene {
         // add button to scroll up on the item list
         new Button('buttonUp', ['gameicons', 'up.png'], x, y, this);
         this.buttonUp.on('pointerup', this.scrollUp, this);
-
-        // hide up button at first while no mode has been selected
-        this.buttonUp.alpha = 0;
     }
 
     addDownButton(x, y) {
         // add button to scroll down on the item list
         new Button('buttonDown', ['gameicons', 'down.png'], x, y, this);
         this.buttonDown.on('pointerup', this.scrollDown, this);
-
-        // hide down button at first while no mode has been selected
-        this.buttonDown.alpha = 0;
     }
 
     scrollDown() {
@@ -388,7 +385,7 @@ class shopScene extends Phaser.Scene {
             this.itemsOffset = Object.keys(saveObject.profiles[saveObject.currentProfile].inventory.items).length - this.maxItemsDisplayed;
 
             // color button slightly red to indicate no further scrolling possible
-            this.buttonDown.setTint(0xff9999);
+            this.buttonDown.setTint(0xff4444);
         }
 
         // check if tab is currently in buy mode and the offset would be higher than the amount of buyable items in the shop (minus the displayed item count)
@@ -397,7 +394,7 @@ class shopScene extends Phaser.Scene {
             this.itemsOffset = Object.keys(this.getBuyableItems()).length - this.maxItemsDisplayed;
 
             // color button slightly red to indicate no further scrolling possible
-            this.buttonDown.setTint(0xff9999);
+            this.buttonDown.setTint(0xff4444);
         }
 
         // reset up button to show that scrolling up could be possible again
@@ -439,7 +436,7 @@ class shopScene extends Phaser.Scene {
         this.buttonBuySellSelected.setInteractive();
         this.buttonBuySellSelected.on('pointerup', this.confirmBuySell, this);
 
-        // hide up button at first while no mode has been selected
+        // hide buy/sell and unselect button since no items are selected
         this.buttonBuySellSelected.alpha = 0;
 
         // display current amount of currency
@@ -515,7 +512,8 @@ class shopScene extends Phaser.Scene {
         // clear list of selected items
         this.selectedItems = {};
 
-        // hide buy/sell button since no items are selected
+        // hide buy/sell and unselect button since no items are selected
+        this.buttonUnselectAll.alpha = 0;
         this.buttonBuySellSelected.alpha = 0;
 
         // reset item offset
@@ -562,11 +560,46 @@ class shopScene extends Phaser.Scene {
         // clear list of selected items
         this.selectedItems = {};
 
-        // hide buy/sell button since no items are selected
+        // hide buy/sell and unselect button since no items are selected
+        this.buttonUnselectAll.alpha = 0;
         this.buttonBuySellSelected.alpha = 0;
 
         // reset item offset
         this.itemsOffset = 0;
+
+        // redraw tab items with items
+        this.displayTab();
+
+        // update display of currency and total value of selected items
+        this.updateCurrency();
+    }
+
+    addUnselectButton(x, y) {
+        // add dollar sign as button for buying/selling selected items
+        this.buttonUnselectAll = this.add.text(x, y, 'X', {
+            fontFamily: 'Arial',
+            fontSize: 32,
+            fontStyle: 'bold',
+            color: '#dd4444'
+        });
+        this.buttonUnselectAll.setStroke('#444444', 4);
+        this.buttonUnselectAll.setInteractive();
+        this.buttonUnselectAll.on('pointerup', this.unselectAll, this);
+
+        // hide unselect button at first when no item is selected
+        this.buttonUnselectAll.alpha = 0;
+    }
+
+    unselectAll() {
+        // clear list of selected items
+        this.selectedItems = {};
+
+        // reset item offset
+        this.itemsOffset = 0;
+
+        // hide buy/sell and unselect button since no items are selected
+        this.buttonUnselectAll.alpha = 0;
+        this.buttonBuySellSelected.alpha = 0;
 
         // redraw tab items with items
         this.displayTab();
