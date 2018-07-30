@@ -7,5 +7,15 @@
     "damage": {
       "heat": 1
     }
+  },
+  "bomb": {
+    "name": "Firebombs",
+    "description": "Bombs that explode in a big fire",
+    "image": "gemRed",
+    "value": 20,
+    "damage": {
+      "impact": 5,
+      "heat": 5
+    }
   }
 }
