@@ -249,7 +249,7 @@ class profileManagementScene extends Phaser.Scene {
             }
         }
 
-        // TODO: remove temporary items
+        // TODO: replace starter items with config
         // give some additional items to player (TEMPORARY)
         giveItem('weapon', 'sword', 100, profile);
         giveItem('weapon', 'axe', 30, profile);

@@ -71,7 +71,6 @@ function create() {
         valuable: this.cache.json.get('valuable')
     };
 
-    // TODO: add fitting item images
     // load images for configured items
     let imageCategories = ['weapon', 'armor', 'offhand', 'trinket', 'valuable'];
     for(let category in imageCategories) {
