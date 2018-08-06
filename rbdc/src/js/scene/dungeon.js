@@ -5,7 +5,9 @@ class dungeonScene extends Phaser.Scene {
     }
 
     preload() {
-
+        // TODO: replace background
+        // load background image for profile overview
+        this.load.image('backgroundDungeon', '../assets/background/dungeon_mockup.png');
     }
 
     create() {
@@ -13,9 +15,21 @@ class dungeonScene extends Phaser.Scene {
         saveObject.profiles[saveObject.currentProfile].scene = 'dungeon';
         saveData();
 
+        // add button to navigate to config
+        this.addBackground();
+
         // TODO: remove exit since it is not wanted in dungeon
         // add button to exit the shop
-        this.addNavigationExit(this.sys.game.config.width * 0.1, this.sys.game.config.height * 0.5);
+        this.addNavigationExit(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.9);
+
+        // add character to the left center of the screen
+        this.addCharacter(this.sys.game.config.width * 0.25, this.sys.game.config.height * 0.62);
+    }
+
+    addBackground() {
+        this.backgroundImage = this.add.sprite(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.5, 'backgroundDungeon');
+        // scale background to screen size and add a few more pixels to prevent flickering
+        this.backgroundImage.setScale((this.sys.game.config.width + 10) / this.backgroundImage.width, (this.sys.game.config.height + 10) / this.backgroundImage.height);
     }
 
     addNavigationExit(x, y) {
@@ -28,5 +42,36 @@ class dungeonScene extends Phaser.Scene {
         // hide current scene and start config scene
         this.scene.sleep();
         this.scene.start('profileOverview');
+    }
+
+    addCharacter(x, y) {
+        // add character outside of view
+        this.character = this.add.sprite(-100, y, 'character');
+        this.character.setOrigin(0.5, 1);
+
+        // load animations if not done already
+        addCharacterAnimations('character');
+
+        // set character animation as running
+        this.character.anims.play('characterRun');
+
+        // have the sword drawn during the entire run
+        this.character.swordDrawn = true;
+
+        // add moving motion to the center of the screen and switch to idle animation after arrival
+        this.characterEnterTween = this.tweens.add({
+            targets: [this.character],
+            x: x,
+            duration: (x - this.character.x) * 5,
+            onComplete: this.characterIdle
+        });
+    }
+
+    characterIdle() {
+        // deactivate any event trigger when completing an animation as precaution
+        this.parent.scene.character.off('animationcomplete');
+
+        // start idle animation with sword
+        this.parent.scene.character.anims.play('characterIdleWithSword');
     }
 }

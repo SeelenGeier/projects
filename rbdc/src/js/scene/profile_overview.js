@@ -33,7 +33,7 @@ class profileOverviewScene extends Phaser.Scene {
         // add equipment at the bottom of the screen
         this.addEquipment(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.8);
 
-        // add character to the center of the screen
+        // add character to the left center of the screen
         this.addCharacter(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.62);
 
         // add character to the center of the screen
