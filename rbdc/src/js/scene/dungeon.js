@@ -44,7 +44,7 @@ class dungeonScene extends Phaser.Scene {
         // add navigation button to return to profile overview and register corresponding function
         new Button('buttonExit', ['gameicons', 'exitLeft.png'], x, y, this);
         this.buttonExit.on('pointerup', this.exitDungeon, this);
-        this.buttonAction.setTint(0xcc0000);
+        this.buttonExit.setTint(0xcc0000);
     }
 
     exitDungeon() {
