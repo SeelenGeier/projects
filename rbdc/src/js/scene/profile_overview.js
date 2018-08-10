@@ -124,9 +124,9 @@ class profileOverviewScene extends Phaser.Scene {
 
     addNavigationDungeon(x, y) {
         // add navigation button to go to the dungeon
-        new Button('buttonDungeon', ['gameicons_exp', 'fightFist.png'], x, y, this);
+        new Button('buttonDungeon', ['gameicons_exp', 'diamond.png'], x, y, this);
         this.buttonDungeon.on('pointerup', this.goTo, ['dungeon', this]);
-        this.buttonDungeon.setTint(0xcc0000);
+        this.buttonDungeon.setTint(0x00ffff);
     }
 
     addBackground() {

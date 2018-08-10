@@ -18,9 +18,17 @@ class dungeonScene extends Phaser.Scene {
         // add button to navigate to config
         this.addBackground();
 
-        // TODO: remove exit since it is not wanted in dungeon
         // add button to exit the shop
         this.addNavigationExit(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.9);
+
+        // add button to exit the shop
+        this.addNavigationAction(this.sys.game.config.width * 0.5, this.sys.game.config.height * 0.3);
+
+        // add button to exit the shop
+        this.addNavigationNextRoom(this.sys.game.config.width * 0.9, this.sys.game.config.height * 0.5);
+
+        // add button to exit the shop
+        this.addNavigationInventory(this.sys.game.config.width * 0.1, this.sys.game.config.height * 0.5);
 
         // add character to the left center of the screen
         this.addCharacter(this.sys.game.config.width * 0.25, this.sys.game.config.height * 0.62);
@@ -34,7 +42,7 @@ class dungeonScene extends Phaser.Scene {
 
     addNavigationExit(x, y) {
         // add navigation button to return to profile overview and register corresponding function
-        new Button('buttonExit', ['gameicons', 'door.png'], x, y, this);
+        new Button('buttonExit', ['gameicons', 'exitLeft.png'], x, y, this);
         this.buttonExit.on('pointerup', this.exitDungeon, this);
     }
 
@@ -42,6 +50,39 @@ class dungeonScene extends Phaser.Scene {
         // hide current scene and start config scene
         this.scene.sleep();
         this.scene.start('profileOverview');
+    }
+
+    addNavigationAction(x, y) {
+        // add navigation button to perform action based on room contents
+        new Button('buttonAction', ['gameicons_exp', 'fightFist.png'], x, y, this);
+        this.buttonAction.on('pointerup', this.performAction, this);
+        this.buttonAction.setTint(0xcc0000);
+    }
+
+    performAction() {
+
+    }
+
+    addNavigationNextRoom(x, y) {
+        // add navigation button to perform action based on room contents
+        new Button('buttonNextRoom', ['gameicons', 'door.png'], x, y, this);
+        this.buttonNextRoom.on('pointerup', this.goToNextRoom, this);
+        this.buttonNextRoom.setTint(0x996600);
+    }
+
+    goToNextRoom() {
+
+    }
+
+    addNavigationInventory(x, y) {
+        // add navigation button to perform action based on room contents
+        new Button('buttonInventory', ['gameicons', 'video.png'], x, y, this);
+        this.buttonInventory.on('pointerup', this.openInventory, this);
+        this.buttonInventory.setTint(0xeeaa00);
+    }
+
+    openInventory() {
+
     }
 
     addCharacter(x, y) {
