@@ -44,6 +44,7 @@ class dungeonScene extends Phaser.Scene {
         // add navigation button to return to profile overview and register corresponding function
         new Button('buttonExit', ['gameicons', 'exitLeft.png'], x, y, this);
         this.buttonExit.on('pointerup', this.exitDungeon, this);
+        this.buttonAction.setTint(0xcc0000);
     }
 
     exitDungeon() {
@@ -65,9 +66,9 @@ class dungeonScene extends Phaser.Scene {
 
     addNavigationNextRoom(x, y) {
         // add navigation button to perform action based on room contents
-        new Button('buttonNextRoom', ['gameicons', 'door.png'], x, y, this);
+        new Button('buttonNextRoom', ['gameicons', 'arrowRight.png'], x, y, this);
         this.buttonNextRoom.on('pointerup', this.goToNextRoom, this);
-        this.buttonNextRoom.setTint(0x996600);
+        this.buttonNextRoom.setTint(0x009966);
     }
 
     goToNextRoom() {
