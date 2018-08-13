@@ -14,8 +14,8 @@ class profileOverviewScene extends Phaser.Scene {
         this.lastScene = saveObject.profiles[saveObject.currentProfile].scene;
 
         // save new current scene in saveObject
-        saveObject.profiles[saveObject.currentProfile].scene = 'profileOverview';
-        saveData();
+        //saveObject.profiles[saveObject.currentProfile].scene = 'profileOverview';
+        //saveData();
 
         // add button to navigate to config
         this.addBackground();
@@ -305,21 +305,22 @@ class profileOverviewScene extends Phaser.Scene {
         // deactivate any event trigger when completing an animation as precaution
         this.parent.scene.character.off('animationcomplete');
 
-        // check if sword is drawn or not
-        if (this.parent.scene.character.swordDrawn) {
-            // start idle animation with sword
-            this.parent.scene.character.anims.play('characterIdleWithSword');
-        } else {
-            // start idle animation without sword
-            this.parent.scene.character.anims.play('characterIdleNoSword');
-        }
-
         // set delay for idle switching
         let delay = 5000 + (5000 * Math.random());
 
-        // remove first delay if character is coming from the dungeon
+        // check if character is coming from the dungeon
         if (this.parent.scene.lastScene == 'dungeon' && this.parent.scene.character.scaleX == -1) {
-            delay = 500;
+            // remove first delay to immediately sheathe sword
+            delay = 0;
+        }else {
+            // check if sword is drawn or not if not coming back from dungeon
+            if (this.parent.scene.character.swordDrawn) {
+                // start idle animation with sword
+                this.parent.scene.character.anims.play('characterIdleWithSword');
+            } else {
+                // start idle animation without sword
+                this.parent.scene.character.anims.play('characterIdleNoSword');
+            }
         }
 
         // add timer for switching idle status
