@@ -11,6 +11,8 @@ class profileOverviewScene extends Phaser.Scene {
     }
 
     create() {
+        this.lastScene = saveObject.profiles[saveObject.currentProfile].scene;
+
         // save new current scene in saveObject
         saveObject.profiles[saveObject.currentProfile].scene = 'profileOverview';
         saveData();
@@ -278,11 +280,23 @@ class profileOverviewScene extends Phaser.Scene {
         // leave sword sheathed initially
         this.character.swordDrawn = false;
 
+        // check if character is coming back from the dungeon
+        if (this.lastScene == 'dungeon') {
+            // turn character around to move from the right to the left
+            this.character.setScale(-1, 1);
+
+            // set character position to be on the dungeon side
+            this.character.x = this.sys.game.config.width + 100;
+
+            // leave sword drawn when coming from the dungeon
+            this.character.swordDrawn = true;
+        }
+
         // add moving motion to the center of the screen and switch to idle animation after arrival
         this.characterEnterTween = this.tweens.add({
             targets: [this.character],
             x: x,
-            duration: (x - this.character.x) * 5,
+            duration: (x - this.character.x) * 5 * this.character.scaleX,
             onComplete: this.characterIdle
         });
     }
@@ -300,8 +314,16 @@ class profileOverviewScene extends Phaser.Scene {
             this.parent.scene.character.anims.play('characterIdleNoSword');
         }
 
+        // set delay for idle switching
+        let delay = 5000 + (5000 * Math.random());
+
+        // remove first delay if character is coming from the dungeon
+        if (this.parent.scene.lastScene == 'dungeon' && this.parent.scene.character.scaleX == -1) {
+            delay = 500;
+        }
+
         // add timer for switching idle status
-        this.parent.scene.switchIdleCall = this.parent.scene.time.delayedCall(5000 + (5000 * Math.random()), this.parent.scene.switchIdle, [], this);
+        this.parent.scene.switchIdleCall = this.parent.scene.time.delayedCall(delay, this.parent.scene.switchIdle, [], this);
     }
 
     switchIdle() {
@@ -312,6 +334,9 @@ class profileOverviewScene extends Phaser.Scene {
 
             // set sword drawn status to false
             this.parent.scene.character.swordDrawn = false;
+
+            // turn character around if he is not facing to the right
+            this.parent.scene.character.setScale(1, 1);
 
             // add event trigger when sheathing animation is complete to switch to idle animation
             this.parent.scene.character.on('animationcomplete', this.parent.scene.characterIdle, this);
