@@ -14,8 +14,8 @@ class profileOverviewScene extends Phaser.Scene {
         this.lastScene = saveObject.profiles[saveObject.currentProfile].scene;
 
         // save new current scene in saveObject
-        //saveObject.profiles[saveObject.currentProfile].scene = 'profileOverview';
-        //saveData();
+        saveObject.profiles[saveObject.currentProfile].scene = 'profileOverview';
+        saveData();
 
         // add button to navigate to config
         this.addBackground();
