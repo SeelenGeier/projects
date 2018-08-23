@@ -11,6 +11,9 @@ class dungeonScene extends Phaser.Scene {
     }
 
     create() {
+        // add content placeholder to keep track of what is currently inside the room
+        this.roomContent = {};
+
         // save new current scene in saveObject
         saveObject.profiles[saveObject.currentProfile].scene = 'dungeon';
         saveData();
@@ -88,7 +91,7 @@ class dungeonScene extends Phaser.Scene {
     }
 
     performAction() {
-
+        // TODO: add actions based on current room contents
     }
 
     addNavigationNextRoom(x, y) {
@@ -99,7 +102,7 @@ class dungeonScene extends Phaser.Scene {
     }
 
     goToNextRoom() {
-
+        // TODO: go to next room with one attack before leaving if an enemy is still in the room
     }
 
     addNavigationInventory(x, y) {
@@ -110,7 +113,7 @@ class dungeonScene extends Phaser.Scene {
     }
 
     openInventory() {
-
+        // TODO: add inventory sliding up and displaying inventory items to be equippable (add X to close)
     }
 
     addCharacter(x, y) {
@@ -142,5 +145,25 @@ class dungeonScene extends Phaser.Scene {
 
         // start idle animation with sword
         this.parent.scene.character.anims.play('characterIdleWithSword');
+    }
+
+    addChest() {
+        let chest = {
+            content: {},
+            open: false
+        };
+        this.roomContent.chest = chest;
+    }
+
+    addEnemy() {
+        let enemy = {
+        };
+        this.roomContent.enemy = enemy;
+    }
+
+    addTrap() {
+        let trap = {
+        };
+        this.roomContent.trap = trap;
     }
 }
